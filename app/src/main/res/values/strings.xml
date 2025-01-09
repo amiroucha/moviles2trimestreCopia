@@ -1,3 +1,62 @@
 <resources>
     <string name="app_name">LoginActivityMoviles2Trimestre</string>
+    <string name="Textlogin">INICIAR SESIÓN</string>
+    <string name="amazon">AMAZON</string>
+    <string name="fondo">Pagina principal</string>
+    <string name="user">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="btn_acceder">Iniciar Sesión</string>
+    <string name="btn_google">Google</string>
+    <string name="btn_facebook">Facebook</string>
+    <string name="PreguntaCuenta">¿Necesitas una cuenta?</string>
+    <string name="btn_registrar">Crear cuenta</string>
+    <string name="NuevaContrasenia">Recuperar contraseña</string>
+    <string name="Cerrar">Cerrar</string>
+    <string name="NuevaPassword">Redirigiendo a recuperación de contraseña</string>
+    <string name="Entrando">Accediendo a tu cuenta</string>
+    <string name="accGoogle">Accediendo por google</string>
+    <string name="accFaceb">Accediendo por facebook</string>
+    <string name="registrar">Redirigiendo a la pagina de registro</string>
+    <string name="MensError">Por favor, complete todos los campos</string>
+    <string name="nocorreo">Correo inválido</string>
+    <string name="nuevocorreo">Por favor, ingrese un correo electrónico válido.</string>
+    <string name="nocontra">Contraseña inválida</string>
+    <string name="nuevacontra">La contraseña debe tener entre 8 y 10 caracteres.</string>
+    <string name="ok">Entendido</string>
+    <string name="textoEntrar">Iniciar sesión con:</string>
+    --aqui empiezan los string de los recyclerView--
+    <string name="titulo">Nombre</string>
+    <string name="precio">Precio</string>
+    <string name="fav">Botón de favorito</string>
+    <string name="amazonFoto">amazon</string>
+    <string name="pantallaFoto">pantalla</string>
+    <string name="llamar">Llamar</string>
+    <string name="correo">Correo electrónico</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="mapa">Google Maps</string>
+    <string name="telefonoTexto">123 123 321</string>
+    <string name="correoTexto">amazon@gmail.com</string>
+    <string name="wasText">Contacta con nosotros</string>
+    <string name="mapaText">Visitanos</string>
+    <string name="mapaContDescrip">mapa</string>
+    <string name="irContacto">Redirigiendo al contacto. Pulsa Google</string>
+    <string name="mapaTexto">Visitanos</string>
+    <!--permisos-->
+    <string name="permisoRechazado">El permiso ha sido rechazado previamente, debes activarlo desde ajustes</string>
+    <string name="noAppMaps">No existe app de maps</string>
+    <string name="permiUbica">El permiso de ubicación es necesario para abrir el mapa</string>
+    <string name="llamadaNoPosible">No es posible hacer la llamada sin la app disponible</string>
+    <string name="noCorreoApp">No se encontró una aplicación para enviar correos</string>
+    <string name="bienvenidaWas">¡Bienvenido! Contacta son nosotros en caso de cualquier duda.</string>
+    <string name="noAppWas">No se encontró la aplicación de WhatsApp.</string>
+
+
+    <!--registro-->
+    <string name="apodo">Apodo</string>
+    <string name="registro">Registro</string>
+    <string name="Registrarbtn">Registrarse</string>
+    <string name="fechNacer">Fecha de nacimiento seleccionada:</string>
+    <string name="btonNacer">Seleccionar fecha nacimiento</string>
+    <string name="TextSelecciona">Selecciona tu fecha de nacimiento</string>
+
 </resources>

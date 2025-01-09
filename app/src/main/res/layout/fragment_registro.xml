@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".Fragments.FragmentRegistro">
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/pruebafon"
+            android:scaleType="centerCrop" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" android:contentDescription="@string/fondo"
+            android:id="@+id/imageView" app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="1.0"/>
+    <ImageView
+            android:layout_width="179dp"
+            android:layout_height="62dp" app:srcCompat="@drawable/amazon_icono" android:id="@+id/imageAmazon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.068"
+            app:layout_constraintVertical_bias="0.023" android:contentDescription="@string/amazon"/>
+
+    <ImageView
+            android:layout_width="121dp"
+            android:layout_height="112dp" app:srcCompat="@drawable/login" android:id="@+id/imageLogin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.886"
+            app:layout_constraintVertical_bias="0.14" android:contentDescription="@string/Textlogin"/>
+    <TextView
+            android:id="@+id/TextReg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registro"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.166"
+            android:textSize="45sp" android:textAlignment="center" android:fontFamily="serif"
+            android:typeface="normal" android:textColor="#ffa121" app:layout_constraintHorizontal_bias="0.208"/>
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/apodoReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/apodo"
+            android:textColorHint="@color/white"
+            app:cursorColor="@color/white"
+            app:hintTextColor="@color/white"
+            app:boxStrokeColor="@color/edittext_stroke_color"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxStrokeWidth="2dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.32"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white" android:textColor="#CCCCCC"
+                android:textSize="20sp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/userReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/correo"
+            android:textColorHint="@color/white"
+            app:cursorColor="@color/white"
+            app:hintTextColor="@color/edittext_stroke_color"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxStrokeWidth="2dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.43"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white" android:textColor="#CCCCCC"
+                android:textSize="20sp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <!--posicion de los mensajes de alerta toast-->
+    <View
+            android:id="@+id/avisoErrorREG"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:visibility="invisible" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/password" app:layout_constraintTop_toBottomOf="@+id/userReg"/>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:textColorHint="@color/white"
+            app:cursorColor="@color/white"
+            app:hintTextColor="@color/white"
+            app:boxStrokeColor="@color/edittext_stroke_color"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxStrokeWidth="2dp"
+            app:endIconMode="password_toggle"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.54"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" android:textColor="#CCCCCC"
+                android:textColorHint="@color/white" android:textSize="20sp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+            android:id="@+id/botonSeleccionarFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btonNacer"
+            android:layout_marginTop="16dp"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:backgroundTint="#025F89"
+            android:textColor="#fff"
+            tools:ignore="HardcodedText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.163" app:layout_constraintVertical_bias="0.695"
+            app:layout_constraintTop_toTopOf="parent"/>
+    <Button
+            android:text="@string/Registrarbtn"
+            android:layout_width="174dp"
+            android:layout_height="56dp"
+            android:id="@+id/botonRegistrar"
+            android:hint="@string/btn_acceder"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.89" app:layout_constraintHorizontal_bias="0.932"
+            android:textSize="20sp" android:backgroundTint="#EDB66F0F" android:textColor="#FFFCFC"
+            app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+            android:text="@string/fechNacer"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:id="@+id/textoFechaSeleccionada"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.148"
+            app:layout_constraintVertical_bias="0.634"/>
+    <Button
+            android:text="@string/btn_google"
+            android:layout_width="177dp"
+            android:layout_height="65dp"
+            android:id="@+id/botonGoogle"
+            android:hint="@string/btn_google"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.068"
+            app:layout_constraintVertical_bias="0.83"
+            android:textSize="20sp"
+            app:icon="@drawable/iconogoogle"
+            app:iconTintMode="multiply" app:iconSize="28dp" android:backgroundTint="#EEA105CC"/>
+    <Button
+            android:text="@string/btn_facebook"
+            android:layout_width="177dp"
+            android:layout_height="65dp"
+            android:id="@+id/botonFacebook"
+            android:hint="@string/btn_facebook"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.975"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.085" android:textSize="20sp"
+            app:icon="@drawable/facebook_icon"
+            app:iconTintMode="multiply" app:iconSize="28dp" android:backgroundTint="#1F2E59"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

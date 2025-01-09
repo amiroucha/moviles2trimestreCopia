@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fondo blanco -->
+    <item android:drawable="@android:color/white" />
+    <!-- Imagen corporativa centrada -->
+    <!-- segudnda capa por encima-->
+    <item>
+
+        <!-- La imagen se coloca sobre el fondo blanco -->
+        <!-- Imagen centrada -->
+        <bitmap
+                android:gravity="center"
+                android:src="@drawable/amazoncircul" />
+    </item>
+</layer-list>

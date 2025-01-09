@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId = "com.example.loginactivitymoviles2trimestre"
         minSdk = 24
-        targetSdk = 34
+        this.targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -29,6 +29,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    viewBinding{
+        enable = true
     }
 }
 
