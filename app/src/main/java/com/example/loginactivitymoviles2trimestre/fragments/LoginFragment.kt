@@ -1,6 +1,5 @@
 package com.example.loginactivitymoviles2trimestre.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
@@ -20,20 +19,33 @@ import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private lateinit var progressBar: ProgressBar
+   // private lateinit var progressBar: ProgressBar
 
+    //variable para la interfaz
+    private var listener: OnFragmentChangeListener? = null
+
+    //Interface para pasar información del Fragment al Activity
+    interface OnFragmentChangeListener { fun onFragmentChangeUno() }
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
+        super.onCreate(savedInstanceState)
+
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         binding = FragmentLoginBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
+        //para establecer la conexion con el activity
+        listener = activity as OnFragmentChangeListener
+
 
         // Inicializa el ProgressBar
-        progressBar = view.findViewById(R.id.progressBar)
+      //  progressBar = view.findViewById(R.id.progressBar)
 
         val posicionMensaje = view.findViewById<View>(R.id.anchor_view)
 
@@ -45,7 +57,7 @@ class LoginFragment : Fragment() {
 
         val accionCerrar = getString(R.string.Cerrar)
 
-        binding.NuevaContrasenia.setOnClickListener { //no necesito comprobar la contraseña porque se buca cambiarla
+        binding.NuevaContrasenia.setOnClickListener { //no necesito comprobar la contraseña porque se busca cambiarla
             val mensaje = getString(R.string.NuevaPassword)
             Snackbar.make(binding.root, mensaje, Snackbar.LENGTH_INDEFINITE)
                 .setAction(accionCerrar) {}
@@ -54,10 +66,11 @@ class LoginFragment : Fragment() {
         }
 
         binding.botonAcceder.setOnClickListener {
-            if (validarCredenciales()){
-                // Muestra la barra de progreso y redirige después de 3 segundos
-                mostrarBarraProgreso()
-            }
+            //me daba advertencia con la progress bar, asi que lo he dejado sin ella de momento
+//            if (validarCredenciales()){
+//                // Muestra la barra de progreso y redirige después de 3 segundos
+//                mostrarBarraProgreso()
+//            }
         }
         /* TODAVIA NO TENGO CONTACTO
         binding.botonGoogle.setOnClickListener{
@@ -75,12 +88,35 @@ class LoginFragment : Fragment() {
 
         binding.botonRegistrar.setOnClickListener{
             //redirigir a REgistro
-            val intent = Intent(this, RegistroActivity::class.java)
-            startActivity(intent)
+            listener?.onFragmentChangeUno()
+//            val intent = Intent(this, RegistroActivity::class.java)
+//            startActivity(intent)
         }
 
     }
 
+    override fun onDestroyView()
+    {
+        super.onDestroyView()
+        //_binding = null
+    }
+
+    companion object {
+        //Patrón Singleton
+        private var instance: LoginFragment? = null
+
+        fun getInstance(): LoginFragment
+        {
+
+            if (instance == null)
+            {
+                instance = LoginFragment()
+            }
+
+            return instance!!
+        }
+    }
+/* La progress bar me da problemas con la memoria, asi que de momento lo comento todo
     private fun mostrarBarraProgreso() {
         // Muestra la barra de progreso
         progressBar.visibility = View.VISIBLE
@@ -93,10 +129,12 @@ class LoginFragment : Fragment() {
             progressBar.visibility = View.GONE
 
             // Redirige a FavoritosActivity
+            /*--------------------------------------------------------------------------------------------------
+            todavia no tengo favoritos
             val intent = Intent(this@MainActivity, FavoritosActivity::class.java)
-            startActivity(intent)
+            startActivity(intent)*/
         }
-    }
+    }*/
     private fun validarCredenciales(): Boolean {
         //he tenido que añadir binding.root para que me pillase el findViewById
         val mensajeAlerta = binding.root.findViewById<View>(R.id.avisoError)
