@@ -98,7 +98,8 @@ class LoginFragment : Fragment() {
         }
     }
     private fun validarCredenciales(): Boolean {
-        val mensajeAlerta = view?.findViewById<View>(R.id.avisoError)
+        //he tenido que añadir binding.root para que me pillase el findViewById
+        val mensajeAlerta = binding.root.findViewById<View>(R.id.avisoError)
         val usuario = binding.user.editText?.text.toString().trim()
         val contrasenia = binding.password.editText?.text.toString().trim()
         return when {
