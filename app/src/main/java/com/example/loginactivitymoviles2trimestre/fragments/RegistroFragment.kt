@@ -1,35 +1,40 @@
-package com.example.loginactivitymoviles2trimestre
+package com.example.loginactivitymoviles2trimestre.fragments
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import com.example.loginactivitymoviles2trimestre.R.id.textoFechaSeleccionada
+import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentRegistroBinding
+import com.example.loginactivitymoviles2trimestre.R.id.textoFechaSeleccionada
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RegistroActivity : AppCompatActivity() {
+
+
+class RegistroFragment : Fragment() {
     private lateinit var binding: FragmentRegistroBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?):View {
-        //super.onCreate(savedInstanceState)
-        //binding = ActivityRegistroBinding.inflate(layoutInflater)//CONVERTIR la vista utilizando la clase de vinculacion
-        binding = FragmentRegistroBinding.inflate(layoutInflater,container, false)
-        val view = binding.root
-        //establece la vista el activity
-        setContentView(view)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
+        binding = FragmentRegistroBinding.inflate(layoutInflater)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_registro, container, false)
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
+        super.onViewCreated(view, savedInstanceState)
 
         //mensaje de alerta posicion
-        val mensajeAlerta = findViewById<View>(R.id.avisoErrorREG)
+        val mensajeAlerta = view.findViewById<View>(R.id.avisoErrorREG)
+        /*Todavia no tengo fAVORITOS
 
         binding.botonRegistrar.setOnClickListener{
             val usuario = binding.userReg.editText?.text.toString().trim()
@@ -49,13 +54,13 @@ class RegistroActivity : AppCompatActivity() {
             { // Mostrar un mensaje de error si uno de los campos está vacío
                 mensajeCamposVacios(mensajeAlerta)
             }
-        }
+        }*/
 
         //para la fecha de nacimiento---------------------------------------------------------
         //enlazado con seleccionarFecha
-        val botonSeleccionarFecha = findViewById<Button>(R.id.botonSeleccionarFecha)
+        val botonSeleccionarFecha = view.findViewById<Button>(R.id.botonSeleccionarFecha)
         //TextView donde se mostrará la fecha seleccionada
-        val textoFechaSeleccionada = findViewById<TextView>(textoFechaSeleccionada)
+        val textoFechaSeleccionada = view.findViewById<TextView>(textoFechaSeleccionada)
 
         // Definir las fechas mínima y máxima
         val calendarMin = Calendar.getInstance().apply {
@@ -85,7 +90,8 @@ class RegistroActivity : AppCompatActivity() {
                 .build()
 
             // Mostrar el selector de fecha, el calendario
-            datePicker.show(supportFragmentManager, "MATERIAL_DATE_PICKER")
+            //he tenido que cambiar getSupportFragmentManager() por childFragmentManager porque no me lo reconocia
+            datePicker.show(childFragmentManager, "MATERIAL_DATE_PICKER")
 
             // Manejar la fecha seleccionada
             datePicker.addOnPositiveButtonClickListener { selection ->
@@ -100,6 +106,7 @@ class RegistroActivity : AppCompatActivity() {
                 }
             }
         }
+        /* Todavia no tengo Contactos
         binding.botonGoogle.setOnClickListener{
             val usuario = binding.userReg.editText?.text.toString().trim()
             val contrasenia = binding.password.editText?.text.toString().trim()
@@ -119,13 +126,14 @@ class RegistroActivity : AppCompatActivity() {
             { // Mostrar un mensaje de error si uno de los campos está vacío
                 mensajeCamposVacios(mensajeAlerta)
             }
-        }
+        }*/
         binding.botonFacebook.setOnClickListener{
             //enseñar el mensaje snackbar
             Snackbar.make(binding.root, getString(R.string.irContacto), Snackbar.LENGTH_LONG).show()
         }
-        return binding.root
+
     }
+
     // Método para convertir un timestamp a una cadena de texto
     // fecha en milisegundos a fecha con el formato deseado (dd/MM/yyyy)
     private fun convertirFecha(timestamp: Long): String {
@@ -149,7 +157,7 @@ class RegistroActivity : AppCompatActivity() {
 
     private fun mostrarAlerta(titulo: String, mensaje: String) {
         val ok = getString(R.string.ok)
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(requireContext()) /*uso required context en vez de this, y salta excepcion si el fragment no esta vinculado a un activity*/
             .setTitle(titulo)
             .setMessage(mensaje)
             .setPositiveButton(ok) { dialog, _ -> dialog.dismiss() }
@@ -176,4 +184,5 @@ class RegistroActivity : AppCompatActivity() {
             .setAnchorView(view)
             .show()
     }
+
 }
