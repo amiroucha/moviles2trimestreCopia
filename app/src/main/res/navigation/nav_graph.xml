@@ -24,7 +24,6 @@ app:startDestination="@id/LoginFragment">
 
     </fragment>
 
-
     <fragment
             android:id="@+id/RegistroFragment"
             android:name="com.example.loginactivitymoviles2trimestre.fragments.RegistroFragment"
@@ -33,7 +32,6 @@ app:startDestination="@id/LoginFragment">
         <action
                 android:id="@+id/action_firstFragment_to_secondFragment"
                 app:destination="@id/RegistroFragment" />
-
     </fragment>
 
 </navigation>
