@@ -8,15 +8,18 @@
         tools:context=".MainActivity">
 
 
-    <FrameLayout
-            android:id="@+id/frameLayout"
+    <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:navGraph="@navigation/nav_graph"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            tools:context=".MainActivity"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-    </FrameLayout>
-<!--Este se queda asi,,no se añade mas, es donde se van a cargar los
-fragments-->
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <!--Este se queda asi,,no se añade mas, es donde se van a cargar los
+    fragments-->
 </androidx.constraintlayout.widget.ConstraintLayout>

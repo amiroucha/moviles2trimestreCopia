@@ -7,22 +7,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.fragment.findNavController
 import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentLoginBinding
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
    // private lateinit var progressBar: ProgressBar
-
-    //variable para la interfaz
-    private var listener: OnFragmentChangeListener? = null
 
     //Interface para pasar información del Fragment al Activity
     interface OnFragmentChangeListener { fun onFragmentChangeUno() }
@@ -41,7 +35,6 @@ class LoginFragment : Fragment() {
     {
         super.onViewCreated(view, savedInstanceState)
         //para establecer la conexion con el activity
-        listener = activity as OnFragmentChangeListener
 
 
         // Inicializa el ProgressBar
@@ -88,7 +81,8 @@ class LoginFragment : Fragment() {
 
         binding.botonRegistrar.setOnClickListener{
             //redirigir a REgistro
-            listener?.onFragmentChangeUno()
+            findNavController()
+                .navigate(R.id.action_firstFragment_to_secondFragment)
 //            val intent = Intent(this, RegistroActivity::class.java)
 //            startActivity(intent)
         }
