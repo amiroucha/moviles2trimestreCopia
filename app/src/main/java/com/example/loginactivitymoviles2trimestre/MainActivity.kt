@@ -20,14 +20,11 @@ class MainActivity : AppCompatActivity() {
     {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-                    as NavHostFragment
+             as NavHostFragment
 
         val navController = navHostFragment.navController
 
-
-        return navController.navigateUp() ||
-                super.onSupportNavigateUp()
-
+        return navController.navigateUp() || super.onSupportNavigateUp()
 
     }
 
