@@ -15,23 +15,42 @@ app:startDestination="@id/LoginFragment">
     <fragment
             android:id="@+id/LoginFragment"
             android:name="com.example.loginactivitymoviles2trimestre.fragments.LoginFragment"
-            android:label="FirstFragment"
+            android:label="login"
             tools:layout="@layout/fragment_login" >
 
         <action
-                android:id="@+id/action_firstFragment_to_secondFragment"
+                android:id="@+id/action_Login_to_Registro"
                 app:destination="@id/RegistroFragment" />
 
+        <action
+                android:id="@+id/action_Login_to_Scaffold"
+                app:destination="@id/ScaffoldFragment" />
+
+
     </fragment>
+
 
     <fragment
             android:id="@+id/RegistroFragment"
             android:name="com.example.loginactivitymoviles2trimestre.fragments.RegistroFragment"
-            android:label="SecondFragment"
+            android:label="registro"
             tools:layout="@layout/fragment_registro">
         <action
-                android:id="@+id/action_secondFragment_to_firstFragment"
-                app:destination="@id/LoginFragment" />
+                android:id="@+id/action_Registro_to_scaffold"
+                app:destination="@id/ScaffoldFragment" />
+    </fragment>
+
+
+    <fragment
+            android:id="@+id/ScaffoldFragment"
+            android:name="com.example.loginactivitymoviles2trimestre.fragments.LoginFragment"
+            android:label="scaffold"
+            tools:layout="@layout/fragment_scaffold" >
+
+        <action
+                android:id="@+id/action_Scaffold_to_Login"
+                app:destination="@id/LoginFragment" /> <!-- opcion del menu para desloguearte-->
+
     </fragment>
 
 </navigation>

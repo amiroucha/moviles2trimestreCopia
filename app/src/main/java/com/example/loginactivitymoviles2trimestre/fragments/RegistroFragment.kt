@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.fragment.findNavController
 import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentRegistroBinding
 import com.example.loginactivitymoviles2trimestre.R.id.textoFechaSeleccionada
@@ -34,9 +35,12 @@ class RegistroFragment : Fragment() {
 
         //mensaje de alerta posicion
         val mensajeAlerta = view.findViewById<View>(R.id.avisoErrorREG)
-        /*Todavia no tengo fAVORITOS
+       //Todavia no tengo fAVORITOS, pero ahora acceder me lleva al scaffold
 
         binding.botonRegistrar.setOnClickListener{
+            findNavController()
+                .navigate(R.id.action_Registro_to_scaffold)
+            /*
             val usuario = binding.userReg.editText?.text.toString().trim()
             val contrasenia = binding.password.editText?.text.toString().trim()
             if(usuario.isNotEmpty() && contrasenia.isNotEmpty()){
@@ -53,8 +57,8 @@ class RegistroFragment : Fragment() {
             }else
             { // Mostrar un mensaje de error si uno de los campos está vacío
                 mensajeCamposVacios(mensajeAlerta)
-            }
-        }*/
+            }*/
+        }
 
         //para la fecha de nacimiento---------------------------------------------------------
         //enlazado con seleccionarFecha

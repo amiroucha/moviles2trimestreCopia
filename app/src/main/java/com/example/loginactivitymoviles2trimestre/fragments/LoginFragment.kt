@@ -59,6 +59,9 @@ class LoginFragment : Fragment() {
         }
 
         binding.botonAcceder.setOnClickListener {
+
+            findNavController()
+                .navigate(R.id.action_Login_to_Scaffold)
             //me daba advertencia con la progress bar, asi que lo he dejado sin ella de momento
 //            if (validarCredenciales()){
 //                // Muestra la barra de progreso y redirige después de 3 segundos
@@ -82,7 +85,7 @@ class LoginFragment : Fragment() {
         binding.botonRegistrar.setOnClickListener{
             //redirigir a REgistro
             findNavController()
-                .navigate(R.id.action_firstFragment_to_secondFragment)
+                .navigate(R.id.action_Login_to_Registro)
 //            val intent = Intent(this, RegistroActivity::class.java)
 //            startActivity(intent)
         }
