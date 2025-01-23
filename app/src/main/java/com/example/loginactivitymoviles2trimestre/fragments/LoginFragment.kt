@@ -19,18 +19,19 @@ class LoginFragment : Fragment() {
    // private lateinit var progressBar: ProgressBar
 
     //Interface para pasar información del Fragment al Activity
-    interface OnFragmentChangeListener { fun onFragmentChangeUno() }
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
 
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         binding = FragmentLoginBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
