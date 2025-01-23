@@ -19,7 +19,6 @@ class ScaffoldFragment : Fragment()
     {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
         }
     }
 
