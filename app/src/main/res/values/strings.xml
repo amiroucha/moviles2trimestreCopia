@@ -59,4 +59,8 @@
     <string name="btonNacer">Seleccionar fecha nacimiento</string>
     <string name="TextSelecciona">Selecciona tu fecha de nacimiento</string>
 
+    <!--Scaffold........................................................................-->
+    <string name="hello_blank_fragment">Hola blank fragment</string>
+    <string name="navigation_drawer_open">Hola</string>
+    <string name="navigation_drawer_close">Cerrar</string>
 </resources>
