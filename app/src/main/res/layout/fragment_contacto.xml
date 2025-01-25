@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mainLayout"
+        tools:context=".fragments.ContactoFragment">
+    <ImageView
+            android:layout_width="411dp"
+            android:layout_height="816dp"
+            app:srcCompat="@drawable/fondo_contacto"
+            android:id="@+id/fondo_contacto"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:contentDescription="@string/fondo"/>
+    <Button
+            android:layout_width="78dp"
+            android:layout_height="61dp"
+            android:id="@+id/botonllamar"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.09"
+            android:textSize="20sp" android:backgroundTint="#EDB66F0F" android:textColor="#FFFCFC"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.277"
+            app:iconSize="35dp"
+            app:icon="@android:drawable/stat_sys_phone_call" android:contentDescription="@string/llamar"/>
+    <Button
+            android:layout_width="78dp"
+            android:layout_height="61dp"
+            android:id="@+id/botoncorreo"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.096"
+            android:textSize="20sp" android:backgroundTint="#EDB66F0F" android:textColor="#FFFCFC"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.391"
+            app:iconSize="35dp"
+            app:icon="@android:drawable/ic_dialog_email" android:contentDescription="@string/correo"/>
+    <Button
+            android:layout_width="78dp"
+            android:layout_height="61dp"
+            android:id="@+id/botonWhatsApp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.096"
+            android:textSize="20sp" android:backgroundTint="#EDB66F0F" android:textColor="#FFFCFC"
+            app:layout_constraintTop_toTopOf="parent"
+            app:iconSize="35dp"
+            android:contentDescription="@string/whatsapp"
+            app:icon="@drawable/whatsapp"/>
+    <Button
+            android:layout_width="78dp"
+            android:layout_height="61dp"
+            android:id="@+id/botonMapa"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.096"
+            android:textSize="20sp" android:backgroundTint="#EDB66F0F" android:textColor="#FFFCFC"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.61"
+            app:iconSize="35dp"
+            app:icon="@drawable/iconmaps" android:contentDescription="@string/mapa"/>
+    <ImageView
+            android:layout_width="192dp"
+            android:layout_height="177dp"
+            app:srcCompat="@drawable/amazoncircul"
+            android:id="@+id/amazonCirculo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/amazon"/>
+    <TextView
+            android:text="@string/telefonoTexto"
+            android:textSize="27sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/telefonoNumero"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintVertical_bias="0.285"
+            app:layout_constraintHorizontal_bias="0.466"/>
+    <TextView
+            android:text="@string/correoTexto"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/correoElectr"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintVertical_bias="0.395"
+            app:layout_constraintHorizontal_bias="0.783"/>
+    <TextView
+            android:text="@string/wasText"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/WasTexto"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintVertical_bias="0.499"
+            app:layout_constraintHorizontal_bias="0.888"/>
+    <TextView
+            android:text="@string/mapaText"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mapaTexto"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintVertical_bias="0.606"
+            app:layout_constraintHorizontal_bias="0.413"/>
+    <ImageView
+            android:layout_width="334dp"
+            android:layout_height="288dp"
+            app:srcCompat="@drawable/mapa"
+            android:id="@+id/mapaImagen"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintBottom_toBottomOf="parent" android:contentDescription="@string/mapaContDescrip"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
