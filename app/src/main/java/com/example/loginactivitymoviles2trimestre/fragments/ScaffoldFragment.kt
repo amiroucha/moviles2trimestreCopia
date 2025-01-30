@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentScaffoldBinding
 
@@ -94,11 +96,16 @@ class ScaffoldFragment : Fragment()
 
         /* BOTTOM NAVIGATION MENU */
 
+        val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        binding.bottomNavigation.setupWithNavController(navController)
+
         binding.bottomNavigation.setOnItemSelectedListener {
             item ->
                         when (item.itemId) {
                             R.id.bnm_home -> {
                                 // Handle Home navigation
+                                navController.navigate(R.id.contactoFragment)
                                 true
                             }
                             R.id.bnm_dashboard -> {
@@ -112,6 +119,11 @@ class ScaffoldFragment : Fragment()
                             else -> false
             }
         }
+
+
+
+
+
     }
 
 }
