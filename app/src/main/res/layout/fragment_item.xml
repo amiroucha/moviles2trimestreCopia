@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:clickable="true"
+        android:backgroundTint="#A4E68A"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="15dp"
+        android:focusable="true">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recuadro">
+
+        <TextView
+                android:text="@string/titulo"
+                android:id="@+id/titulo"
+                android:textSize="17sp"
+                android:fontFamily="serif"
+                android:layout_width="145dp"
+                android:layout_height="92dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.557"
+                android:layout_marginStart="212dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="#000000" android:textStyle="bold"
+                android:textAlignment="center"/>
+        <ImageView
+                android:layout_width="98dp"
+                android:layout_height="45dp"
+                app:srcCompat="@drawable/logoamazonnegro"
+                android:id="@+id/amazonlogo"
+                android:contentDescription="@string/amazonFoto"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="4dp"
+                app:layout_constraintHorizontal_bias="0.02"/>
+        <TextView
+                android:text="@string/precio"
+                android:id="@+id/precio"
+                android:textSize="18sp"
+                android:fontFamily="serif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.946" app:layout_constraintVertical_bias="0.853"
+                android:textColor="#000000" android:textStyle="bold"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                app:fabCustomSize="47dp"
+                android:clickable="true"
+                app:srcCompat="@drawable/fav_unselected"
+                android:id="@+id/favorito"
+                android:contentDescription="@string/fav"
+                android:focusable="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="0.977"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.026"/>
+        <ImageView
+                android:layout_width="211dp"
+                android:layout_height="146dp"
+                app:srcCompat="@drawable/monitor1"
+                android:id="@+id/imageMonitor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:contentDescription="@string/pantallaFoto"
+                android:layout_marginTop="68dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
