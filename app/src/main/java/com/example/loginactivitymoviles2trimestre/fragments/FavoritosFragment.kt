@@ -45,7 +45,7 @@ class FavoritosFragment : Fragment() {
         // Configuración del RecyclerView
         //establecer un layout manager
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = MonitorAdapterFragment(monitorLista)
+        recyclerView.adapter = MonitorAdapter(monitorLista)
     }
 
 }

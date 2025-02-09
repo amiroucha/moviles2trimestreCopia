@@ -50,5 +50,7 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.5.3")
     //noinspection GradleDependency
     implementation ("androidx.navigation:navigation-ui-ktx:2.5.3")
+    //glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
 }
