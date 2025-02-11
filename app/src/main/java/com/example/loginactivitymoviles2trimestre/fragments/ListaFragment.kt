@@ -11,7 +11,7 @@ import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentFavoritosBinding
 
 
-class FavoritosFragment : Fragment() {
+class ListaFragment : Fragment() {
     private lateinit var binding: FragmentFavoritosBinding
 
     override fun onCreate(savedInstanceState: Bundle?)

@@ -66,4 +66,9 @@
     <string name="home">Home</string>
     <string name="dashboard">Dashboard</string>
     <string name="notifications">Notifications</string>
+    <string name="contacto">contacto</string>
+    <string name="lista">lista</string>
+    <string name="favoritos">favoritos</string>
+
+
 </resources>

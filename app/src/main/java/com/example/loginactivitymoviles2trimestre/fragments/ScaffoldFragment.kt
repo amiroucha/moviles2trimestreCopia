@@ -98,18 +98,19 @@ class ScaffoldFragment : Fragment()
 
         val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        binding.bottomNavigation.setupWithNavController(navController)
+        //binding.bottomNavigation.setupWithNavController(navController)
 
         binding.bottomNavigation.setOnItemSelectedListener {
             item ->
                         when (item.itemId) {
-                            R.id.bnm_home -> {
+                            R.id.contactoFragment -> {
                                 // Handle Home navigation
                                 navController.navigate(R.id.contactoFragment)
                                 true
                             }
-                            R.id.bnm_dashboard -> {
+                            R.id.listaFragment -> {
                                 // Handle Dashboard navigation
+                                navController.navigate(R.id.listaFragment)
                                 true
                             }
                             R.id.bnm_notifications -> {
