@@ -11,7 +11,11 @@ app:startDestination="@id/contactoFragment">
             android:name="com.example.loginactivitymoviles2trimestre.fragments.ContactoFragment"
             android:label="contacto"
             tools:layout="@layout/fragment_contacto"/>
-
+    <fragment
+            android:id="@+id/favoritoFragment"
+            android:name="com.example.loginactivitymoviles2trimestre.fragments.FavoritosFragment"
+            android:label="favoritos"
+            tools:layout="@layout/fragment_favoritos"/>
 
 
 </navigation>
