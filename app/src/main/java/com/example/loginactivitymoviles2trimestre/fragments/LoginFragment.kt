@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentLoginBinding
@@ -61,8 +62,12 @@ class LoginFragment : Fragment() {
 
         binding.botonAcceder.setOnClickListener {
 
-            findNavController()
-                .navigate(R.id.action_Login_to_Scaffold)
+            val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment)
+                        as NavHostFragment
+
+            val navController = navHostFragment.navController
+
+            navController.navigate(R.id.action_Login_to_Scaffold)
             //me daba advertencia con la progress bar, asi que lo he dejado sin ella de momento
 //            if (validarCredenciales()){
 //                // Muestra la barra de progreso y redirige después de 3 segundos
