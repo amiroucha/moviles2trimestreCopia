@@ -23,7 +23,6 @@ class LoginFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -38,14 +37,13 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //para establecer la conexion con el activity
 
-
         // Inicializa el ProgressBar
       //  progressBar = view.findViewById(R.id.progressBar)
 
         val posicionMensaje = view.findViewById<View>(R.id.anchor_view)
 
         // Crea un objeto SpannableString con el texto "Recuperar contraseña"
-        val underlineText = SpannableString(getString(R.string.NuevaContrasenia))  // (obtenido desde el archivo de recursos de strings.xml).
+        val underlineText = SpannableString(getString(R.string.NuevaContrasenia))
         underlineText.setSpan(UnderlineSpan(), 0, underlineText.length, 0)// Aplica un subrayado a todo el texto dentro del objeto SpannableString
 
         binding.NuevaContrasenia.text = underlineText// Asigna el texto subrayado al TextView con el ID 'NuevaContrasenia'
@@ -58,22 +56,30 @@ class LoginFragment : Fragment() {
                 .setAction(accionCerrar) {}
                 .setAnchorView(posicionMensaje)
                 .show()
+            //meter un alertDialog y que sea meter una pantalla pequeña de correo y que te mande un correo apra regenerarla
+            //alli tengo que meter un bloque de logica que tiene firebase para hacer eso
         }
 
         binding.botonAcceder.setOnClickListener {
-
-            val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment)
+            if(validarCredenciales())
+            {
+                val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment)
                         as NavHostFragment
 
-            val navController = navHostFragment.navController
+                val navController = navHostFragment.navController
+                navController.navigate(R.id.action_Login_to_Scaffold)
 
-            navController.navigate(R.id.action_Login_to_Scaffold)
+            }
+
+
             //me daba advertencia con la progress bar, asi que lo he dejado sin ella de momento
 //            if (validarCredenciales()){
 //                // Muestra la barra de progreso y redirige después de 3 segundos
 //                mostrarBarraProgreso()
-//            }
+//            } tiene que estar en la vista de favoritos y de lista fragment
         }
+
+
         /* TODAVIA NO TENGO CONTACTO
         binding.botonGoogle.setOnClickListener{
             if (validarCredenciales()){

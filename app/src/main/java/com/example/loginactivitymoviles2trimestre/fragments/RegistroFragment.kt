@@ -1,5 +1,6 @@
 package com.example.loginactivitymoviles2trimestre.fragments
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -59,8 +60,38 @@ class RegistroFragment : Fragment() {
                 mensajeCamposVacios(mensajeAlerta)
             }*/
         }
+        /*
+        val calendar = Calendar.getInstance()
 
-        //para la fecha de nacimiento---------------------------------------------------------
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, month)
+            calendar.set(Calendar.DAY_OF_MONTH, day)
+            binding.fechanac.setText(
+                "${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.YEAR)}"
+            )
+        }
+
+        binding.IconoFecha.setOnClickListener{
+            showDatePicker(calendar, dateSetListener)
+        }
+
+        binding.IconoFecha.setOnClickListener {
+            showDatePicker(calendar, dateSetListener)
+        }
+    }
+    private fun showDatePicker(calendar: Calendar, dateSetListener: DatePickerDialog.OnDateSetListener) {
+        DatePickerDialog(
+            requireContext(),
+            dateSetListener,
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+        */
+    //para la fecha de nacimiento---------------------------------------------------------
+        /*
         //enlazado con seleccionarFecha
         val botonSeleccionarFecha = view.findViewById<Button>(R.id.botonSeleccionarFecha)
         //TextView donde se mostrará la fecha seleccionada
@@ -109,7 +140,11 @@ class RegistroFragment : Fragment() {
                     append(fechaSeleccionada)
                 }
             }
-        }
+
+
+        }*/
+
+
         /* Todavia no tengo Contactos
         binding.botonGoogle.setOnClickListener{
             val usuario = binding.userReg.editText?.text.toString().trim()
@@ -130,12 +165,12 @@ class RegistroFragment : Fragment() {
             { // Mostrar un mensaje de error si uno de los campos está vacío
                 mensajeCamposVacios(mensajeAlerta)
             }
-        }*/
+        }
         binding.botonFacebook.setOnClickListener{
             //enseñar el mensaje snackbar
             Snackbar.make(binding.root, getString(R.string.irContacto), Snackbar.LENGTH_LONG).show()
         }
-
+        */
     }
 
     // Método para convertir un timestamp a una cadena de texto
