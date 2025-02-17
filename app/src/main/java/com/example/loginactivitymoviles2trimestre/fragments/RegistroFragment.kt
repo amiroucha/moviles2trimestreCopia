@@ -50,9 +50,8 @@ class RegistroFragment : Fragment() {
                 mensajeCamposVacios(mensajeAlerta)
             }
         }
-
+        //Fecha nacimiento----------------------------------------------------------------
         val calendar = Calendar.getInstance()
-
         val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
