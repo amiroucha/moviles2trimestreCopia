@@ -6,17 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentRegistroBinding
-import com.example.loginactivitymoviles2trimestre.R.id.textoFechaSeleccionada
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -39,17 +33,13 @@ class RegistroFragment : Fragment() {
        //Todavia no tengo fAVORITOS, pero ahora acceder me lleva al scaffold
 
         binding.botonRegistrar.setOnClickListener{
-            findNavController()
-                .navigate(R.id.action_Registro_to_scaffold)
-            /*
             val usuario = binding.userReg.editText?.text.toString().trim()
             val contrasenia = binding.password.editText?.text.toString().trim()
             if(usuario.isNotEmpty() && contrasenia.isNotEmpty()){
                 if (esCorreoValido(usuario) && esContraseniaValida(contrasenia)) {
                     //se pone el guion para decir que no se va  ausar ningun parametro del OnclickListener
-                    val intent = Intent(this, FavoritosActivity::class.java)
-                    startActivity(intent)
-
+                    findNavController()
+                        .navigate(R.id.action_Registro_to_scaffold)
                 } else if (!esCorreoValido(usuario)) {
                     mostrarAlertaCorreoInvalido()
                 } else {
@@ -58,18 +48,23 @@ class RegistroFragment : Fragment() {
             }else
             { // Mostrar un mensaje de error si uno de los campos está vacío
                 mensajeCamposVacios(mensajeAlerta)
-            }*/
+            }
         }
-        /*
+
         val calendar = Calendar.getInstance()
 
         val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, day)
-            binding.fechanac.setText(
-                "${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.YEAR)}"
-            )
+            //le paso los datos al formato en si y lo guardo
+            val fechaFormateada = getString(R.string.fechaFormato,
+                calendar.get(Calendar.DAY_OF_MONTH),
+                calendar.get(Calendar.MONTH) + 1,
+                calendar.get(Calendar.YEAR))
+
+            //se le aplica el formatro con datos de usuaruio
+            binding.fechanac.setText(fechaFormateada)
         }
 
         binding.IconoFecha.setOnClickListener{
@@ -79,70 +74,6 @@ class RegistroFragment : Fragment() {
         binding.IconoFecha.setOnClickListener {
             showDatePicker(calendar, dateSetListener)
         }
-    }
-    private fun showDatePicker(calendar: Calendar, dateSetListener: DatePickerDialog.OnDateSetListener) {
-        DatePickerDialog(
-            requireContext(),
-            dateSetListener,
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        ).show()
-    }
-        */
-    //para la fecha de nacimiento---------------------------------------------------------
-        /*
-        //enlazado con seleccionarFecha
-        val botonSeleccionarFecha = view.findViewById<Button>(R.id.botonSeleccionarFecha)
-        //TextView donde se mostrará la fecha seleccionada
-        val textoFechaSeleccionada = view.findViewById<TextView>(textoFechaSeleccionada)
-
-        // Definir las fechas mínima y máxima
-        val calendarMin = Calendar.getInstance().apply {
-            set(1925, Calendar.JANUARY, 1) // Año 1925, mes enero, día 1
-        }
-        val calendarMax = Calendar.getInstance().apply {
-            set(2010, Calendar.JANUARY, 1) // Año 2010, mes enero, día 1
-        }
-
-        // Obtener los timestamps de las fechas mínima y máxima
-        //con el calendar es la forma mas facil que encontre
-        val fechaMinima = calendarMin.timeInMillis
-        val fechaMaxima = calendarMax.timeInMillis
-
-        //constraints de fecha (minima y maxima)
-        //uso el CalendarConstraints
-        val constraintsBuilder = CalendarConstraints.Builder()
-            .setStart(fechaMinima)  // Fecha mínima
-            .setEnd(fechaMaxima)    // Fecha máxima
-            .build()
-
-        botonSeleccionarFecha.setOnClickListener {
-            // Crear el Material DatePicker, selecctor de fecha con restricciones
-            val datePicker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText(R.string.TextSelecciona) //Selecciona tu fecha de nacimiento
-                .setCalendarConstraints(constraintsBuilder)  // Aplicar las restricciones
-                .build()
-
-            // Mostrar el selector de fecha, el calendario
-            //he tenido que cambiar getSupportFragmentManager() por childFragmentManager porque no me lo reconocia
-            datePicker.show(childFragmentManager, "MATERIAL_DATE_PICKER")
-
-            // Manejar la fecha seleccionada
-            datePicker.addOnPositiveButtonClickListener { selection ->
-
-                val fechaSeleccionada = convertirFecha(selection as Long)
-
-                // Actualizar el TextView con la fecha seleccionada
-                textoFechaSeleccionada.text = buildString {
-                    append(getString(R.string.fechNacer))
-                    append("  ")
-                    append(fechaSeleccionada)
-                }
-            }
-
-
-        }*/
 
 
         /* Todavia no tengo Contactos
@@ -172,14 +103,15 @@ class RegistroFragment : Fragment() {
         }
         */
     }
-
-    // Método para convertir un timestamp a una cadena de texto
-    // fecha en milisegundos a fecha con el formato deseado (dd/MM/yyyy)
-    private fun convertirFecha(timestamp: Long): String {
-        //especifico formato dd/MM/yyyy
-        val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        //se hace la conversion y se manda
-        return formatter.format(Date(timestamp))
+    //FUNCIONES-----------------------------------------------------------------------------------------
+    private fun showDatePicker(calendar: Calendar, dateSetListener: DatePickerDialog.OnDateSetListener) {
+        DatePickerDialog(
+            requireContext(),
+            dateSetListener,
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ).show()
     }
 
     /*de aqui abajo es para la comprobacion de los campos, que sean correctos y qwue no esten vacios*/
@@ -196,7 +128,8 @@ class RegistroFragment : Fragment() {
 
     private fun mostrarAlerta(titulo: String, mensaje: String) {
         val ok = getString(R.string.ok)
-        AlertDialog.Builder(requireContext()) /*uso required context en vez de this, y salta excepcion si el fragment no esta vinculado a un activity*/
+        /*uso require context en vez de this, y salta excepcion si el fragment no esta vinculado a un activity*/
+        AlertDialog.Builder(requireContext())
             .setTitle(titulo)
             .setMessage(mensaje)
             .setPositiveButton(ok) { dialog, _ -> dialog.dismiss() }

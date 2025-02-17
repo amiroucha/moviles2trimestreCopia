@@ -55,8 +55,12 @@
     <string name="apodo">Apodo</string>
     <string name="registro">Registro</string>
     <string name="Registrarbtn">Registrarse</string>
+    <string name="fechanac">Fecha de nacimiento</string>
+    <string name="fechaFormato">%1$d/%2$d/%3$d</string><!--depsues se reemplazan por el dia mes y año-->
+    <!--
     <string name="fechNacer">Fecha de nacimiento seleccionada:</string>
     <string name="btonNacer">Seleccionar fecha nacimiento</string>
+    -->
     <string name="TextSelecciona">Selecciona tu fecha de nacimiento</string>
 
     <!--Scaffold........................................................................-->

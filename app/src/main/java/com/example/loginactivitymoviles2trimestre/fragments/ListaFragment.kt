@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.loginactivitymoviles2trimestre.R
-import com.example.loginactivitymoviles2trimestre.databinding.FragmentFavoritosBinding
+import com.example.loginactivitymoviles2trimestre.databinding.FragmentListaBinding
 
 
 class ListaFragment : Fragment() {
-    private lateinit var binding: FragmentFavoritosBinding
+    private lateinit var binding: FragmentListaBinding
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -20,7 +20,7 @@ class ListaFragment : Fragment() {
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binding = FragmentFavoritosBinding.inflate(layoutInflater)
+        binding = FragmentListaBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
         return binding.root
     }

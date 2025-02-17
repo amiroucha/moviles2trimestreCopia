@@ -176,7 +176,7 @@ class LoginFragment : Fragment() {
     }
     private fun mostrarAlerta(titulo: String, mensaje: String) {
         val ok = getString(R.string.ok)
-        /*uso required context en vez de this, y salta excepcion si el fragment no esta vinculado a un activity*/
+        /*uso require context en vez de this, y salta excepcion si el fragment no esta vinculado a un activity*/
         AlertDialog.Builder(requireContext())
             .setTitle(titulo)
             .setMessage(mensaje)
