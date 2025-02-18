@@ -80,13 +80,10 @@ class ScaffoldFragment : Fragment()
                             R.id.nav_home -> {
                                 true
                             }
-
-                            R.id.nav_dashboard -> {
-
+                            R.id.nav_notifications -> {
                                 true
                             }
-
-                            R.id.nav_notifications -> {
+                            R.id.nav_fav -> {
                                 true
                             }
 

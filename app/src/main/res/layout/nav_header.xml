@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--El como se va a ver el drawer-->
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -10,22 +11,21 @@
 
     <ImageView
             android:id="@+id/imageViewProfile"
-            android:layout_width="72dp"
+            android:layout_width="89dp"
             android:layout_height="72dp"
             android:src="@drawable/login"
             android:layout_gravity="start"
             android:layout_marginStart="16dp"
-            android:contentDescription="fotoPerfil"
-            />
-
+            android:contentDescription="@string/fotoperfil"
+    />
     <TextView
             android:id="@+id/textViewName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="211dp"
+            android:layout_height="44dp"
             android:text="@string/user"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:layout_gravity="start"
-            android:layout_marginStart="24dp"
-            android:paddingTop="8dp" />
+            android:layout_marginStart="29dp"
+            android:paddingTop="8dp"/>
 </LinearLayout>

@@ -1,40 +1,22 @@
 <menu
         xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Opciones">
+    <item android:title="@string/opciones">
         <menu>
 
             <item
                     android:id="@+id/nav_home"
                     android:icon="@drawable/ic_home"
-                    android:title="Home" />
-            <item
-                    android:id="@+id/nav_dashboard"
-                    android:icon="@drawable/ic_dashboard"
-                    android:title="Dashboard" />
+                    android:title="@string/homeDrawer" />
+
             <item
                     android:id="@+id/nav_notifications"
                     android:icon="@drawable/ic_notifications"
-                    android:title="Notifications" />
-
-        </menu>
-    </item>
-
-    <item android:title="Segundo submenú">
-        <menu>
-
+                    android:title="@string/notificaciones" />
             <item
-                    android:id="@+id/nav_home1"
-                    android:icon="@drawable/ic_home"
-                    android:title="Home" />
-            <item
-                    android:id="@+id/nav_dashboard1"
-                    android:icon="@drawable/ic_dashboard"
-                    android:title="Dashboard" />
-            <item
-                    android:id="@+id/nav_notifications1"
-                    android:icon="@drawable/ic_notifications"
-                    android:title="Notifications" />
+                    android:id="@+id/nav_fav"
+                    android:icon="@drawable/ic_fav"
+                    android:title="@string/favoritos" />
 
         </menu>
     </item>

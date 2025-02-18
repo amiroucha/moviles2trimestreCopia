@@ -72,7 +72,12 @@
     <string name="notifications">Notifications</string>
     <string name="contacto">contacto</string>
     <string name="lista">lista</string>
-    <string name="favoritos">favoritos</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="fotoperfil">fotoPerfil</string>
+    <string name="opciones">Opciones</string>
+    <string name="homeDrawer">Home</string>
+    <string name="notificaciones">Notificaciones</string>
+    <string name="favoritosString">Favoritos</string>
 
 
 </resources>
