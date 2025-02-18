@@ -81,6 +81,7 @@
     <string name="cerrarSesion">Salir</string>
     <string name="buscarLupa">Buscar</string>
     <string name="ajustes">Ajustes</string>
+    <string name="ordenar">Ordenar</string>
 
 
 </resources>

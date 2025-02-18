@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1020334167712",
+    "project_id": "monitoresmoviles",
+    "storage_bucket": "monitoresmoviles.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020334167712:android:c0b7387b2651a97c595bc5",
+        "android_client_info": {
+          "package_name": "com.example.loginactivitymoviles2trimestre"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQOwFcJ7HBfBZ-QVArEVPI_NOwKn7YwTg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
