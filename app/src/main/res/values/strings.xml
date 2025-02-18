@@ -78,6 +78,9 @@
     <string name="homeDrawer">Home</string>
     <string name="notificaciones">Notificaciones</string>
     <string name="favoritosString">Favoritos</string>
+    <string name="cerrarSesion">Salir</string>
+    <string name="buscarLupa">Buscar</string>
+    <string name="ajustes">Ajustes</string>
 
 
 </resources>

@@ -59,6 +59,11 @@ class ScaffoldFragment : Fragment()
                             // Manejar la selección del item2
                             true
                         }
+                        R.id.cerrarSesion -> {
+                            logOut()
+                            true
+                        }
+
                         else -> false
                     }
                 }
@@ -117,9 +122,15 @@ class ScaffoldFragment : Fragment()
                             else -> false
             }
         }
+    }
 
+    private fun logOut(){
 
-
+        // Después de cerrar sesión, redirigir al LoginActivity
+        val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment)
+                as NavHostFragment
+        val navController = navHostFragment.navController
+        navController.navigate(R.id.action_Scaffold_to_Login)
 
 
     }
