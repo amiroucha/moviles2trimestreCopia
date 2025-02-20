@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -23,6 +22,7 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
    // private lateinit var progressBar: ProgressBar
     val basDatos =  Firebase.firestore
+    private lateinit var auth: FirebaseAuth
 
     //Interface para pasar información del Fragment al Activity
     override fun onCreate(savedInstanceState: Bundle?)
@@ -41,6 +41,7 @@ class LoginFragment : Fragment() {
     {
         super.onViewCreated(view, savedInstanceState)
         //para establecer la conexion con el activity
+
 
         // Inicializa el ProgressBar
       //  progressBar = view.findViewById(R.id.progressBar)
@@ -95,14 +96,11 @@ class LoginFragment : Fragment() {
         }
 
 
-        /* TODAVIA NO TENGO CONTACTO
+
         binding.botonGoogle.setOnClickListener{
-            if (validarCredenciales()){
-                //redirigir a Contactos
-                val intent = Intent(this, ContactoActivity::class.java)
-                startActivity(intent)
-            }
-        }*/
+
+        }
+
         binding.botonFacebook.setOnClickListener{
             //enseñar el mensaje snackbar
             Snackbar.make(binding.root, getString(R.string.irContacto), Snackbar.LENGTH_LONG).show()
