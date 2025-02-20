@@ -7,17 +7,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentLoginBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.firestore
 
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
    // private lateinit var progressBar: ProgressBar
+    val basDatos =  Firebase.firestore
 
     //Interface para pasar información del Fragment al Activity
     override fun onCreate(savedInstanceState: Bundle?)
@@ -61,14 +66,24 @@ class LoginFragment : Fragment() {
         }
 
         binding.botonAcceder.setOnClickListener {
-            if(validarCredenciales())
-            {
-                val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment)
-                        as NavHostFragment
+            val credenciales = validarCredenciales()
 
-                val navController = navHostFragment.navController
-                navController.navigate(R.id.action_Login_to_Scaffold)
+            if(credenciales != null) {
+                val (usuario, contrasenia) = credenciales
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(usuario, contrasenia)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // Usuario autenticado, navegar a Scaffold
+                            val navHostFragment =
+                                activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment)
+                                        as NavHostFragment
+                            val navController = navHostFragment.navController
+                            navController.navigate(R.id.action_Login_to_Scaffold)
+                        } else {
+                            errorAutenticacion()
+                        }
 
+                    }
             }
 
 
@@ -116,7 +131,6 @@ class LoginFragment : Fragment() {
 
         fun getInstance(): LoginFragment
         {
-
             if (instance == null)
             {
                 instance = LoginFragment()
@@ -144,35 +158,37 @@ class LoginFragment : Fragment() {
             startActivity(intent)*/
         }
     }*/
-    private fun validarCredenciales(): Boolean {
+    private fun validarCredenciales(): Pair<String, String>? {
         //he tenido que añadir binding.root para que me pillase el findViewById
-        val mensajeAlerta = binding.root.findViewById<View>(R.id.avisoError)
         val usuario = binding.user.editText?.text.toString().trim()
         val contrasenia = binding.password.editText?.text.toString().trim()
+        val mensajeAlerta = binding.root.findViewById<View>(R.id.avisoError)
+
         return when {
             usuario.isEmpty() || contrasenia.isEmpty() -> {
                 mensajeCamposVacios(mensajeAlerta)
-                false
+                null
             }
             !esCorreoValido(usuario) -> {
                 mostrarAlertaCorreoInvalido()
-                false
+                null
             }
             !esContraseniaValida(contrasenia) -> {
                 mostrarAlertaContraseniaInvalida()
-                false
+                null
             }
-            else -> true
+            else -> Pair(usuario, contrasenia)
         }
     }
     // Función para validar el correo electrónico
+
     private fun esCorreoValido(correo: String): Boolean {
-        val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"
+        val emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
         return correo.matches(emailRegex.toRegex())
     }
     // Función para validar la contraseña
     private fun esContraseniaValida(contrasenia: String): Boolean {
-        return contrasenia.length in 8..10
+        return contrasenia.length in 6..10
     }
     private fun mostrarAlerta(titulo: String, mensaje: String) {
         val ok = getString(R.string.ok)
@@ -203,6 +219,12 @@ class LoginFragment : Fragment() {
             .setAction(ok) {}
             .setAnchorView(view)
             .show()
+    }
+    private fun errorAutenticacion() {
+        mostrarAlerta(
+            titulo = getString(R.string.errorAutenticacion),
+            mensaje = getString(R.string.errorAutenticacionFrase)
+        )
     }
 
 }

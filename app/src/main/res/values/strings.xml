@@ -82,6 +82,8 @@
     <string name="buscarLupa">Buscar</string>
     <string name="ajustes">Ajustes</string>
     <string name="ordenar">Ordenar</string>
+    <string name="errorAutenticacion">Usuario no registrado</string>
+    <string name="errorAutenticacionFrase">Registrate primero o comprueba tu contraseña</string>
 
 
 </resources>
