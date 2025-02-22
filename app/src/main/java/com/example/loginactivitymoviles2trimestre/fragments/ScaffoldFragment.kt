@@ -105,20 +105,19 @@ class ScaffoldFragment : Fragment()
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.contactoFragment -> {
-                    // Handle Home navigation
-                    navController.navigate(R.id.contactoFragment)
-                    true
-                }
-
-                R.id.listaFragment -> {
+                R.id.bnm_home-> {
                     // Handle Dashboard navigation
                     navController.navigate(R.id.listaFragment)
                     true
                 }
 
-                R.id.bnm_notifications -> {
+                R.id.bnm_listaFavoritos -> {
                     // Handle Notifications navigation
+                    true
+                }
+                R.id.bnm_contactoFragment -> {
+                    // Handle Home navigation
+                    navController.navigate(R.id.contactoFragment)
                     true
                 }
 

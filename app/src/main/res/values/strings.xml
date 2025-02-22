@@ -69,9 +69,7 @@
     <string name="navigation_drawer_close">Cerrar</string>
     <string name="home">Home</string>
     <string name="dashboard">Dashboard</string>
-    <string name="notifications">Notifications</string>
     <string name="contacto">contacto</string>
-    <string name="lista">lista</string>
     <string name="favoritos">Favoritos</string>
     <string name="fotoperfil">fotoPerfil</string>
     <string name="opciones">Opciones</string>

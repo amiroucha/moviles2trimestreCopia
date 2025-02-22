@@ -3,7 +3,7 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
-app:startDestination="@id/favoritoFragment">
+app:startDestination="@id/listaFragment">
 
 
     <fragment
@@ -12,7 +12,7 @@ app:startDestination="@id/favoritoFragment">
             android:label="contacto"
             tools:layout="@layout/fragment_contacto"/>
     <fragment
-            android:id="@+id/favoritoFragment"
+            android:id="@+id/listaFragment"
             android:name="com.example.loginactivitymoviles2trimestre.fragments.ListaFragment"
             android:label="favoritos"
             tools:layout="@layout/fragment_lista"/>
