@@ -9,17 +9,9 @@
     android:id="@+id/mainLayout"
     android:background="@color/white">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="0dp"
-        app:searchIcon="@drawable/ic_search"
-        app:queryHint="Buscar..."
-        app:iconifiedByDefault="true" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerRestaurantes"
+        android:id="@+id/recyclerMonitorFav"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"

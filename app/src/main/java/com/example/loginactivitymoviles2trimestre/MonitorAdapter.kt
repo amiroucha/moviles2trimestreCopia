@@ -27,8 +27,6 @@ class MonitorAdapter(private val context: Context, private var monitoresLista: L
     fun actualizarLista(nuevaLista: List<Monitor>) {
         monitoresLista = nuevaLista
         notifyDataSetChanged()
-
-
     }
 
     // Devuelve el tamaño de la lista

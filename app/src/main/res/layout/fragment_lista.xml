@@ -10,16 +10,18 @@
         android:background="#4A574B">
 
 
-    <ScrollView
+ <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:ignore="UselessParent">
-        <androidx.recyclerview.widget.RecyclerView
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/fragment_item"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:id="@+id/recyclerV"/>
-    </ScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/fragment_item"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:id="@+id/recyclerViewMonitorLista"/>
+
+   </ScrollView>
 </FrameLayout>
