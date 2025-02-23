@@ -72,7 +72,7 @@ dependencies {
     implementation ("androidx.credentials:credentials:1.5.0-rc01")
     implementation ("androidx.credentials:credentials-play-services-auth:1.5.0-rc01")
     implementation ("com.google.android.libraries.identity.googleid:googleid:1.1.1")
-    //implementation("androidx.activity:activity-compose:1.10.0")
+    implementation("androidx.activity:activity-compose:1.10.0")
     implementation("com.google.firebase:firebase-crashlytics-buildtools:3.0.2")
 
     testImplementation("junit:junit:4.13.2")
