@@ -17,10 +17,10 @@ app:startDestination="@id/listaFragment">
             android:label="favoritos"
             tools:layout="@layout/fragment_lista"/>
     <fragment
-            android:id="@+id/monitorFragment"
-            android:name="com.example.loginactivitymoviles2trimestre.fragments.MonitorFragment"
-            android:label="monitor"
-            tools:layout="@layout/fragment_item"/>
+            android:id="@+id/favoritosFragment"
+            android:name="com.example.loginactivitymoviles2trimestre.fragments.FavoritosFragment"
+            android:label="@string/favoritos"
+            tools:layout="@layout/fragment_favoritos"/>
 
 
 </navigation>

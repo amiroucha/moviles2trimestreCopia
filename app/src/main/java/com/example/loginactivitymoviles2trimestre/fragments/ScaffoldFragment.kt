@@ -112,7 +112,7 @@ class ScaffoldFragment : Fragment()
                 }
 
                 R.id.bnm_listaFavoritos -> {
-                    // Handle Notifications navigation
+                    navController.navigate(R.id.favoritosFragment)
                     true
                 }
                 R.id.bnm_contactoFragment -> {
