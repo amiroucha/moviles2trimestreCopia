@@ -82,6 +82,10 @@
     <string name="ordenar">Ordenar</string>
     <string name="errorAutenticacion">Usuario no registrado</string>
     <string name="errorAutenticacionFrase">Registrate primero o comprueba tu contraseña</string>
+    <string name="resetPass">Restaurar Contraseña</string>
+    <string name="sendEmail">Enviar correo</string>
+    <string name="enviarCorreo">Correo enviado</string>
+    <string name="botonCancelar">Cancelar</string>
 
 
 </resources>

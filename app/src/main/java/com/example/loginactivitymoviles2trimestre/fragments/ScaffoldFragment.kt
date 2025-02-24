@@ -9,6 +9,7 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentScaffoldBinding
 
@@ -128,14 +129,10 @@ class ScaffoldFragment : Fragment()
 
 
     private fun logOut(){
-
         // Después de cerrar sesión, redirigir al LoginActivity
-        val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment)
-                as NavHostFragment
-        val navController = navHostFragment.navController
-        navController.navigate(R.id.action_Scaffold_to_Login)
-
-
+        val firebaseAuth = com.google.firebase.auth.FirebaseAuth.getInstance()
+            firebaseAuth.signOut()
+            findNavController().navigate(R.id.action_Scaffold_to_Login)
     }
 
 }

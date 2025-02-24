@@ -7,16 +7,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.login.viewmodels.RegisterViewModel
 import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentRegistroBinding
-import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import java.util.*
-
+import androidx.lifecycle.Observer
+import androidx.core.widget.addTextChangedListener
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
 
 
 class RegistroFragment : Fragment() {
     private lateinit var binding: FragmentRegistroBinding
+    private lateinit var auth: FirebaseAuth
+    private val registerViewModel: RegisterViewModel by viewModels()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
@@ -27,28 +39,56 @@ class RegistroFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
+        auth= FirebaseAuth.getInstance()
 
+        binding.cancelarBTN.setOnClickListener {
+            findNavController().navigate(R.id.action_Registro_to_login)
+        }
         //mensaje de alerta posicion
         val mensajeAlerta = view.findViewById<View>(R.id.avisoErrorREG)
-       //Todavia no tengo fAVORITOS, pero ahora acceder me lleva al scaffold
+
+        // Observamos los errores de cada campo
+        registerViewModel.emailError.observe(viewLifecycleOwner, Observer { error ->
+            binding.userReg.error = error
+        })
+
+        registerViewModel.passwordError.observe(viewLifecycleOwner, Observer { error ->
+            binding.password.error = error
+        })
+
+        registerViewModel.dateError.observe(viewLifecycleOwner, Observer { error ->
+            binding.fechanac.error = error
+        })
+
+
+        binding.userReg.editText?.addTextChangedListener {
+            registerViewModel.setEmail(it.toString())
+        }
+
+        binding.password.editText?.addTextChangedListener {
+            registerViewModel.setPassword(it.toString())
+        }
+
+        binding.fechanac.addTextChangedListener {
+            registerViewModel.setDate(it.toString())
+        }
 
         binding.botonRegistrar.setOnClickListener{
+            /*
             val usuario = binding.userReg.editText?.text.toString().trim()
             val contrasenia = binding.password.editText?.text.toString().trim()
-            if(usuario.isNotEmpty() && contrasenia.isNotEmpty()){
-                if (esCorreoValido(usuario) && esContraseniaValida(contrasenia)) {
-                    //se pone el guion para decir que no se va  ausar ningun parametro del OnclickListener
-                    findNavController()
-                        .navigate(R.id.action_Registro_to_scaffold)
-                } else if (!esCorreoValido(usuario)) {
-                    mostrarAlertaCorreoInvalido()
-                } else {
-                    mostrarAlertaContraseniaInvalida()
-                }
-            }else
-            { // Mostrar un mensaje de error si uno de los campos está vacío
-                mensajeCamposVacios(mensajeAlerta)
-            }
+            if (registerViewModel.validateOnSubmit()) {
+
+                crearCuenta(
+                    binding.userReg.editText?.text.toString(),
+                    binding.password.editText?.text.toString(),
+                    binding.fechanac.text.toString(),
+                    "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
+                )
+            } else {
+
+                Snackbar.make(it, R.string.MensError, Snackbar.LENGTH_LONG).show()
+            }*/
         }
         //Fecha nacimiento----------------------------------------------------------------
         val calendar = Calendar.getInstance()
@@ -56,6 +96,7 @@ class RegistroFragment : Fragment() {
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, day)
+
             //le paso los datos al formato en si y lo guardo
             val fechaFormateada = getString(R.string.fechaFormato,
                 calendar.get(Calendar.DAY_OF_MONTH),
@@ -65,10 +106,10 @@ class RegistroFragment : Fragment() {
             //se le aplica el formatro con datos de usuaruio
             binding.fechanac.setText(fechaFormateada)
         }
-
         binding.IconoFecha.setOnClickListener{
             showDatePicker(calendar, dateSetListener)
         }
+
 
         binding.IconoFecha.setOnClickListener {
             showDatePicker(calendar, dateSetListener)
@@ -112,6 +153,43 @@ class RegistroFragment : Fragment() {
             calendar.get(Calendar.DAY_OF_MONTH)
         ).show()
     }
+    fun crearCuenta(email: String, password: String,nombreUser:String,fecha : String,url:String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    user?.let {
+                        val db = FirebaseFirestore.getInstance()
+
+                        val timestampFecha = try {
+                            val sdf = SimpleDateFormat("d-M-yyyy", Locale.getDefault())
+                            val date = sdf.parse(fecha)
+                            date?.let { Timestamp(it) }
+
+                        } catch (e: Exception) {
+                            null
+                        }
+                        val userData = hashMapOf(
+                            "correo" to email,
+                            "username" to nombreUser,
+                            "fecha" to timestampFecha,
+                            "url" to url
+                        )
+
+                        db.collection("usuarios").document(email)
+                            .set(userData)
+                            .addOnSuccessListener {
+                                findNavController().navigate(R.id.action_Registro_to_scaffold)
+                            }
+                            .addOnFailureListener { e ->
+                                Snackbar.make(binding.root, "Error al guardar usuario: ${e.message}", Snackbar.LENGTH_LONG).show()
+                            }
+                    }
+                } else {
+                    Snackbar.make(binding.root, "Error al crear cuenta: ${task.exception?.message}", Snackbar.LENGTH_LONG).show()
+                }
+            }
+    }
 
     /*de aqui abajo es para la comprobacion de los campos, que sean correctos y qwue no esten vacios*/
 
@@ -147,13 +225,6 @@ class RegistroFragment : Fragment() {
         )
     }
 
-    private fun mensajeCamposVacios(view: View) {
-        val mensaje = getString(R.string.MensError)
-        val ok = getString(R.string.ok)
-        Snackbar.make(binding.root, mensaje, Snackbar.LENGTH_SHORT)
-            .setAction(ok) {}
-            .setAnchorView(view)
-            .show()
-    }
+
 
 }

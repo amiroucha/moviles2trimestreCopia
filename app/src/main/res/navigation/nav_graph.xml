@@ -33,6 +33,9 @@ app:startDestination="@id/LoginFragment">
         <action
                 android:id="@+id/action_Registro_to_scaffold"
                 app:destination="@id/ScaffoldFragment" />
+        <action
+                android:id="@+id/action_Registro_to_login"
+                app:destination="@id/LoginFragment" />
     </fragment>
 
 
