@@ -36,7 +36,7 @@ class FavoritosFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+/*
         //Datos a mostrar
         val monitorLista = listOf(
             //METER LAS IMAGENES DE LA NUEVA FORMA EXPLICADA
@@ -56,7 +56,7 @@ class FavoritosFragment : Fragment() {
         //establecer un layout manager
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = MonitorAdapter(requireContext(), monitorLista)
-
+*/
     }
 
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.loginactivitymoviles2trimestre.MainActivity"
     android:id="@+id/mainLayout"
-    android:background="@color/white">
+    android:background="#4A574B">
 
 
     <androidx.recyclerview.widget.RecyclerView
