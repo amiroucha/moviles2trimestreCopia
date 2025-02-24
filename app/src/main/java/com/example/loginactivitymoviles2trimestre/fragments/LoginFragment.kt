@@ -1,6 +1,8 @@
 package com.example.loginactivitymoviles2trimestre.fragments
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import androidx.fragment.app.Fragment
@@ -8,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
@@ -29,7 +32,7 @@ import androidx.core.widget.addTextChangedListener
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-   // private lateinit var progressBar: ProgressBar
+    private lateinit var progressBar: ProgressBar
     private lateinit var auth: FirebaseAuth
 
     private val loginViewModel: LoginViewModel by viewModels()
@@ -52,6 +55,8 @@ class LoginFragment : Fragment() {
     {
         super.onViewCreated(view, savedInstanceState)
         //para establecer la conexion con el activity
+        progressBar = binding.progressBar
+
 
         auth = Firebase.auth
         if (auth.currentUser != null) {
@@ -98,19 +103,28 @@ class LoginFragment : Fragment() {
                 val credenciales = validarCredenciales()
                 if (credenciales != null) {
                     val (usuario, contrasenia) = credenciales
+
+                    // Muestra la ProgressBar antes de iniciar sesión
+                    progressBar.visibility = View.VISIBLE
+                    binding.botonAcceder.isEnabled = false // Deshabilita el botón para evitar múltiples toques
+
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(usuario, contrasenia)
                         .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                // Usuario autenticado, navegar a Scaffold
-                                val navHostFragment =
-                                    activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment)
-                                            as NavHostFragment
-                                val navController = navHostFragment.navController
-                                navController.navigate(R.id.action_Login_to_Scaffold)
-                            } else {
-                                errorAutenticacion()
-                            }
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                progressBar.visibility = View.GONE // Oculta la ProgressBar al finalizar
+                                binding.botonAcceder.isEnabled = true // Rehabilita el botón
 
+                                if (task.isSuccessful) {
+                                    // Usuario autenticado, navegar a Scaffold
+                                    val navHostFragment =
+                                        activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment)
+                                                as NavHostFragment
+                                    val navController = navHostFragment.navController
+                                    navController.navigate(R.id.action_Login_to_Scaffold)
+                                } else {
+                                    errorAutenticacion()
+                                }
+                            }, 2000) // Espera 2 segundos antes de continuar
                         }
                 }
             }
