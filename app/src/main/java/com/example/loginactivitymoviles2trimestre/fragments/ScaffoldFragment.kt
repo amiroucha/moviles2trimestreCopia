@@ -37,7 +37,7 @@ class ScaffoldFragment : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /* TOOLBAR */
+        /* TOOLBAR ------------------------------------------------------------*/
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
         val menuHost: MenuHost = requireActivity()
@@ -98,7 +98,7 @@ class ScaffoldFragment : Fragment()
             }
         }
 
-        /* BOTTOM NAVIGATION MENU */
+        /* BOTTOM NAVIGATION MENU ------------------------------------------------------------*/
 
         val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_scaffold) as NavHostFragment
         val navController = navHostFragment.navController

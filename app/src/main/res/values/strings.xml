@@ -86,6 +86,7 @@
     <string name="sendEmail">Enviar correo</string>
     <string name="enviarCorreo">Correo enviado</string>
     <string name="botonCancelar">Cancelar</string>
+    <string name="permisoUbicacionDenegado">Permiso de ubicación denegado. No se puede abrir el mapa.</string>
 
 
 </resources>

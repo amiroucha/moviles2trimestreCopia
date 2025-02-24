@@ -25,9 +25,9 @@ class ContactoFragment : Fragment() {
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binding = FragmentContactoBinding.inflate(layoutInflater)
-        // Inflate the layout for this fragment
+        binding = FragmentContactoBinding.inflate(inflater, container, false)
         return binding.root
+
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
@@ -37,7 +37,15 @@ class ContactoFragment : Fragment() {
             //Verificamos si tenemos el permiso o no
             if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) ==
                 PackageManager.PERMISSION_GRANTED) {
-                makePhoneCall()
+                  //todo ok entonces llma
+                val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:123123321"))
+                //busca una app para hacer la accion
+                if (intent.resolveActivity(requireContext().packageManager) != null){
+                    startActivity(intent)
+                }
+                else{
+                    Snackbar.make(binding.root, R.string.llamadaNoPosible, Snackbar.LENGTH_LONG).show()
+                }
             }else{ //si no tenemos el permiso se lo solicitamos al usuario
                 //el usuario ya habia rechazado el permiso anteriormente, entonces tiene que activarlo desde ajustes
                 if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),android.Manifest.permission.CALL_PHONE )){
@@ -74,6 +82,7 @@ class ContactoFragment : Fragment() {
             verificarPermisoYAbrirMapa()
         }
     }
+
     private fun verificarPermisoYAbrirMapa() {
         if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             abrirMapa()
@@ -102,36 +111,25 @@ class ContactoFragment : Fragment() {
             Snackbar.make(binding.root, R.string.noAppMaps, Snackbar.LENGTH_LONG).show()
         }
     }
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        //compruebo si el código de solicitud = al de la ubicación (permiso de ACCESS_FINE_LOCATION)
+
         if (requestCode == lOCATIONPERMISSIONREQUESTCODE) {
-            // Abre el mapa, sin importar si el permiso fue concedido o no
-            abrirMapa()
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                abrirMapa() // Solo abrir el mapa si el permiso fue concedido
+            } else {
+                Snackbar.make(binding.root, R.string.permisoUbicacionDenegado, Snackbar.LENGTH_LONG).show()
+            }
         }
     }
 
-    //metodo para hacer la llamada
-    private fun makePhoneCall(){
-        //intent para hacer la llamada
-        val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:123123321"))
-        //busca una app para hacer la accion
-        if (intent.resolveActivity(requireContext().packageManager) != null){
-            startActivity(intent)
-        }
-        else{
-            Snackbar.make(binding.root, R.string.llamadaNoPosible, Snackbar.LENGTH_LONG).show()
-        }
-    }
     private fun enviarEmail(){
+        val destinatario = "amazon@gmail.com"
+
         //SendTo : app de envar datos
         val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
             //mail to lo limita a app de correos
-            data = Uri.parse("mailto:") //email destinatario
+            data = Uri.parse("mailto:$destinatario") //email destinatario
         }
         try {
             startActivity(emailIntent)
@@ -143,6 +141,7 @@ class ContactoFragment : Fragment() {
                 Snackbar.LENGTH_LONG
             ).show()
         }
+
     }
     private fun enviarMensaje(){
         val numeroTelefono = "1234567890" // Número de teléfono con código de país sin el "+"
