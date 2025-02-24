@@ -155,8 +155,7 @@ class LoginFragment : Fragment() {
 
         binding.botonRegistrar.setOnClickListener{
             //redirigir a REgistro
-            findNavController()
-                .navigate(R.id.action_Login_to_Registro)
+            findNavController().navigate(R.id.action_Login_to_Registro)
 //            val intent = Intent(this, RegistroActivity::class.java)
 //            startActivity(intent)
         }
@@ -250,7 +249,6 @@ class LoginFragment : Fragment() {
         //he tenido que añadir binding.root para que me pillase el findViewById
         val usuario = binding.user.editText?.text.toString().trim()
         val contrasenia = binding.password.editText?.text.toString().trim()
-        val mensajeAlerta = binding.root.findViewById<View>(R.id.avisoError)
 
         return when { //compruebo que tengan un formato valido
             !esCorreoValido(usuario) -> {

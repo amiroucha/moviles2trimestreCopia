@@ -12,9 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.login.viewmodels.RegisterViewModel
 import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentRegistroBinding
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import java.util.*
 import androidx.lifecycle.Observer
 import androidx.core.widget.addTextChangedListener
@@ -31,19 +29,16 @@ class RegistroFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-        binding = FragmentRegistroBinding.inflate(layoutInflater)
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_registro, container, false)
+                              savedInstanceState: Bundle?): View {
+        binding = FragmentRegistroBinding.inflate(inflater, container, false)
+        return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
         auth= FirebaseAuth.getInstance()
 
-        binding.cancelarBTN.setOnClickListener {
-            findNavController().navigate(R.id.action_Registro_to_login)
-        }
         //mensaje de alerta posicion
         val mensajeAlerta = view.findViewById<View>(R.id.avisoErrorREG)
 
@@ -74,21 +69,24 @@ class RegistroFragment : Fragment() {
         }
 
         binding.botonRegistrar.setOnClickListener{
-            /*
-            val usuario = binding.userReg.editText?.text.toString().trim()
-            val contrasenia = binding.password.editText?.text.toString().trim()
-            if (registerViewModel.validateOnSubmit()) {
 
-                crearCuenta(
-                    binding.userReg.editText?.text.toString(),
-                    binding.password.editText?.text.toString(),
-                    binding.fechanac.text.toString(),
-                    "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
-                )
+            if (registerViewModel.validateOnSubmit()) {
+                val credenciales = validarCredenciales()
+                val contrasenia = binding.password.editText?.text.toString().trim()
+                val contraseniaRepetir = binding.password.editText?.text.toString().trim()
+                if(credenciales !=null && contrasenia == contraseniaRepetir)//la contraseña y el usuario es correcto
+                {
+                    crearCuenta(
+                        binding.userReg.editText?.text.toString(),
+                        binding.password.editText?.text.toString(),
+                        binding.passwordRepetir.editText?.text.toString(),
+                        binding.fechanac.text.toString(),
+                    )
+                }
             } else {
 
                 Snackbar.make(it, R.string.MensError, Snackbar.LENGTH_LONG).show()
-            }*/
+            }
         }
         //Fecha nacimiento----------------------------------------------------------------
         val calendar = Calendar.getInstance()
@@ -96,7 +94,7 @@ class RegistroFragment : Fragment() {
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, day)
-
+            /*
             //le paso los datos al formato en si y lo guardo
             val fechaFormateada = getString(R.string.fechaFormato,
                 calendar.get(Calendar.DAY_OF_MONTH),
@@ -104,17 +102,20 @@ class RegistroFragment : Fragment() {
                 calendar.get(Calendar.YEAR))
 
             //se le aplica el formatro con datos de usuaruio
-            binding.fechanac.setText(fechaFormateada)
+            binding.fechanac.setText(fechaFormateada)*/
+            binding.fechanac.setText(
+                "${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.YEAR)}"
+            )
         }
         binding.IconoFecha.setOnClickListener{
             showDatePicker(calendar, dateSetListener)
         }
 
+        binding.cancelarBTN.setOnClickListener {
 
-        binding.IconoFecha.setOnClickListener {
-            showDatePicker(calendar, dateSetListener)
+            findNavController().navigate(R.id.action_Registro_to_login)
+
         }
-
 
         /* Todavia no tengo Contactos
         binding.botonGoogle.setOnClickListener{
@@ -153,7 +154,7 @@ class RegistroFragment : Fragment() {
             calendar.get(Calendar.DAY_OF_MONTH)
         ).show()
     }
-    fun crearCuenta(email: String, password: String,nombreUser:String,fecha : String,url:String) {
+    fun crearCuenta(email: String, password: String, passwordRepetir:String, fecha:String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
@@ -171,9 +172,8 @@ class RegistroFragment : Fragment() {
                         }
                         val userData = hashMapOf(
                             "correo" to email,
-                            "username" to nombreUser,
+                            "contraseña" to passwordRepetir,
                             "fecha" to timestampFecha,
-                            "url" to url
                         )
 
                         db.collection("usuarios").document(email)
@@ -192,7 +192,26 @@ class RegistroFragment : Fragment() {
     }
 
     /*de aqui abajo es para la comprobacion de los campos, que sean correctos y qwue no esten vacios*/
-
+    private fun validarCredenciales(): Pair<String, String>? {
+        //he tenido que añadir binding.root para que me pillase el findViewById
+        val usuario = binding.userReg.editText?.text.toString().trim()
+        val contrasenia = binding.password.editText?.text.toString().trim()
+        val contraseniaRepetir = binding.password.editText?.text.toString().trim()
+        return when { //compruebo que tengan un formato valido
+            !esCorreoValido(usuario) -> {
+                mostrarAlertaCorreoInvalido()
+                null
+            }
+            !esContraseniaValida(contrasenia) -> {
+                mostrarAlertaContraseniaInvalida()
+                null
+            }!esContraseniaValida(contraseniaRepetir) -> {
+                mostrarAlertaContraseniaInvalida()
+                null
+            }
+            else -> Pair(usuario, contrasenia)
+        }
+    }
     // Función para validar el correo electrónico
     private fun esCorreoValido(correo: String): Boolean {
         val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"

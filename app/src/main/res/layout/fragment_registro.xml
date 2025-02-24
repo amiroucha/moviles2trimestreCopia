@@ -17,6 +17,7 @@
             app:layout_constraintBottom_toBottomOf="parent" android:contentDescription="@string/fondo"
             android:id="@+id/imageView" app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintVertical_bias="1.0"/>
+
     <ImageView
             android:layout_width="179dp"
             android:layout_height="62dp" app:srcCompat="@drawable/amazon_icono" android:id="@+id/imageAmazon"
@@ -32,6 +33,7 @@
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.886"
             app:layout_constraintVertical_bias="0.14" android:contentDescription="@string/Textlogin"/>
+
     <TextView
             android:id="@+id/TextReg"
             android:layout_width="wrap_content"
@@ -43,11 +45,12 @@
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.166"
             android:textSize="45sp" android:textAlignment="center" android:fontFamily="serif"
             android:typeface="normal" android:textColor="#ffa121" app:layout_constraintHorizontal_bias="0.208"/>
+
     <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/apodoReg"
+            android:id="@+id/userReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/apodo"
+            android:hint="@string/correo"
             android:textColorHint="@color/white"
             app:cursorColor="@color/white"
             app:hintTextColor="@color/white"
@@ -59,23 +62,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="0.32"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/white" android:textColor="#CCCCCC"
+                android:textColorHint="@color/white"
+                android:textColor="#CCCCCC"
                 android:textSize="20sp"/>
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/userReg"
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/correo"
+            android:hint="@string/password"
             android:textColorHint="@color/white"
             app:cursorColor="@color/white"
+            app:endIconMode="password_toggle"
             app:hintTextColor="@color/edittext_stroke_color"
             app:boxStrokeColor="@color/white"
             app:boxStrokeWidthFocused="2dp"
@@ -85,14 +90,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="0.43"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/white" android:textColor="#CCCCCC"
                 android:textSize="20sp"/>
-
     </com.google.android.material.textfield.TextInputLayout>
     <!--posicion de los mensajes de alerta toast-->
     <View
@@ -105,7 +110,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password"
+            android:id="@+id/passwordRepetir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
@@ -143,38 +148,42 @@
             app:layout_constraintVertical_bias="0.811" app:layout_constraintHorizontal_bias="0.932"
             android:textSize="20sp" android:backgroundTint="#EDB66F0F" android:textColor="#FFFCFC"
             app:layout_constraintTop_toTopOf="parent"/>
+
+
     <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fechanac"
+            android:layout_width="370dp"
+            android:layout_height="58dp"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:hint="@string/fechanac"
+            android:inputType="date"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            app:cursorColor="@color/white"
-            app:hintTextColor="@color/white"
             app:boxStrokeColor="@color/edittext_stroke_color"
             app:boxStrokeWidthFocused="2dp"
             app:boxStrokeWidth="2dp"
             android:textSize="20sp"
-            android:layout_width="303dp"
-            android:layout_height="52dp"
-            android:layout_marginStart="15dp"
-            android:hint="@string/fechanac"
-            android:inputType="date"
-            android:layout_marginRight="100dp"
+            app:boxBackgroundColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.65"
-            app:layout_constraintHorizontal_bias="0.053"/>
+            app:layout_constraintHorizontal_bias="0.4"/>
+
     <ImageView
             android:id="@+id/IconoFecha"
-            android:layout_width="50dp"
-            android:layout_height="45dp"
+            android:layout_width="46dp"
+            android:layout_height="41dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/calen"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="20dp"
+
+            app:layout_constraintEnd_toEndOf="@+id/fechanac"
             app:layout_constraintTop_toTopOf="@+id/fechanac"
-            app:layout_constraintBottom_toBottomOf="@+id/fechanac" android:layout_marginEnd="16dp"
-            app:layout_constraintVertical_bias="1.0"/>
+            app:srcCompat="@drawable/calen"/>
+
     <Button
             android:text="@string/btn_google"
             android:layout_width="177dp"
@@ -188,6 +197,7 @@
             android:textSize="20sp"
             app:icon="@drawable/iconogoogle"
             app:iconTintMode="multiply" app:iconSize="28dp" android:backgroundTint="#EEA105CC"/>
+
     <Button
             android:text="@string/btn_facebook"
             android:layout_width="177dp"
@@ -200,6 +210,7 @@
             app:layout_constraintHorizontal_bias="0.085" android:textSize="20sp"
             app:icon="@drawable/facebook_icon"
             app:iconTintMode="multiply" app:iconSize="28dp" android:backgroundTint="#1F2E59"/>
+
     <Button
             android:id="@+id/cancelarBTN"
             android:text="@string/botonCancelar"
@@ -212,6 +223,5 @@
             android:textSize="20sp"
             android:backgroundTint="#B71C1C" android:textColor="#FFFCFC"
             app:layout_constraintTop_toTopOf="parent"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

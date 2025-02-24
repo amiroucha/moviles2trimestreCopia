@@ -130,6 +130,7 @@ class ScaffoldFragment : Fragment()
 
     private fun logOut(){
         // Después de cerrar sesión, redirigir al LoginActivity
+
         val firebaseAuth = com.google.firebase.auth.FirebaseAuth.getInstance()
             firebaseAuth.signOut()
             findNavController().navigate(R.id.action_Scaffold_to_Login)
