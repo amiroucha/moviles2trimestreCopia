@@ -7,16 +7,25 @@
             <item
                     android:id="@+id/nav_home"
                     android:icon="@drawable/ic_home"
-                    android:title="@string/homeDrawer" />
-
-            <item
-                    android:id="@+id/nav_notifications"
-                    android:icon="@drawable/ic_notifications"
-                    android:title="@string/notificaciones" />
+                    android:title="@string/listaMonitores" />
             <item
                     android:id="@+id/nav_fav"
                     android:icon="@drawable/ic_fav"
                     android:title="@string/favoritos" />
+            <item
+                    android:id="@+id/contactos"
+                    android:icon="@drawable/ic_contacto"
+                    android:title="@string/Contacto" />
+
+        </menu>
+    </item>
+    <item android:title="@string/salir">
+        <menu>
+
+            <item
+                    android:id="@+id/salir"
+                    android:icon="@drawable/ic_logout"
+                    android:title="@string/cerrarSesion"/>
 
         </menu>
     </item>

@@ -70,7 +70,8 @@ class ScaffoldFragment : Fragment()
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         /* DRAWERLAYOUT */
-
+        val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_scaffold) as NavHostFragment
+        val navController = navHostFragment.navController
         val toggle = ActionBarDrawerToggle(
             requireActivity(), binding.drawerLayout, binding.toolbar,
             R.string.navigation_drawer_open, R.string.navigation_drawer_close
@@ -83,14 +84,21 @@ class ScaffoldFragment : Fragment()
                 item ->
             when (item.itemId) {
                 R.id.nav_home -> {
+                    navController.navigate(R.id.listaFragment)
                     true
                 }
 
-                R.id.nav_notifications -> {
+                R.id.contactoFragment -> {
+                    navController.navigate(R.id.contactoFragment)
                     true
                 }
 
                 R.id.nav_fav -> {
+                    navController.navigate(R.id.favoritosFragment)
+                    true
+                }
+                R.id.salir -> {
+                    logOut()
                     true
                 }
 
@@ -100,8 +108,6 @@ class ScaffoldFragment : Fragment()
 
         /* BOTTOM NAVIGATION MENU ------------------------------------------------------------*/
 
-        val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_scaffold) as NavHostFragment
-        val navController = navHostFragment.navController
         //binding.bottomNavigation.setupWithNavController(navController)
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->

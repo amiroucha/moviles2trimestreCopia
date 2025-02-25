@@ -74,9 +74,8 @@
     <string name="fotoperfil">fotoPerfil</string>
     <string name="opciones">Opciones</string>
     <string name="homeDrawer">Home</string>
-    <string name="notificaciones">Notificaciones</string>
     <string name="favoritosString">Favoritos</string>
-    <string name="cerrarSesion">Salir</string>
+    <string name="cerrarSesion">Cerrar Sesion</string>
     <string name="buscarLupa">Buscar</string>
     <string name="ajustes">Ajustes</string>
     <string name="ordenar">Ordenar</string>
@@ -87,6 +86,9 @@
     <string name="enviarCorreo">Correo enviado</string>
     <string name="botonCancelar">Cancelar</string>
     <string name="permisoUbicacionDenegado">Permiso de ubicación denegado. No se puede abrir el mapa.</string>
+    <string name="salir">Salir</string>
+    <string name="listaMonitores">Lista Monitores</string>
+    <string name="Contacto">Contacta con nosotros</string>
 
 
 </resources>
