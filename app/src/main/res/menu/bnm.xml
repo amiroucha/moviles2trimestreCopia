@@ -4,9 +4,9 @@
             android:icon="@drawable/ic_home"
             android:title="@string/home" />
     <item
-            android:id="@+id/bnm_listaFavoritos"
-            android:icon="@drawable/ic_fav"
-            android:title="@string/favoritos" />
+            android:id="@+id/bnm_listaMonitores"
+            android:icon="@drawable/ic_monitoreslista"
+            android:title="@string/listaMonitores" />
     <item
             android:id="@+id/bnm_contactoFragment"
             android:icon="@drawable/ic_contacto"

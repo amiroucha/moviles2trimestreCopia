@@ -43,7 +43,7 @@ class ViewPagerAdapter (fragmentActivity: FragmentActivity): FragmentStateAdapte
 
         return when (position) {
             0 ->ListaFragment()
-            1 ->ListaFragment()
+            1 ->FavoritosFragment()
             else ->ListaFragment()
         }
     }

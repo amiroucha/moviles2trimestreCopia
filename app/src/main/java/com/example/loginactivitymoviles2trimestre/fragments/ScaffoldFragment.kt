@@ -144,10 +144,10 @@ class ScaffoldFragment : Fragment()
             when (item.itemId) {
                 R.id.bnm_home-> {
                     // Handle Dashboard navigation
-                    navController.navigate(R.id.listaFragment)
+
                     true
                 }
-                R.id.bnm_listaFavoritos -> {
+                R.id.bnm_listaMonitores -> {
                     navController.navigate(R.id.tabsfragment)
                     true
                 }
@@ -165,7 +165,6 @@ class ScaffoldFragment : Fragment()
 
     private fun logOut(){
         // Después de cerrar sesión, redirigir al LoginActivity
-
         val firebaseAuth = com.google.firebase.auth.FirebaseAuth.getInstance()
             firebaseAuth.signOut()
             findNavController().navigate(R.id.action_Scaffold_to_Login)

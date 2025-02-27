@@ -13,7 +13,6 @@ import com.example.loginactivitymoviles2trimestre.databinding.FragmentListaBindi
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.*
-import kotlinx.coroutines.tasks.await
 
 class ListaFragment : Fragment() {
 
@@ -43,11 +42,10 @@ class ListaFragment : Fragment() {
             // Simular una recarga de 2 segundos
             Handler(Looper.getMainLooper()).postDelayed({
                 // Recargar los datos
-                setupRecyclerView()
                 obtenerMonitores()
                 // Detener la animación de carga
                 binding.swipeRefreshLayout.isRefreshing = false
-            }, 2000) // 2 segundos
+            }, 1500) // 2 segundos
         }
 
         // Cargamos los datos de Firestore
@@ -97,7 +95,7 @@ class ListaFragment : Fragment() {
 
 
     private fun setupRecyclerView() {
-        adapter = MonitorAdapter(requireContext(), mutableListOf()) // Inicialmente vacío
+        adapter = MonitorAdapter( mutableListOf()) // Inicialmente vacío
         binding.recyclerViewMonitorLista.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewMonitorLista.adapter = adapter
     }

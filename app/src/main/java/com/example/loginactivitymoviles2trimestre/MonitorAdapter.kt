@@ -7,16 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentItemBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FieldValue
 
 
 //Adapter para recyclerView
-class MonitorAdapter(private val context: Context, private var monitoresLista: MutableList<Monitor>)
+class MonitorAdapter( private var monitoresLista: MutableList<Monitor>)
     : RecyclerView.Adapter<MonitorAdapter.MonitorViewHolder>() {
 
     // Guarda la lista original para restaurarla al filtrar
@@ -42,14 +40,6 @@ class MonitorAdapter(private val context: Context, private var monitoresLista: M
 
     override fun getItemCount(): Int = monitoresLista.size
 
-    fun filter(query: String) {
-        val filteredList = if (query.isEmpty()) {
-            itemsOriginal
-        } else {
-            itemsOriginal.filter { it.nombre.contains(query, ignoreCase = true) }
-        }
-        updateList(filteredList)
-    }
     fun updateList(nuevaLista: List<Monitor>) {
         monitoresLista.clear()
         monitoresLista.addAll(nuevaLista)
@@ -57,7 +47,7 @@ class MonitorAdapter(private val context: Context, private var monitoresLista: M
         notifyDataSetChanged()
     }
 
-
+//para cargar los monitores
     class MonitorViewHolder(private val binding: FragmentItemBinding ,
                             private var auth: FirebaseAuth) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Monitor) {
