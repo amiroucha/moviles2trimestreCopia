@@ -102,26 +102,6 @@ class ListaFragment : Fragment() {
         binding.recyclerViewMonitorLista.adapter = adapter
     }
 
-
-
-    /*
-        override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-            inflater.inflate(R.menu.toolbar, menu)
-
-            val searchItem = menu.findItem(R.id.action_search)
-            val searchView = searchItem.actionView as androidx.appcompat.widget.SearchView
-
-            searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    return false
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    adapter.filter(newText.orEmpty())
-                    return true
-                }
-            })
-        }*/
 }
 
 
