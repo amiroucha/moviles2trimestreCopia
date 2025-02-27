@@ -1,9 +1,11 @@
 package com.example.loginactivitymoviles2trimestre.fragments
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
 import android.view.*
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,16 +14,16 @@ import com.example.loginactivitymoviles2trimestre.MonitorAdapter
 import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentListaBinding
 import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.firestore
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
 
 class ListaFragment : Fragment() {
 
     private lateinit var binding: FragmentListaBinding
     private lateinit var adapter: MonitorAdapter
-    private var currentList = mutableListOf<Monitor>()
+    private var monitores = mutableListOf<Monitor>()
     val db = Firebase.firestore
 
     override fun onCreateView(
@@ -38,37 +40,52 @@ class ListaFragment : Fragment() {
 
         // Inicializamos el RecyclerView con una lista vacía
         setupRecyclerView()
+        //swipe de recarga
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            // Simular una recarga de 2 segundos
+            Handler(Looper.getMainLooper()).postDelayed({
+                // Recargar los datos
+                setupRecyclerView()
+                obtenerMonitores()
+                // Detener la animación de carga
+                binding.swipeRefreshLayout.isRefreshing = false
+            }, 2000) // 2 segundos
+        }
 
         // Cargamos los datos de Firestore
         obtenerMonitores()
     }
 
+
     private fun obtenerMonitores() {
-        db.collection("monitores")
+        db.collection("monitor")
             .get()
             .addOnSuccessListener { documents ->
-                currentList.clear()
+                monitores.clear()
                 for (document in documents) {
                     val monitor = Monitor(
-                        document.getString("nombre") ?: "",
-                        document.getString("precio") ?: "",
-                        document.getBoolean("favorito") ?: false,
-                        document.getString("url") ?: ""
+                        document.id.toInt(),
+                        document.get("nombre") as String,
+                        document.get("precio") as String,
+                        document.get("favorito") as Boolean,
+                        document.get("url") as String,
                     )
-                    currentList.add(monitor)
+                    monitores.add(monitor)
                 }
-                Log.d("FirestoreDebug", "Lista de monitores cargada: $currentList")
+
 
                 // Actualizamos los datos en el RecyclerView
-                adapter.updateData(currentList)
+                adapter.updateList(monitores)
+
 
                 // Mostramos el RecyclerView
                 binding.recyclerViewMonitorLista.visibility = View.VISIBLE
             }
             .addOnFailureListener { exception ->
-                Log.w("FirestoreDebug", "Error obteniendo documentos: ", exception)
+                Toast.makeText(requireContext(), "Error cargando los monitores", Toast.LENGTH_SHORT).show()
             }
     }
+
 
     private fun setupRecyclerView() {
         adapter = MonitorAdapter(requireContext(), mutableListOf()) // Inicialmente vacío
@@ -76,23 +93,26 @@ class ListaFragment : Fragment() {
         binding.recyclerViewMonitorLista.adapter = adapter
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar, menu)
 
-        val searchItem = menu.findItem(R.id.action_search)
-        val searchView = searchItem.actionView as androidx.appcompat.widget.SearchView
 
-        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
+    /*
+        override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+            inflater.inflate(R.menu.toolbar, menu)
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                adapter.filter(newText.orEmpty())
-                return true
-            }
-        })
-    }
+            val searchItem = menu.findItem(R.id.action_search)
+            val searchView = searchItem.actionView as androidx.appcompat.widget.SearchView
+
+            searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    adapter.filter(newText.orEmpty())
+                    return true
+                }
+            })
+        }*/
 }
 
 

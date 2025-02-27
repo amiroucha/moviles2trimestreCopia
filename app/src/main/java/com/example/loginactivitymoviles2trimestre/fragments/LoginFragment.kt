@@ -55,7 +55,7 @@ class LoginFragment : Fragment() {
     {
         super.onViewCreated(view, savedInstanceState)
         //para establecer la conexion con el activity
-        progressBar = binding.progressBar
+       // progressBar = binding.progressBar
 
 
         auth = Firebase.auth
@@ -110,8 +110,8 @@ class LoginFragment : Fragment() {
 
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(usuario, contrasenia)
                         .addOnCompleteListener { task ->
-                            Handler(Looper.getMainLooper()).postDelayed({
-                                progressBar.visibility = View.GONE // Oculta la ProgressBar al finalizar
+                          //  Handler(Looper.getMainLooper()).postDelayed({
+                             //   progressBar.visibility = View.GONE // Oculta la ProgressBar al finalizar
                                 binding.botonAcceder.isEnabled = true // Rehabilita el botón
 
                                 if (task.isSuccessful) {
@@ -124,7 +124,7 @@ class LoginFragment : Fragment() {
                                 } else {
                                     errorAutenticacion()
                                 }
-                            }, 2000) // Espera 2 segundos antes de continuar
+                           // }, 2000) // Espera 2 segundos antes de continuar
                         }
                 }
             }

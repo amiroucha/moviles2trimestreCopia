@@ -25,9 +25,13 @@ class MonitorAdapter(private val context: Context, private var monitoresLista: M
         )
         return MonitorViewHolder(binding)
     }
-
+    //actualizar los datos de la vista.
     override fun onBindViewHolder(holder: MonitorViewHolder, position: Int) {
         holder.bind(monitoresLista[position])
+
+
+
+
     }
 
     override fun getItemCount(): Int = monitoresLista.size
@@ -38,9 +42,9 @@ class MonitorAdapter(private val context: Context, private var monitoresLista: M
         } else {
             itemsOriginal.filter { it.nombre.contains(query, ignoreCase = true) }
         }
-        updateData(filteredList)
+        updateList(filteredList)
     }
-    fun updateData(nuevaLista: List<Monitor>) {
+    fun updateList(nuevaLista: List<Monitor>) {
         monitoresLista.clear()
         monitoresLista.addAll(nuevaLista)
         itemsOriginal = ArrayList(nuevaLista) // Guardamos la lista original para filtrar
@@ -52,6 +56,12 @@ class MonitorAdapter(private val context: Context, private var monitoresLista: M
         fun bind(data: Monitor) {
             binding.titulo.text = data.nombre
             binding.precio.text = data.precio
+
+            // Cargar la imagen usando Glide
+            Glide.with(binding.root.context)
+                .load(data.imagen) // URL de la imagen
+                .placeholder(R.drawable.monitorcarga) // Imagen mientras se carga
+                .into(binding.imageMonitor) // imagen xml
 
             if (data.favo) {
                 binding.favorito.setImageResource(R.drawable.fav_selected)
@@ -67,8 +77,10 @@ class MonitorAdapter(private val context: Context, private var monitoresLista: M
                     binding.favorito.setImageResource(R.drawable.fav_unselected)
                 }
 
+                //Actualizar BBDD
+
                 val db = Firebase.firestore
-                db.collection("monitores")
+                db.collection("monitor")
                     .document(data.id.toString())
                     .update("favorito", data.favo)
             }
