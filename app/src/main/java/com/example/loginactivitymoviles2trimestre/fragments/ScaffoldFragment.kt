@@ -2,9 +2,12 @@ package com.example.loginactivitymoviles2trimestre.fragments
 
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -78,6 +81,30 @@ class ScaffoldFragment : Fragment()
         )
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+        /*
+        // Obtener la cabecera del NavigationView
+        val headerView = binding.navigationView.getHeaderView(0)
+        val imageViewProfile = headerView.findViewById<ImageView>(R.id.imageViewProfile)
+        val textViewUserName = headerView.findViewById<TextView>(R.id.textViewEmail)
+
+        // Obtener el usuario logueado
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+        if (firebaseUser != null) {
+            val usuarioLogueado = Usuario(
+                correo = firebaseUser.displayName ?: "Usuario",
+                imagen = firebaseUser.photoUrl?.toString() ?: ""
+            )
+            // Actualizar la cabecera con los datos del usuario
+            textViewUserName.text = usuarioLogueado.correo
+
+            Glide.with(requireContext())
+                .load(usuarioLogueado.imagen) //nombre de la imagen de la calse
+                .placeholder(R.drawable.login) // Imagen por defecto
+                .into(imageViewProfile)
+        } else {
+            null
+        }
+        */
 
         binding.navigationView.setNavigationItemSelectedListener {
 
@@ -85,16 +112,19 @@ class ScaffoldFragment : Fragment()
             when (item.itemId) {
                 R.id.nav_home -> {
                     navController.navigate(R.id.listaFragment)
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
 
-                R.id.contactoFragment -> {
+                R.id.nav_contactos -> {
                     navController.navigate(R.id.contactoFragment)
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
 
                 R.id.nav_fav -> {
                     navController.navigate(R.id.favoritosFragment)
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
                 R.id.salir -> {
@@ -117,9 +147,8 @@ class ScaffoldFragment : Fragment()
                     navController.navigate(R.id.listaFragment)
                     true
                 }
-
                 R.id.bnm_listaFavoritos -> {
-                    navController.navigate(R.id.favoritosFragment)
+                    navController.navigate(R.id.tabsfragment)
                     true
                 }
                 R.id.bnm_contactoFragment -> {

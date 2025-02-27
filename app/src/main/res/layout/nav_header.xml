@@ -20,7 +20,7 @@
             android:contentDescription="@string/fotoperfil"
     />
     <TextView
-            android:id="@+id/textViewName"
+            android:id="@+id/textViewEmail"
             android:layout_width="211dp"
             android:layout_height="44dp"
             android:text="@string/user"

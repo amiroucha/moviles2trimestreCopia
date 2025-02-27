@@ -87,8 +87,9 @@
     <string name="botonCancelar">Cancelar</string>
     <string name="permisoUbicacionDenegado">Permiso de ubicación denegado. No se puede abrir el mapa.</string>
     <string name="salir">Salir</string>
-    <string name="listaMonitores">Lista Monitores</string>
+    <string name="listaMonitores">Monitores</string>
     <string name="Contacto">Contacta con nosotros</string>
+    <string name="listas">Listas</string>
 
 
 </resources>
