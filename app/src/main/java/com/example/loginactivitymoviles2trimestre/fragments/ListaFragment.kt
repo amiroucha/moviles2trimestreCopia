@@ -34,6 +34,8 @@ class ListaFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerViewMonitorLista.visibility = View.GONE
 
+        binding.progressBar.visibility = View.VISIBLE
+
         // Inicializamos el RecyclerView con una lista vacía
         setupRecyclerView()
         //swipe de recarga
@@ -52,34 +54,45 @@ class ListaFragment : Fragment() {
         obtenerMonitores()
     }
 
+    // Cuando el Fragment se reanuda, actualizamos la lista de monitores
+    override fun onResume() {
+        super.onResume()
+        obtenerMonitores()
+    }
 
     private fun obtenerMonitores() {
-        db.collection("monitor")
-            .get()
-            .addOnSuccessListener { documents ->
-                monitores.clear()
-                for (document in documents) {
-                    val monitor = Monitor(
-                        document.id.toInt(),
-                        document.get("nombre") as String,
-                        document.get("precio") as String,
-                        document.get("favorito") as Boolean,
-                        document.get("url") as String,
-                    )
-                    monitores.add(monitor)
+        // Mostrar ProgressBar y ocultar RecyclerView al iniciar la carga
+        binding.progressBar.visibility = View.VISIBLE
+        binding.recyclerViewMonitorLista.visibility = View.GONE
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(1500) // Esperar 1.5 segundos
+            db.collection("monitor")
+                .get()
+                .addOnSuccessListener { documents ->
+                    monitores.clear()
+                    for (document in documents) {
+                        val monitor = Monitor(
+                            document.id.toInt(),
+                            document.get("nombre") as String,
+                            document.get("precio") as String,
+                            document.get("favorito") as Boolean,
+                            document.get("url") as String,
+                        )
+                        monitores.add(monitor)
+                    }
+
+                    // Actualizamos los datos en el RecyclerView
+                    adapter.updateList(monitores)
+
+                    binding.progressBar.visibility = View.GONE
+                    // Mostramos el RecyclerView
+                    binding.recyclerViewMonitorLista.visibility = View.VISIBLE
                 }
-
-
-                // Actualizamos los datos en el RecyclerView
-                adapter.updateList(monitores)
-
-
-                // Mostramos el RecyclerView
-                binding.recyclerViewMonitorLista.visibility = View.VISIBLE
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(requireContext(), "Error cargando los monitores", Toast.LENGTH_SHORT).show()
-            }
+                .addOnFailureListener { exception ->
+                    binding.progressBar.visibility = View.GONE //por si falla que no se quede alli
+                    Toast.makeText(requireContext(), "Error cargando los monitores", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
 
