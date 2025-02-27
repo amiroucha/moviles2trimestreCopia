@@ -4,17 +4,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.*
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.loginactivitymoviles2trimestre.Monitor
 import com.example.loginactivitymoviles2trimestre.MonitorAdapter
-import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentListaBinding
 import com.google.firebase.Firebase
-import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await

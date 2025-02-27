@@ -32,7 +32,6 @@ import androidx.core.widget.addTextChangedListener
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private lateinit var progressBar: ProgressBar
     private lateinit var auth: FirebaseAuth
 
     private val loginViewModel: LoginViewModel by viewModels()
@@ -55,16 +54,12 @@ class LoginFragment : Fragment() {
     {
         super.onViewCreated(view, savedInstanceState)
         //para establecer la conexion con el activity
-       // progressBar = binding.progressBar
-
 
         auth = Firebase.auth
         if (auth.currentUser != null) {
             findNavController().navigate(R.id.action_Login_to_Scaffold)
             return
         }
-        // Inicializa el ProgressBar
-      //  progressBar = view.findViewById(R.id.progressBar)
 
         loginViewModel.emailError.observe(viewLifecycleOwner, Observer { error ->
             binding.user.error = error
@@ -104,14 +99,12 @@ class LoginFragment : Fragment() {
                 if (credenciales != null) {
                     val (usuario, contrasenia) = credenciales
 
-                    // Muestra la ProgressBar antes de iniciar sesión
-                    progressBar.visibility = View.VISIBLE
                     binding.botonAcceder.isEnabled = false // Deshabilita el botón para evitar múltiples toques
 
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(usuario, contrasenia)
                         .addOnCompleteListener { task ->
-                          //  Handler(Looper.getMainLooper()).postDelayed({
-                             //   progressBar.visibility = View.GONE // Oculta la ProgressBar al finalizar
+                            Handler(Looper.getMainLooper()).postDelayed({
+
                                 binding.botonAcceder.isEnabled = true // Rehabilita el botón
 
                                 if (task.isSuccessful) {
@@ -124,35 +117,11 @@ class LoginFragment : Fragment() {
                                 } else {
                                     errorAutenticacion()
                                 }
-                           // }, 2000) // Espera 2 segundos antes de continuar
+                            }, 2000) // Espera 2 segundos antes de continuar
                         }
                 }
             }
-            /*
-            if(credenciales != null) {
-                val (usuario, contrasenia) = credenciales
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(usuario, contrasenia)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            // Usuario autenticado, navegar a Scaffold
-                            val navHostFragment =
-                                activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment)
-                                        as NavHostFragment
-                            val navController = navHostFragment.navController
-                            navController.navigate(R.id.action_Login_to_Scaffold)
-                        } else {
-                            errorAutenticacion()
-                        }
 
-                    }
-            }*/
-
-
-            //me daba advertencia con la progress bar, asi que lo he dejado sin ella de momento
-//            if (validarCredenciales()){
-//                // Muestra la barra de progreso y redirige después de 3 segundos
-//                mostrarBarraProgreso()
-//            } tiene que estar en la vista de favoritos y de lista fragment
         }
 
 
