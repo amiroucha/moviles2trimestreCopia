@@ -11,6 +11,7 @@ import com.example.loginactivitymoviles2trimestre.Monitor
 import com.example.loginactivitymoviles2trimestre.MonitorAdapter
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentListaBinding
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.*
 
@@ -20,6 +21,7 @@ class ListaFragment : Fragment() {
     private lateinit var adapter: MonitorAdapter
     private var monitores = mutableListOf<Monitor>()
     val db = Firebase.firestore
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -95,12 +97,14 @@ class ListaFragment : Fragment() {
 
 
     private fun setupRecyclerView() {
-        adapter = MonitorAdapter( mutableListOf()) // Inicialmente vacío
+        adapter = MonitorAdapter(mutableListOf()) // Inicialmente vacío
         binding.recyclerViewMonitorLista.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewMonitorLista.adapter = adapter
     }
 
 }
+
+
 
 
 /*

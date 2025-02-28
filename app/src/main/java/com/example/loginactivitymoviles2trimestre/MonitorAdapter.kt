@@ -47,7 +47,7 @@ class MonitorAdapter( private var monitoresLista: MutableList<Monitor>)
         notifyDataSetChanged()
     }
 
-//para cargar los monitores
+    //para cargar los monitores
     class MonitorViewHolder(private val binding: FragmentItemBinding ,
                             private var auth: FirebaseAuth) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Monitor) {
@@ -101,6 +101,7 @@ class MonitorAdapter( private var monitoresLista: MutableList<Monitor>)
         }
     }
 }
+
 
 
 

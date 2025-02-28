@@ -2,8 +2,6 @@ package com.example.loginactivitymoviles2trimestre.fragments
 
 import android.os.Bundle
 import android.view.*
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -144,7 +142,7 @@ class ScaffoldFragment : Fragment()
             when (item.itemId) {
                 R.id.bnm_home-> {
                     // Handle Dashboard navigation
-
+                    navController.navigate(R.id.contactoFragment)
                     true
                 }
                 R.id.bnm_listaMonitores -> {
