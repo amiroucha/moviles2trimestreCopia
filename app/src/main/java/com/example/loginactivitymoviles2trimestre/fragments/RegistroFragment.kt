@@ -68,18 +68,41 @@ class RegistroFragment : Fragment() {
             registerViewModel.setDate(it.toString())
         }
 
+        //Fecha nacimiento----------------------------------------------------------------
+
+        val calendar = Calendar.getInstance()
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, month)
+            calendar.set(Calendar.DAY_OF_MONTH, day)
+
+            //le paso los datos al formato en si y lo guardo
+            val fechaFormateada = getString(R.string.fechaFormato,
+                calendar.get(Calendar.DAY_OF_MONTH),
+                calendar.get(Calendar.MONTH) + 1,
+                calendar.get(Calendar.YEAR))
+
+            //se le aplica el formatro con datos de usuaruio
+            binding.fechanac.setText(fechaFormateada)
+            /*   binding.fechanac.setText(
+                   "${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.YEAR)}"
+               )*/
+        }
+
+        binding.IconoFecha.setOnClickListener{
+
+            showDatePicker(calendar, dateSetListener)
+        }
         binding.botonRegistrar.setOnClickListener{
 
             if (registerViewModel.validateOnSubmit()) {
                 val credenciales = validarCredenciales()
-                val contrasenia = binding.password.editText?.text.toString().trim()
-                val contraseniaRepetir = binding.password.editText?.text.toString().trim()
-                if(credenciales !=null && contrasenia == contraseniaRepetir)//la contraseña y el usuario es correcto
+
+                if(credenciales != null)//la contraseña y el usuario es correcto
                 {
                     crearCuenta(
                         binding.userReg.editText?.text.toString(),
                         binding.password.editText?.text.toString(),
-                        binding.passwordRepetir.editText?.text.toString(),
                         binding.fechanac.text.toString(),
                     )
                 }
@@ -88,28 +111,6 @@ class RegistroFragment : Fragment() {
                 Snackbar.make(it, R.string.MensError, Snackbar.LENGTH_LONG).show()
             }
         }
-        //Fecha nacimiento----------------------------------------------------------------
-        val calendar = Calendar.getInstance()
-        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month)
-            calendar.set(Calendar.DAY_OF_MONTH, day)
-            /*
-            //le paso los datos al formato en si y lo guardo
-            val fechaFormateada = getString(R.string.fechaFormato,
-                calendar.get(Calendar.DAY_OF_MONTH),
-                calendar.get(Calendar.MONTH) + 1,
-                calendar.get(Calendar.YEAR))
-
-            //se le aplica el formatro con datos de usuaruio
-            binding.fechanac.setText(fechaFormateada)*/
-            binding.fechanac.setText(
-                "${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.YEAR)}"
-            )
-        }
-        binding.IconoFecha.setOnClickListener{
-            showDatePicker(calendar, dateSetListener)
-        }
 
         binding.cancelarBTN.setOnClickListener {
 
@@ -117,32 +118,15 @@ class RegistroFragment : Fragment() {
 
         }
 
-        /* Todavia no tengo Contactos
-        binding.botonGoogle.setOnClickListener{
-            val usuario = binding.userReg.editText?.text.toString().trim()
-            val contrasenia = binding.password.editText?.text.toString().trim()
-            if(usuario.isNotEmpty() && contrasenia.isNotEmpty()){
-                if (esCorreoValido(usuario) && esContraseniaValida(contrasenia)) {
-                    //se pone el guion para decir que no se va  ausar ningun parametro del OnclickListener
-                    //redirigir a Contactos
-                    val intent = Intent(this, ContactoActivity::class.java)
-                    startActivity(intent)
 
-                } else if (!esCorreoValido(usuario)) {
-                    mostrarAlertaCorreoInvalido()
-                } else {
-                    mostrarAlertaContraseniaInvalida()
-                }
-            }else
-            { // Mostrar un mensaje de error si uno de los campos está vacío
-                mensajeCamposVacios(mensajeAlerta)
-            }
+        binding.botonGoogle.setOnClickListener{
+
         }
         binding.botonFacebook.setOnClickListener{
             //enseñar el mensaje snackbar
             Snackbar.make(binding.root, getString(R.string.irContacto), Snackbar.LENGTH_LONG).show()
         }
-        */
+
     }
     //FUNCIONES-----------------------------------------------------------------------------------------
     private fun showDatePicker(calendar: Calendar, dateSetListener: DatePickerDialog.OnDateSetListener) {
@@ -154,7 +138,7 @@ class RegistroFragment : Fragment() {
             calendar.get(Calendar.DAY_OF_MONTH)
         ).show()
     }
-    fun crearCuenta(email: String, password: String, passwordRepetir:String, fecha:String) {
+    fun crearCuenta(email: String, password: String, fecha: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
@@ -162,20 +146,18 @@ class RegistroFragment : Fragment() {
                     user?.let {
                         val db = FirebaseFirestore.getInstance()
 
-                        val timestampFecha = try {
-                            val sdf = SimpleDateFormat("d-M-yyyy", Locale.getDefault())
-                            val date = sdf.parse(fecha)
-                            date?.let { Timestamp(it) }
+                        // Crear un array de enteros vacío
+                        val arrayFav = arrayListOf<Int>()
 
-                        } catch (e: Exception) {
-                            null
-                        }
+                        // Datos del usuario
                         val userData = hashMapOf(
                             "correo" to email,
-                            "contraseña" to passwordRepetir,
-                            "fecha" to timestampFecha,
+                            "contraseña" to password,
+                            "fecha" to fecha,
+                            "fav" to arrayFav
                         )
 
+                        // Guardar los datos en Firestore
                         db.collection("usuarios").document(email)
                             .set(userData)
                             .addOnSuccessListener {
@@ -219,7 +201,7 @@ class RegistroFragment : Fragment() {
     }
     // Función para validar la contraseña
     private fun esContraseniaValida(contrasenia: String): Boolean {
-        return contrasenia.length in 8..10
+        return contrasenia.length in 6..10
     }
 
     private fun mostrarAlerta(titulo: String, mensaje: String) {
