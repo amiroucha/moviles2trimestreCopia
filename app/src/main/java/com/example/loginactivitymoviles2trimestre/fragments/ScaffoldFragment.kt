@@ -2,6 +2,7 @@ package com.example.loginactivitymoviles2trimestre.fragments
 
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentScaffoldBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class ScaffoldFragment : Fragment()
 {
@@ -37,6 +39,16 @@ class ScaffoldFragment : Fragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val user = FirebaseAuth.getInstance().currentUser?.email
+        val header = binding.navigationView.getHeaderView(0)
+        val textView: TextView= header.findViewById(R.id.textViewEmail)
+
+        if (user != null){
+            textView.text = user
+        }else{
+            textView.text = getString(R.string.usuario)
+        }
 
         /* TOOLBAR ------------------------------------------------------------*/
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)

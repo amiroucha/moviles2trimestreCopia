@@ -14,13 +14,9 @@ import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentRegistroBinding
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
-import androidx.lifecycle.Observer
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
-import java.text.SimpleDateFormat
-
 
 class RegistroFragment : Fragment() {
     private lateinit var binding: FragmentRegistroBinding
@@ -39,21 +35,18 @@ class RegistroFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         auth= FirebaseAuth.getInstance()
 
-        //mensaje de alerta posicion
-        val mensajeAlerta = view.findViewById<View>(R.id.avisoErrorREG)
-
         // Observamos los errores de cada campo
-        registerViewModel.emailError.observe(viewLifecycleOwner, Observer { error ->
+        registerViewModel.emailError.observe(viewLifecycleOwner) { error ->
             binding.userReg.error = error
-        })
+        }
 
-        registerViewModel.passwordError.observe(viewLifecycleOwner, Observer { error ->
+        registerViewModel.passwordError.observe(viewLifecycleOwner) { error ->
             binding.password.error = error
-        })
+        }
 
-        registerViewModel.dateError.observe(viewLifecycleOwner, Observer { error ->
+        registerViewModel.dateError.observe(viewLifecycleOwner) { error ->
             binding.fechanac.error = error
-        })
+        }
 
 
         binding.userReg.editText?.addTextChangedListener {
@@ -84,9 +77,7 @@ class RegistroFragment : Fragment() {
 
             //se le aplica el formatro con datos de usuaruio
             binding.fechanac.setText(fechaFormateada)
-            /*   binding.fechanac.setText(
-                   "${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.YEAR)}"
-               )*/
+
         }
 
         binding.IconoFecha.setOnClickListener{
@@ -138,7 +129,7 @@ class RegistroFragment : Fragment() {
             calendar.get(Calendar.DAY_OF_MONTH)
         ).show()
     }
-    fun crearCuenta(email: String, password: String, fecha: String) {
+    private fun crearCuenta(email: String, password: String, fecha: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {

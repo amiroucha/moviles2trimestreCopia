@@ -87,5 +87,6 @@
     <string name="listaMonitores">Monitors</string>
     <string name="Contacto">Contact Us</string>
     <string name="listas">Lists</string>
+    <string name="usuario">Usuario</string>
 
 </resources>
