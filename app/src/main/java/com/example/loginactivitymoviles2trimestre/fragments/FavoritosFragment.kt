@@ -1,6 +1,8 @@
 package com.example.loginactivitymoviles2trimestre.fragments
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -42,68 +44,56 @@ class FavoritosFragment : Fragment() {
         binding.progressBarFav.visibility = View.VISIBLE
 
         mostraRecyclerView()
-
-        // Cargar favoritos al iniciar el fragmento
-        CoroutineScope(Dispatchers.IO).launch {
-            cargarFavoritos()
-            withContext(Dispatchers.Main) {
-                binding.swipeRefreshLayout.isRefreshing = false
-            }
-        }
-
         // Configurar SwipeRefreshLayout
         binding.swipeRefreshLayout.setOnRefreshListener {
-            CoroutineScope(Dispatchers.IO).launch {
-                delay(1000) // Simula una espera de 1 segundo
+            // Simular una recarga de 2 segundos
+            Handler(Looper.getMainLooper()).postDelayed({
+                // Recargar los datos
                 cargarFavoritos()
-                withContext(Dispatchers.Main) {
-                    binding.swipeRefreshLayout.isRefreshing = false
-                }
-            }
+                // Detener la animación de carga
+                binding.swipeRefreshLayout.isRefreshing = false
+            }, 1000) // 1 segundos
         }
+        // Cargar favoritos al iniciar el fragmento
+
+        cargarFavoritos()
+
     }
 
-    private suspend fun cargarFavoritos() {
+    private fun cargarFavoritos() {
         listaFavoritos.clear()
+        binding.recyclerMonitorFav.visibility = View.GONE
+        binding.progressBarFav.visibility = View.VISIBLE
 
-        withContext(Dispatchers.Main) {
-            binding.recyclerMonitorFav.visibility = View.GONE
-            binding.progressBarFav.visibility = View.VISIBLE
-        }
+        db.collection("monitor")
+            .whereEqualTo("favorito", true)
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val favorito = document.getBoolean("favorito") ?: false
+                    val mon = Monitor(
+                        document.id.hashCode(), // Considera usar el id original si es posible
+                        document.getString("nombre") ?: "",
+                        document.getString("precio") ?: "",
+                        favorito,
+                        document.getString("url") ?: ""
+                    )
+                    listaFavoritos.add(mon)
+                }
 
-        try {
-            val result = db.collection("monitor")
-                .whereEqualTo("favorito", true)
-                .get().await()
-            for (document in result) {
-                val favorito = document.get("favorito") as Boolean
-                val mon = Monitor(
-                    document.id.hashCode(), // Usando hashCode como ID no me da error
-                    document.get("nombre") as String,
-                    document.get("precio") as String,
-                    favorito,
-                    document.get("url") as String,
-                )
-                listaFavoritos.add(mon)
-            }
-
-            //actualizar la vista
-            withContext(Dispatchers.Main) {
+                // Actualizar la UI
                 binding.progressBarFav.visibility = View.GONE
                 binding.recyclerMonitorFav.visibility = View.VISIBLE
-                // Actualizar el adaptador
                 adapter = MonitorAdapter(listaFavoritos)
                 binding.recyclerMonitorFav.adapter = adapter
                 adapter.notifyDataSetChanged()
-
             }
-        } catch (e: Exception) {
-            Log.e("FirebaseError", "Error al obtener amigos: ", e)
-            withContext(Dispatchers.Main) {
+            .addOnFailureListener { e ->
+                binding.progressBarFav.visibility = View.GONE
                 Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_LONG).show()
             }
-        }
     }
+
 
     private fun mostraRecyclerView() {
         adapter = MonitorAdapter(mutableListOf())

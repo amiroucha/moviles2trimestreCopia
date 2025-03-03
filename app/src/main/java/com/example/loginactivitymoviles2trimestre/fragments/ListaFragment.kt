@@ -34,7 +34,6 @@ class ListaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerViewMonitorLista.visibility = View.GONE
-
         binding.progressBar.visibility = View.VISIBLE
 
         // Inicializamos el RecyclerView con una lista vacía
