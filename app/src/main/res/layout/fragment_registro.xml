@@ -28,7 +28,7 @@
 
     <ImageView
             android:layout_width="121dp"
-            android:layout_height="112dp" app:srcCompat="@drawable/login" android:id="@+id/imageLogin"
+            android:layout_height="112dp" android:id="@+id/imageLogin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.886"

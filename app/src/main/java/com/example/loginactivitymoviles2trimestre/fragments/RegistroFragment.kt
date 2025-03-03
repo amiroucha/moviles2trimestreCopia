@@ -15,6 +15,7 @@ import com.example.loginactivitymoviles2trimestre.databinding.FragmentRegistroBi
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 import androidx.core.widget.addTextChangedListener
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -34,6 +35,12 @@ class RegistroFragment : Fragment() {
     {
         super.onViewCreated(view, savedInstanceState)
         auth= FirebaseAuth.getInstance()
+
+
+        Glide.with(binding.root.context)
+            .load(R.drawable.login) // URL de la imagen
+            .placeholder(R.drawable.precargausuario) // Imagen mientras se carga
+            .into(binding.imageLogin) // imagen xml
 
         // Observamos los errores de cada campo
         registerViewModel.emailError.observe(viewLifecycleOwner) { error ->
