@@ -20,8 +20,7 @@ class ListaFragment : Fragment() {
     private lateinit var binding: FragmentListaBinding
     private lateinit var adapter: MonitorAdapter
     private var monitores = mutableListOf<Monitor>()
-    val db = Firebase.firestore
-    private lateinit var auth: FirebaseAuth
+    private val db = Firebase.firestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -87,7 +86,7 @@ class ListaFragment : Fragment() {
                     // Mostramos el RecyclerView
                     binding.recyclerViewMonitorLista.visibility = View.VISIBLE
                 }
-                .addOnFailureListener { exception ->
+                .addOnFailureListener { _ ->
                     binding.progressBar.visibility = View.GONE //por si falla que no se quede alli
                     Toast.makeText(requireContext(), "Error cargando los monitores", Toast.LENGTH_SHORT).show()
                 }
@@ -102,18 +101,3 @@ class ListaFragment : Fragment() {
     }
 
 }
-
-
-
-
-/*
-            //METER LAS IMAGENES DE LA NUEVA FORMA EXPLICADA
-            Monitor("KOORUI 24″ Full HD", "99,99€", false, R.drawable.monitor1),
-            Monitor("Philips 24E1N1100A", "74,90€", false, R.drawable.monitor2),
-            Monitor("Acer EK220Q H3", "67,99€", true, R.drawable.monitor3),
-            Monitor("LG 22MR410-B", "76,99€", false, R.drawable.monitor4),
-            Monitor("MSI Pro MP243X", "83,00€", true, R.drawable.monitor5),
-            Monitor("Lenovo D24-45", "78,90€", true, R.drawable.monitor6),
-            Monitor("SAMSUNG LS24C310EAUXEN", "94,99€", false, R.drawable.monitor7)
-
-* */

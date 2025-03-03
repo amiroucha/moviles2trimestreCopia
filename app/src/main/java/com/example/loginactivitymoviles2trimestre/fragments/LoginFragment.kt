@@ -23,7 +23,6 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.example.loginactivitymoviles2trimestre.fragments.viewmodelCarp.LoginViewModel
 import com.google.firebase.auth.auth
-import androidx.lifecycle.Observer
 import androidx.core.widget.addTextChangedListener
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
@@ -53,7 +52,7 @@ class LoginFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?): View {
         binding = FragmentLoginBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
         return binding.root
@@ -70,13 +69,13 @@ class LoginFragment : Fragment() {
             return
         }
 
-        loginViewModel.emailError.observe(viewLifecycleOwner, Observer { error ->
+        loginViewModel.emailError.observe(viewLifecycleOwner) { error ->
             binding.user.error = error
-        })
+        }
 
-        loginViewModel.passwordError.observe(viewLifecycleOwner, Observer { error ->
+        loginViewModel.passwordError.observe(viewLifecycleOwner) { error ->
             binding.password.error = error
-        })
+        }
 
 
         binding.user.editText?.addTextChangedListener {
@@ -156,20 +155,6 @@ class LoginFragment : Fragment() {
         //_binding = null
     }
 
-    companion object {
-        //Patrón Singleton
-        private var instance: LoginFragment? = null
-
-        fun getInstance(): LoginFragment
-        {
-            if (instance == null)
-            {
-                instance = LoginFragment()
-            }
-            //Usas !! para garantizar que no sera null
-            return instance!!
-        }
-    }
     private fun signInWithGoogle(){
         val auth = FirebaseAuth.getInstance() //si no inicio esto aquí, no me inicia sesiñón
 
