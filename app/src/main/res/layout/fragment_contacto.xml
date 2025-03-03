@@ -89,8 +89,8 @@
             android:id="@+id/correoElectr"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintVertical_bias="0.395"
-            app:layout_constraintHorizontal_bias="0.783"/>
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintVertical_bias="0.393"
+            app:layout_constraintHorizontal_bias="0.677"/>
     <TextView
             android:text="@string/wasText"
             android:textSize="25sp"
@@ -100,17 +100,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintVertical_bias="0.499"
-            app:layout_constraintHorizontal_bias="0.888"/>
+            app:layout_constraintHorizontal_bias="0.787"/>
     <TextView
-            android:text="@string/mapaText"
+            android:text="@string/mapaTexto"
             android:textSize="25sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/mapaTexto"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintVertical_bias="0.606"
-            app:layout_constraintHorizontal_bias="0.413"/>
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintVertical_bias="0.605"
+            app:layout_constraintHorizontal_bias="0.4"/>
     <ImageView
             android:layout_width="370dp"
             android:layout_height="204dp"

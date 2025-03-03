@@ -25,13 +25,23 @@ import com.example.loginactivitymoviles2trimestre.fragments.viewmodelCarp.LoginV
 import com.google.firebase.auth.auth
 import androidx.lifecycle.Observer
 import androidx.core.widget.addTextChangedListener
-
-
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.GetCredentialException
+import androidx.lifecycle.lifecycleScope
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var credentialManager: CredentialManager
 
     private val loginViewModel: LoginViewModel by viewModels()
 
@@ -123,13 +133,12 @@ class LoginFragment : Fragment() {
 
 
         binding.botonGoogle.setOnClickListener{
-
+            signInWithGoogle()
         }
 
         binding.botonFacebook.setOnClickListener{
             //enseñar el mensaje snackbar
             Snackbar.make(binding.root, getString(R.string.irContacto), Snackbar.LENGTH_LONG).show()
-
         }
 
         binding.botonRegistrar.setOnClickListener{
@@ -161,25 +170,67 @@ class LoginFragment : Fragment() {
             return instance!!
         }
     }
-/* La progress bar me da problemas con la memoria, asi que de momento lo comento todo
-    private fun mostrarBarraProgreso() {
-        // Muestra la barra de progreso
-        progressBar.visibility = View.VISIBLE
+    private fun signInWithGoogle(){
+        val auth = FirebaseAuth.getInstance() //si no inicio esto aquí, no me inicia sesiñón
 
-        // Usamos una corrutina para esperar 3 segundos
-        CoroutineScope(Dispatchers.Main).launch {
-            delay(3000) // Esperar 3 segundos
+        val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(false) //con esto en false ya me deja elegir cuenta
+            .setServerClientId(getString(R.string.idWeb))
+            //.setNonce(hashedNonce)
+            .setAutoSelectEnabled(false) //con esto en false no selecciona automáticamente una cuenta de google
+            .build()
 
-            // Después de esperar, oculta la barra de progreso
-            progressBar.visibility = View.GONE
+        val request: GetCredentialRequest = GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
 
-            // Redirige a FavoritosActivity
-            /*--------------------------------------------------------------------------------------------------
-            todavia no tengo favoritos
-            val intent = Intent(this@MainActivity, FavoritosActivity::class.java)
-            startActivity(intent)*/
+        lifecycleScope.launch {
+            credentialManager = CredentialManager.create(context = requireContext())
+            try {
+
+                val result = credentialManager.getCredential(context = requireContext(), request = request)
+                val credential = result.credential
+
+                // Use googleIdTokenCredential and extract the ID to validate and
+                // authenticate on your server.
+                val googleIdTokenCredential = GoogleIdTokenCredential
+                    .createFrom(credential.data)
+
+                // You can use the members of googleIdTokenCredential directly for UX
+                // purposes, but don't use them to store or control access to user
+                // data. For that you first need to validate the token:
+                val googleIdToken = googleIdTokenCredential.idToken
+
+                val firebaseCredential = GoogleAuthProvider.getCredential(googleIdToken, null)
+                val authResult = auth.signInWithCredential(firebaseCredential).await()
+
+                if(authResult != null)
+                {
+                    withContext(Dispatchers.Main)
+                    {
+                        Toast.makeText(requireContext(), "Login exitoso", Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.action_Login_to_Scaffold)
+                    }
+
+                }
+                else
+                {
+                    withContext(Dispatchers.Main)
+                    {
+                        Toast.makeText(requireContext(), "Error en el login", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+            }
+            catch (e: GetCredentialException)
+            {
+                withContext(Dispatchers.Main)
+                {
+                    Toast.makeText(requireContext(), e.localizedMessage , Toast.LENGTH_SHORT).show()
+                }
+            }
         }
-    }*/
+    }
 
     private fun showResetPasswordDialog() {
         val builder = android.app.AlertDialog.Builder(requireContext())

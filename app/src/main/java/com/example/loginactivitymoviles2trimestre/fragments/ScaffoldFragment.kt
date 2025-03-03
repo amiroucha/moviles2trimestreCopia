@@ -82,7 +82,7 @@ class ScaffoldFragment : Fragment()
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        /* DRAWERLAYOUT */
+        /* DRAWERLAYOUT ----------------------------------------------------*/
         val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_scaffold) as NavHostFragment
         val navController = navHostFragment.navController
         val toggle = ActionBarDrawerToggle(
@@ -91,30 +91,6 @@ class ScaffoldFragment : Fragment()
         )
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-        /*
-        // Obtener la cabecera del NavigationView
-        val headerView = binding.navigationView.getHeaderView(0)
-        val imageViewProfile = headerView.findViewById<ImageView>(R.id.imageViewProfile)
-        val textViewUserName = headerView.findViewById<TextView>(R.id.textViewEmail)
-
-        // Obtener el usuario logueado
-        val firebaseUser = FirebaseAuth.getInstance().currentUser
-        if (firebaseUser != null) {
-            val usuarioLogueado = Usuario(
-                correo = firebaseUser.displayName ?: "Usuario",
-                imagen = firebaseUser.photoUrl?.toString() ?: ""
-            )
-            // Actualizar la cabecera con los datos del usuario
-            textViewUserName.text = usuarioLogueado.correo
-
-            Glide.with(requireContext())
-                .load(usuarioLogueado.imagen) //nombre de la imagen de la calse
-                .placeholder(R.drawable.login) // Imagen por defecto
-                .into(imageViewProfile)
-        } else {
-            null
-        }
-        */
 
         binding.navigationView.setNavigationItemSelectedListener {
 

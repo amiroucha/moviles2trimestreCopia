@@ -39,10 +39,10 @@
     <string name="telefonoTexto">123 123 321</string>
     <string name="correoTexto">amazon@gmail.com</string>
     <string name="wasText">Contact us</string>
-    <string name="mapaText">Visit us</string>
     <string name="mapaContDescrip">maps</string>
     <string name="irContacto">Redirecting to the contact. Press Google</string>
     <!--permisos-->
+    <string name="mapaTexto">Visit us</string>
     <string name="permisoRechazado">The permission has been previously rejected, you must activate it from settings</string>
     <string name="noAppMaps">There is no map app</string>
     <string name="permiUbica">Location permission is required to open the map</string>
@@ -89,4 +89,5 @@
     <string name="listas">Lists</string>
     <string name="usuario">Usuario</string>
 
+    <string name="idWeb">1020334167712-9h8apog6o7oomvlq3k5j0cgnhn1ugpkc.apps.googleusercontent.com</string>
 </resources>

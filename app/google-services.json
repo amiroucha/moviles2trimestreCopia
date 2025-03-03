@@ -12,7 +12,20 @@
           "package_name": "com.example.loginactivitymoviles2trimestre"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1020334167712-0p1uq7o0pvoid0tu85vp8ee2jdfga80b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.loginactivitymoviles2trimestre",
+            "certificate_hash": "bd13ec7e481cd297e98ff2d5ca581390e97b6253"
+          }
+        },
+        {
+          "client_id": "1020334167712-rvjhb1bm8fk50sa345ghrep1iit9doil.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCQOwFcJ7HBfBZ-QVArEVPI_NOwKn7YwTg"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020334167712-9h8apog6o7oomvlq3k5j0cgnhn1ugpkc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
