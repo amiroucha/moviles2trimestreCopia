@@ -21,7 +21,7 @@
                     android:layout_height="?attr/actionBarSize"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:menu="@menu/toolbar"
-                    app:title="Monitores "/>
+                    app:title="@string/listaMonitores"/>
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

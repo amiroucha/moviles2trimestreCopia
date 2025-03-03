@@ -1,9 +1,6 @@
 package com.example.loginactivitymoviles2trimestre.fragments
-import android.net.http.HttpException
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,8 +32,6 @@ class FavoritosFragment : Fragment() {
         adapter = MonitorAdapter(listaFavoritos)
         binding.recyclerMonitorFav.adapter = adapter
 
-
-
         return binding.root
     }
 
@@ -46,9 +41,14 @@ class FavoritosFragment : Fragment() {
         binding.recyclerMonitorFav.visibility = View.GONE
         binding.progressBarFav.visibility = View.VISIBLE
 
+        mostraRecyclerView()
+
         // Cargar favoritos al iniciar el fragmento
         CoroutineScope(Dispatchers.IO).launch {
             cargarFavoritos()
+            withContext(Dispatchers.Main) {
+                binding.swipeRefreshLayout.isRefreshing = false
+            }
         }
 
         // Configurar SwipeRefreshLayout
@@ -62,6 +62,7 @@ class FavoritosFragment : Fragment() {
             }
         }
     }
+
     private suspend fun cargarFavoritos() {
         listaFavoritos.clear()
 

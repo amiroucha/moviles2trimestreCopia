@@ -27,13 +27,13 @@
         <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Monitores" />
+                android:text="@string/listaMonitores" />
 
         <!-- Pestaña 2: Favoritos -->
         <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Favoritos" />
+                android:text="@string/favoritos" />
     </com.google.android.material.tabs.TabLayout>
 
 
