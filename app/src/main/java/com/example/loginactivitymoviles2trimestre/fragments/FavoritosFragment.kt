@@ -64,8 +64,9 @@ class FavoritosFragment : Fragment() {
         listaFavoritos.clear()
         binding.recyclerMonitorFav.visibility = View.GONE
         binding.progressBarFav.visibility = View.VISIBLE
-
-        db.collection("monitor")
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(1000)
+            db.collection("monitor")
             .whereEqualTo("favorito", true)
             .get()
             .addOnSuccessListener { result ->
@@ -80,18 +81,19 @@ class FavoritosFragment : Fragment() {
                     )
                     listaFavoritos.add(mon)
                 }
-
-                // Actualizar la UI
-                binding.progressBarFav.visibility = View.GONE
-                binding.recyclerMonitorFav.visibility = View.VISIBLE
                 adapter = MonitorAdapter(listaFavoritos)
+                binding.progressBarFav.visibility = View.GONE
+
+                binding.recyclerMonitorFav.visibility = View.VISIBLE
+
                 binding.recyclerMonitorFav.adapter = adapter
-                adapter.notifyDataSetChanged()
             }
             .addOnFailureListener { e ->
                 binding.progressBarFav.visibility = View.GONE
                 Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_LONG).show()
             }
+        }
+
     }
 
 
