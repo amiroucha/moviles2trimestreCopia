@@ -47,7 +47,7 @@ class ListaFragment : Fragment() {
                 obtenerMonitores()
                 // Detener la animación de carga
                 binding.swipeRefreshLayout.isRefreshing = false
-            }, 1500) // 2 segundos
+            }, 1000) // 1 segundos
         }
 
         // Cargamos los datos de Firestore
@@ -65,7 +65,7 @@ class ListaFragment : Fragment() {
         binding.progressBar.visibility = View.VISIBLE
         binding.recyclerViewMonitorLista.visibility = View.GONE
         CoroutineScope(Dispatchers.Main).launch {
-            delay(1500) // Esperar 1.5 segundos
+            delay(1000) // Esperar 1.5 segundos
             db.collection("monitor")
                 .get()
                 .addOnSuccessListener { documents ->
@@ -103,6 +103,7 @@ class ListaFragment : Fragment() {
     }
 
 }
+
 
 
 

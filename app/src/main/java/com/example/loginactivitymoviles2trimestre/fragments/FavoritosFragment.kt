@@ -2,6 +2,8 @@ package com.example.loginactivitymoviles2trimestre.fragments
 import android.net.http.HttpException
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,16 +12,12 @@ import android.widget.Toast
 import androidx.annotation.RequiresExtension
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.loginactivitymoviles2trimestre.MonitorAdapter
 import com.example.loginactivitymoviles2trimestre.Monitor
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentFavoritosBinding
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
 class FavoritosFragment : Fragment() {
     private lateinit var binding: FragmentFavoritosBinding
@@ -47,24 +45,24 @@ class FavoritosFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerMonitorFav.visibility = View.GONE
         binding.progressBarFav.visibility = View.VISIBLE
-        mostraRecyclerView()
-        //se carga al iniciar el fragment
+
+        // Cargar favoritos al iniciar el fragmento
         CoroutineScope(Dispatchers.IO).launch {
-            try {
-                cargarFavorites()// Cargar fav
-            } catch (e: HttpException) {
+            cargarFavoritos()
+        }
+
+        // Configurar SwipeRefreshLayout
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                delay(1000) // Simula una espera de 1 segundo
+                cargarFavoritos()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "Error HTTP: ${e.message}", Toast.LENGTH_LONG).show()
-                }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                    binding.swipeRefreshLayout.isRefreshing = false
                 }
             }
         }
-
     }
-    private suspend fun cargarFavorites() {
+    private suspend fun cargarFavoritos() {
         listaFavoritos.clear()
 
         withContext(Dispatchers.Main) {

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LoginActivityMoviles2Trimestre</string>
+    <string name="Textlogin">LOGIN</string>
+    <string name="amazon">AMAZON</string>
+    <string name="fondo">Home page</string>
+    <string name="user">User</string>
+    <string name="password">Password</string>
+    <string name="passwordRepetir">Repeat the password</string>
+    <string name="btn_acceder">Login</string>
+    <string name="btn_google">Google</string>
+    <string name="btn_facebook">Facebook</string>
+    <string name="PreguntaCuenta">Do you need an account?</string>
+    <string name="btn_registrar">Create account</string>
+    <string name="NuevaContrasenia">Recover password</string>
+    <string name="Cerrar">Close</string>
+    <string name="NuevaPassword">Redirecting to password recovery</string>
+    <string name="Entrando">Accessing your account</string>
+    <string name="accGoogle">Accessing by google</string>
+    <string name="accFaceb">Accessing by facebook</string>
+    <string name="registrar">Redirecting to the registration page</string>
+    <string name="MensError">Please complete all fields</string>
+    <string name="nocorreo">Invalid email</string>
+    <string name="nuevocorreo">Please enter a valid email .</string>
+    <string name="nocontra">Invalid password</string>
+    <string name="nuevacontra">Password must be between 6 and 10 characters .</string>
+    <string name="ok">OK</string>
+    <string name="textoEntrar">Sign in with:</string>
+    --aqui empiezan los string de los recyclerView--
+    <string name="titulo">Name</string>
+    <string name="precio">Price</string>
+    <string name="fav">Favorite button</string>
+    <string name="amazonFoto">amazon</string>
+    <string name="pantallaFoto">screen</string>
+    <string name="llamar">Call</string>
+    <string name="correo">E-mail</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="mapa">Google Maps</string>
+    <string name="telefonoTexto">123 123 321</string>
+    <string name="correoTexto">amazon@gmail.com</string>
+    <string name="wasText">Contact us</string>
+    <string name="mapaText">Visit us</string>
+    <string name="mapaContDescrip">maps</string>
+    <string name="irContacto">Redirecting to the contact. Press Google</string>
+    <!--permisos-->
+    <string name="permisoRechazado">The permission has been previously rejected, you must activate it from settings</string>
+    <string name="noAppMaps">There is no map app</string>
+    <string name="permiUbica">Location permission is required to open the map</string>
+    <string name="llamadaNoPosible">It is not possible to make the call without the app available</string>
+    <string name="noCorreoApp">No application found to send emails</string>
+    <string name="bienvenidaWas">Welcome! Contact us in case of any questions.</string>
+    <string name="noAppWas">WhatsApp application not found.</string>
+
+
+    <!--registro-->
+    <string name="registro">Register</string>
+    <string name="Registrarbtn">Sign Up</string>
+    <string name="fechanac">Date of Birth</string>
+    <string name="fechaFormato">%1$d/%2$d/%3$d</string><!--then replaced by day, month, and year-->
+
+    <string name="TextSelecciona">Select your date of birth</string>
+
+    <!--Scaffold........................................................................-->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="navigation_drawer_open">Hello</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string name="home">Home</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="contacto">Contact</string>
+    <string name="favoritos">Favorites</string>
+    <string name="fotoperfil">Profile Picture</string>
+    <string name="opciones">Options</string>
+    <string name="homeDrawer">Home</string>
+    <string name="favoritosString">Favorites</string>
+    <string name="cerrarSesion">Log Out</string>
+    <string name="buscarLupa">Search</string>
+    <string name="ajustes">Settings</string>
+    <string name="ordenar">Sort</string>
+    <string name="errorAutenticacion">User not registered</string>
+    <string name="errorAutenticacionFrase">Sign up first or check your password</string>
+    <string name="resetPass">Reset Password</string>
+    <string name="sendEmail">Send Email</string>
+    <string name="enviarCorreo">Email Sent</string>
+    <string name="botonCancelar">Cancel</string>
+    <string name="permisoUbicacionDenegado">Location permission denied. Cannot open the map.</string>
+    <string name="salir">Exit</string>
+    <string name="listaMonitores">Monitors</string>
+    <string name="Contacto">Contact Us</string>
+    <string name="listas">Lists</string>
+
+</resources>

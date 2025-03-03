@@ -77,15 +77,12 @@ class LoginFragment : Fragment() {
             loginViewModel.setPassword(it.toString())
         }
 
-        val posicionMensaje = view.findViewById<View>(R.id.anchor_view)
-
         // Crea un objeto SpannableString con el texto "Recuperar contraseña"
         val underlineText = SpannableString(getString(R.string.NuevaContrasenia))
         underlineText.setSpan(UnderlineSpan(), 0, underlineText.length, 0)// Aplica un subrayado a todo el texto dentro del objeto SpannableString
 
         binding.NuevaContrasenia.text = underlineText// Asigna el texto subrayado al TextView con el ID 'NuevaContrasenia'
 
-        val accionCerrar = getString(R.string.Cerrar)
 
         binding.NuevaContrasenia.setOnClickListener { //no necesito comprobar la contraseña porque se busca cambiarla
             showResetPasswordDialog()
