@@ -106,7 +106,6 @@ class ListaFragment : Fragment() {
 
 
 
-
 /*
             //METER LAS IMAGENES DE LA NUEVA FORMA EXPLICADA
             Monitor("KOORUI 24″ Full HD", "99,99€", false, R.drawable.monitor1),
