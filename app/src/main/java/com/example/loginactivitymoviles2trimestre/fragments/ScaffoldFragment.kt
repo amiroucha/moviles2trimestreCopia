@@ -140,13 +140,13 @@ class ScaffoldFragment : Fragment()
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
+                R.id.bnm_listaMonitores -> {
+                    navController.navigate(R.id.tabsfragment)
+                    true
+                }
                 R.id.bnm_home-> {
                     // Handle Dashboard navigation
                     navController.navigate(R.id.contactoFragment)
-                    true
-                }
-                R.id.bnm_listaMonitores -> {
-                    navController.navigate(R.id.tabsfragment)
                     true
                 }
                 R.id.bnm_contactoFragment -> {

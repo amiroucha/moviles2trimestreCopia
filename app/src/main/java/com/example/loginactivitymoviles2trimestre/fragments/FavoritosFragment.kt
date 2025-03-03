@@ -1,98 +1,115 @@
 package com.example.loginactivitymoviles2trimestre.fragments
+import android.net.http.HttpException
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresExtension
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.loginactivitymoviles2trimestre.MonitorAdapter
 import com.example.loginactivitymoviles2trimestre.Monitor
-import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentFavoritosBinding
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class FavoritosFragment : Fragment() {
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var binding: FragmentFavoritosBinding
     private lateinit var adapter: MonitorAdapter
-    private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
-    private var listaMonitores = mutableListOf<Monitor>()
-    private var listaFavoritos = mutableListOf<Int>() // Lista de IDs favoritos
+    private var listaFavoritos = mutableListOf<Monitor>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_favoritos, container, false)
-        recyclerView = view.findViewById(R.id.recyclerMonitorFav)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding = FragmentFavoritosBinding.inflate(inflater,container,false)
+        db = FirebaseFirestore.getInstance()
+        listaFavoritos = mutableListOf()
 
-        auth = FirebaseAuth.getInstance()
-        db = Firebase.firestore
+        adapter = MonitorAdapter(listaFavoritos)
+        binding.recyclerMonitorFav.adapter = adapter
 
-        cargarFavoritos()
 
-        return view
+
+        return binding.root
     }
 
-    private fun cargarFavoritos() {
-        val usuario = auth.currentUser?.email ?: return
-
-        db.collection("usuarios").document(usuario).get()
-            .addOnSuccessListener { document ->
-                if (document.exists()) {
-                    listaFavoritos = (document.get("fav") as? List<Long>)?.map { it.toInt() }?.toMutableList() ?: mutableListOf()
+    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.recyclerMonitorFav.visibility = View.GONE
+        binding.progressBarFav.visibility = View.VISIBLE
+        mostraRecyclerView()
+        //se carga al iniciar el fragment
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                cargarFavorites()// Cargar fav
+            } catch (e: HttpException) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Error HTTP: ${e.message}", Toast.LENGTH_LONG).show()
                 }
-                if (listaFavoritos.isNotEmpty()) {
-                    cargarMonitoresFavoritos()
-                } else {
-                    actualizarRecyclerView()
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
-            .addOnFailureListener {
-                println("Error al obtener favoritos")
-                actualizarRecyclerView()
-            }
-    }
-
-    private fun cargarMonitoresFavoritos() {
-        if (listaFavoritos.isEmpty()) {
-            actualizarRecyclerView()
-            return
         }
 
-        db.collection("monitor").whereIn("id", listaFavoritos).get()
-            .addOnSuccessListener { result ->
-                listaMonitores.clear()
-                for (document in result) {
-                    val monitor = Monitor(
-                        document.id.toInt(),
-                        document.get("nombre") as String,
-                        document.get("precio") as String,
-                        document.get("favorito") as Boolean,
-                        document.get("url") as String,
-                    )
-                    listaMonitores.add(monitor)
-                }
-                actualizarRecyclerView()
-            }
-            .addOnFailureListener {
-                println("Error al obtener monitores favoritos")
-                actualizarRecyclerView()
-            }
     }
+    private suspend fun cargarFavorites() {
+        listaFavoritos.clear()
 
-    private fun actualizarRecyclerView() {
-        if (!::adapter.isInitialized) {
-            adapter = MonitorAdapter(listaMonitores)
-            recyclerView.adapter = adapter
-        } else {
-            adapter.updateList(listaMonitores)
+        withContext(Dispatchers.Main) {
+            binding.recyclerMonitorFav.visibility = View.GONE
+            binding.progressBarFav.visibility = View.VISIBLE
+        }
+
+        try {
+            val result = db.collection("monitor")
+                .whereEqualTo("favorito", true)
+                .get().await()
+            for (document in result) {
+                val favorito = document.get("favorito") as Boolean
+                val mon = Monitor(
+                    document.id.hashCode(), // Usando hashCode como ID no me da error
+                    document.get("nombre") as String,
+                    document.get("precio") as String,
+                    favorito,
+                    document.get("url") as String,
+                )
+                listaFavoritos.add(mon)
+            }
+
+            //actualizar la vista
+            withContext(Dispatchers.Main) {
+                binding.progressBarFav.visibility = View.GONE
+                binding.recyclerMonitorFav.visibility = View.VISIBLE
+                // Actualizar el adaptador
+                adapter = MonitorAdapter(listaFavoritos)
+                binding.recyclerMonitorFav.adapter = adapter
+                adapter.notifyDataSetChanged()
+
+            }
+        } catch (e: Exception) {
+            Log.e("FirebaseError", "Error al obtener amigos: ", e)
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_LONG).show()
+            }
         }
     }
+
+    private fun mostraRecyclerView() {
+        adapter = MonitorAdapter(mutableListOf())
+        binding.recyclerMonitorFav.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerMonitorFav.adapter = adapter
+    }
+
 }

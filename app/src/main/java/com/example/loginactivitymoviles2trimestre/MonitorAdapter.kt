@@ -24,10 +24,7 @@ class MonitorAdapter( private var monitoresLista: MutableList<Monitor>)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonitorViewHolder {
-        val binding = FragmentItemBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+        val binding = FragmentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false
         )
         return MonitorViewHolder(binding, auth)
     }

@@ -9,6 +9,20 @@
     android:id="@+id/mainLayout"
     android:background="#4A574B">
 
+    <!-- ProgressBar que se mostrará durante 3 segundos -->
+    <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="349dp"
+            android:layout_height="87dp"
+            android:id="@+id/progressBarFav"
+            android:visibility="gone"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.322"
+            app:layout_constraintVertical_bias="0.413"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMonitorFav"
