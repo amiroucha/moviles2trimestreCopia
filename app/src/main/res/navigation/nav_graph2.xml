@@ -26,6 +26,11 @@ app:startDestination="@id/tabsfragment">
             android:name="com.example.loginactivitymoviles2trimestre.fragments.TabsFragment"
             android:label="@string/listas"
             tools:layout="@layout/fragment_tabs"/>
+    <fragment
+            android:id="@+id/homeFragment"
+            android:name="com.example.loginactivitymoviles2trimestre.fragments.HomeFragment"
+            android:label="@string/amazon"
+            tools:layout="@layout/fragment_home"/>
 
 
 </navigation>

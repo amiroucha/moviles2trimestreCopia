@@ -94,5 +94,9 @@
     <string name="idWeb">
         1020334167712-9h8apog6o7oomvlq3k5j0cgnhn1ugpkc.apps.googleusercontent.com
     </string>
+    <string name="amazonPresentacion">
+        En Amazon, nos esforzamos por ser la empresa más centrada en el cliente del mundo, ofreciendo una amplia
+        selección de productos, innovación y comodidad para hacer tu vida más fácil.
+    </string>
 
 </resources>

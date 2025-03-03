@@ -97,7 +97,7 @@ class ScaffoldFragment : Fragment()
                 item ->
             when (item.itemId) {
                 R.id.nav_home -> {
-                    navController.navigate(R.id.listaFragment)
+                    navController.navigate(R.id.homeFragment)
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
@@ -134,7 +134,7 @@ class ScaffoldFragment : Fragment()
                 }
                 R.id.bnm_home-> {
                     // Handle Dashboard navigation
-                    navController.navigate(R.id.contactoFragment)
+                    navController.navigate(R.id.homeFragment)
                     true
                 }
                 R.id.bnm_contactoFragment -> {
