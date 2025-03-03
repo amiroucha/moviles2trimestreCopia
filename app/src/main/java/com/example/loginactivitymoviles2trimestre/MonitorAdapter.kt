@@ -1,4 +1,5 @@
 package com.example.loginactivitymoviles2trimestre
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -35,11 +36,12 @@ class MonitorAdapter( private var monitoresLista: MutableList<Monitor>)
 
     override fun getItemCount(): Int = monitoresLista.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateList(nuevaLista: List<Monitor>) {
         monitoresLista.clear()
         monitoresLista.addAll(nuevaLista)
         itemsOriginal = ArrayList(nuevaLista) // Guardamos la lista original para filtrar
-        notifyDataSetChanged()
+        this.notifyDataSetChanged()
     }
 
     //para cargar los monitores
@@ -56,7 +58,7 @@ class MonitorAdapter( private var monitoresLista: MutableList<Monitor>)
                 .into(binding.imageMonitor) // imagen xml
 
             // Actualizar el ícono de favorito
-            if (data.favo) {
+            if (data.favorito) {
                 binding.favorito.setImageResource(R.drawable.fav_selected)
             } else {
                 binding.favorito.setImageResource(R.drawable.fav_unselected)
@@ -64,8 +66,8 @@ class MonitorAdapter( private var monitoresLista: MutableList<Monitor>)
 
             // Configurar el clic en el botón de favoritos
             binding.favorito.setOnClickListener {
-                data.favo = !data.favo
-                if (data.favo) {
+                data.favorito = !data.favorito
+                if (data.favorito) {
                     binding.favorito.setImageResource(R.drawable.fav_selected)
                 } else {
                     binding.favorito.setImageResource(R.drawable.fav_unselected)
@@ -75,13 +77,13 @@ class MonitorAdapter( private var monitoresLista: MutableList<Monitor>)
                 val db = Firebase.firestore
                 db.collection("monitor")
                     .document(data.id.toString())
-                    .update("favorito", data.favo)
+                    .update("favorito", data.favorito)
                     .addOnSuccessListener {
                         // Actualizar la lista de favoritos del usuario en Firestore
                         val usuario = auth.currentUser?.email.toString()
                         val usuarioRef = db.collection("usuarios").document(usuario)
 
-                        if (data.favo) {
+                        if (data.favorito) {
                             // Añadir a favoritos
                             usuarioRef.update("fav", FieldValue.arrayUnion(data.id))
                         } else {
@@ -96,6 +98,7 @@ class MonitorAdapter( private var monitoresLista: MutableList<Monitor>)
         }
     }
 }
+
 
 
 

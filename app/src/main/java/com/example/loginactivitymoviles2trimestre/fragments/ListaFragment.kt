@@ -11,7 +11,6 @@ import com.example.loginactivitymoviles2trimestre.Monitor
 import com.example.loginactivitymoviles2trimestre.MonitorAdapter
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentListaBinding
 import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.*
 

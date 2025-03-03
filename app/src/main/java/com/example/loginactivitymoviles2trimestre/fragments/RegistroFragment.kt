@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.login.viewmodels.RegisterViewModel
+import com.example.loginactivitymoviles2trimestre.fragments.viewModel.RegisterViewModel
 import com.example.loginactivitymoviles2trimestre.R
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentRegistroBinding
 import com.google.firebase.auth.FirebaseAuth

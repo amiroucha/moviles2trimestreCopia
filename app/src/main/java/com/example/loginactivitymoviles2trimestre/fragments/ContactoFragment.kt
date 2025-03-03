@@ -111,17 +111,6 @@ class ContactoFragment : Fragment() {
             Snackbar.make(binding.root, R.string.noAppMaps, Snackbar.LENGTH_LONG).show()
         }
     }
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == lOCATIONPERMISSIONREQUESTCODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                abrirMapa() // Solo abrir el mapa si el permiso fue concedido
-            } else {
-                Snackbar.make(binding.root, R.string.permisoUbicacionDenegado, Snackbar.LENGTH_LONG).show()
-            }
-        }
-    }
 
     private fun enviarEmail(){
         val destinatario = "amazon@gmail.com"

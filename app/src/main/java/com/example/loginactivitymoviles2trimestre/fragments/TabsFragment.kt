@@ -14,7 +14,7 @@ class TabsFragment : Fragment() {
 
     private lateinit var binding: FragmentTabsBinding
      override fun onCreateView(
-         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
          binding = FragmentTabsBinding.inflate(layoutInflater)
          return binding.root

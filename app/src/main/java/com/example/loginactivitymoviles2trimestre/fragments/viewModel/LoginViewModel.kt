@@ -1,19 +1,16 @@
-package com.example.login.viewmodels
+package com.example.loginactivitymoviles2trimestre.fragments.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class RegisterViewModel : ViewModel() {
+class LoginViewModel : ViewModel() {
 
     private val _email = MutableLiveData<String>()
-    val email: LiveData<String> get() = _email
+    //val email: LiveData<String> get() = _email
 
     private val _password = MutableLiveData<String>()
-    val password: LiveData<String> get() = _password
-
-    private val _date = MutableLiveData<String>()
-    val date: LiveData<String> get() = _date
+    //val password: LiveData<String> get() = _password
 
     private val _emailError = MutableLiveData<String?>()
     val emailError: LiveData<String?> get() = _emailError
@@ -21,12 +18,8 @@ class RegisterViewModel : ViewModel() {
     private val _passwordError = MutableLiveData<String?>()
     val passwordError: LiveData<String?> get() = _passwordError
 
-
-    private val _dateError = MutableLiveData<String?>()
-    val dateError: LiveData<String?> get() = _dateError
-
     private val _isFormValid = MutableLiveData<Boolean>()
-
+    //val isFormValid: LiveData<Boolean> get() = _isFormValid
 
     fun setEmail(email: String) {
         _email.value = email
@@ -38,26 +31,14 @@ class RegisterViewModel : ViewModel() {
         if (password.isNotEmpty()) _passwordError.value = null
     }
 
-    fun setDate(date: String) {
-        _date.value = date
-
-        if (date.isNotEmpty() && date != "d-M-yyyy") {
-            _dateError.value = null
-        }
-    }
-
     fun validateOnSubmit(): Boolean {
         val email = _email.value.orEmpty()
         val password = _password.value.orEmpty()
-        val date = _date.value.orEmpty()
-
 
         _emailError.value = if (email.isEmpty()) "El correo no puede estar vacío" else null
         _passwordError.value = if (password.isEmpty()) "La contraseña no puede estar vacía" else null
-        _dateError.value = if (date.isEmpty() || date == "d-M-yyyy") "Debes seleccionar una fecha" else null
 
-
-        val isValid = email.isNotEmpty() && password.isNotEmpty() && date.isNotEmpty() && date != "d-M-yyyy"
+        val isValid = email.isNotEmpty() && password.isNotEmpty()
         _isFormValid.value = isValid
         return isValid
     }

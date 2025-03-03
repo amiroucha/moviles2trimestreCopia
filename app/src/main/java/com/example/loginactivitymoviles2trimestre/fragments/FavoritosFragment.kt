@@ -71,7 +71,7 @@ class FavoritosFragment : Fragment() {
                 for (document in documents) {
                     val favorito = document.get("favorito") as Boolean
                     val mon = Monitor(
-                        document.id.hashCode(),
+                        document.id.toInt(),
                         document.getString("nombre") ?: "",
                         document.getString("precio") ?: "",
                         favorito,

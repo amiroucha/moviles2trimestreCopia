@@ -30,7 +30,7 @@ class ScaffoldFragment : Fragment()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View?
+    ): View
     {
         // Inflate the layout for this fragment
         binding = FragmentScaffoldBinding.inflate(layoutInflater)
@@ -150,9 +150,8 @@ class ScaffoldFragment : Fragment()
 
 
     private fun logOut(){
-
         // Después de cerrar sesión, redirigir al LoginActivity
-        val firebaseAuth = com.google.firebase.auth.FirebaseAuth.getInstance()
+        val firebaseAuth = FirebaseAuth.getInstance()
             firebaseAuth.signOut()
             findNavController().navigate(R.id.action_Scaffold_to_Login)
     }

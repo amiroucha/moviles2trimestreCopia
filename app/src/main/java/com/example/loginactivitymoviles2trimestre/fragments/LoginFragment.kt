@@ -21,7 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.example.loginactivitymoviles2trimestre.fragments.viewmodelCarp.LoginViewModel
+import com.example.loginactivitymoviles2trimestre.fragments.viewModel.LoginViewModel
 import com.google.firebase.auth.auth
 import androidx.core.widget.addTextChangedListener
 import androidx.credentials.CredentialManager
@@ -69,19 +69,15 @@ class LoginFragment : Fragment() {
             return
         }
 
-        loginViewModel.emailError.observe(viewLifecycleOwner) { error ->
-            binding.user.error = error
-        }
-
         loginViewModel.passwordError.observe(viewLifecycleOwner) { error ->
             binding.password.error = error
         }
-
-
+        loginViewModel.emailError.observe(viewLifecycleOwner) { error ->
+            binding.user.error = error
+        }
         binding.user.editText?.addTextChangedListener {
             loginViewModel.setEmail(it.toString())
         }
-
         binding.password.editText?.addTextChangedListener {
             loginViewModel.setPassword(it.toString())
         }

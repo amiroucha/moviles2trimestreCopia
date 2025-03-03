@@ -4,5 +4,5 @@ data class Monitor(
     val id: Int,
     val nombre:String,
     val precio:String,
-    var favo:Boolean,
+    var favorito:Boolean,
     var imagen:String)
