@@ -14,88 +14,108 @@ import com.example.loginactivitymoviles2trimestre.databinding.FragmentFavoritosB
 import com.google.firebase.firestore.FirebaseFirestore
 
 class FavoritosFragment : Fragment() {
+    // Declaración de variables de vinculación y Firebase
     private lateinit var binding: FragmentFavoritosBinding
-    private lateinit var adapter: MonitorAdapter
-    private lateinit var db: FirebaseFirestore
-    private var listaFavoritos = mutableListOf<Monitor>()
+    private lateinit var adapter: MonitorAdapter // Adaptador para el RecyclerView
+    private lateinit var db: FirebaseFirestore // Referencia a Firestore
+    private var listaFavoritos = mutableListOf<Monitor>() // Lista que almacenará los monitores favoritos
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
+        // Inflamos la vista del fragmento y vinculamos el binding
         binding = FragmentFavoritosBinding.inflate(inflater, container, false)
-        //db = FirebaseFirestore.getInstance()
-       // listaFavoritos = mutableListOf()
-
-        //adapter = MonitorAdapter(listaFavoritos)
-       // binding.recyclerMonitorFav.adapter = adapter
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Ocultamos el RecyclerView y mostramos el ProgressBar mientras se cargan los datos
         binding.recyclerMonitorFav.visibility = View.GONE
         binding.progressBarFav.visibility = View.VISIBLE
+
+        // Inicializamos Firestore y la lista de favoritos
         db = FirebaseFirestore.getInstance()
         listaFavoritos = mutableListOf()
 
+        // Configuramos el adaptador con una lista vacía inicialmente
         adapter = MonitorAdapter(listaFavoritos)
         binding.recyclerMonitorFav.adapter = adapter
+
+        // Configuramos el RecyclerView
         mostraRecyclerView()
+
+        // Configuramos el swipe para refrescar la lista
         setupSwipeRefresh()
+
+        // Cargamos los monitores favoritos desde Firestore
         cargarFavoritos()
     }
-    // Cuando el Fragment se reanuda, actualizamos la lista de monitores
+
+    // Se ejecuta cuando el fragmento se reanuda (por ejemplo, al volver de otra pantalla)
     override fun onResume() {
         super.onResume()
-        cargarFavoritos()
+        cargarFavoritos() // Recargamos la lista de favoritos
     }
+
     private fun setupSwipeRefresh() {
+        // Configuramos la funcionalidad de deslizar para refrescar la lista de favoritos
         binding.swipeRefreshLayout.setOnRefreshListener {
             Handler(Looper.getMainLooper()).postDelayed({
-                cargarFavoritos()
-                binding.swipeRefreshLayout.isRefreshing = false
-            }, 1000)
+                cargarFavoritos() // Recargamos los datos
+                binding.swipeRefreshLayout.isRefreshing = false // Ocultamos el icono de refresco
+            }, 1000) // Esperamos 1 segundo antes de recargar
         }
     }
 
     private fun cargarFavoritos() {
+        // Limpiamos la lista de favoritos antes de cargar nuevos datos
         listaFavoritos.clear()
+
+        // Ocultamos el RecyclerView y mostramos el ProgressBar mientras se cargan los datos
         binding.recyclerMonitorFav.visibility = View.GONE
         binding.progressBarFav.visibility = View.VISIBLE
 
+        // Consulta a Firestore para obtener solo los monitores marcados como favoritos
         db.collection("monitor")
-            .whereEqualTo("favorito", true)
+            .whereEqualTo("favorito", true) // Filtramos por aquellos con la propiedad favorito = true
             .get()
             .addOnSuccessListener { documents ->
+                // Recorremos los documentos obtenidos y los añadimos a la lista
                 for (document in documents) {
                     val favorito = document.get("favorito") as Boolean
                     val mon = Monitor(
                         document.id.toInt(),
-                        document.getString("nombre") ?: "",
+                        document.getString("nombre") ?: "", // Si el campo es nulo, asignamos una cadena vacía
                         document.getString("precio") ?: "",
                         favorito,
                         document.getString("url") ?: ""
                     )
-
                     listaFavoritos.add(mon)
                 }
 
+                // Ocultamos el ProgressBar y mostramos el RecyclerView con los datos cargados
                 binding.progressBarFav.visibility = View.GONE
                 binding.recyclerMonitorFav.visibility = View.VISIBLE
 
+                // Aquí podríamos actualizar el adaptador en lugar de crear uno nuevo cada vez
                 // adapter.updateList(listaFavoritos)
-                adapter = MonitorAdapter(listaFavoritos)
-                mostraRecyclerView()
+
+                adapter = MonitorAdapter(listaFavoritos) // Creamos un nuevo adaptador con la lista actualizada
+                mostraRecyclerView() // Volvemos a configurar el RecyclerView
             }
             .addOnFailureListener { _ ->
-                binding.progressBarFav.visibility = View.GONE //por si falla que no se quede alli
+                // Si hay un error en la consulta, ocultamos el ProgressBar y mostramos un mensaje de error
+                binding.progressBarFav.visibility = View.GONE
                 Toast.makeText(requireContext(), "Error cargando los monitores", Toast.LENGTH_SHORT).show()
             }
     }
 
     private fun mostraRecyclerView() {
+        // Configuramos el RecyclerView con un LinearLayoutManager para mostrar los elementos en una lista vertical
         binding.recyclerMonitorFav.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerMonitorFav.adapter = adapter
+        binding.recyclerMonitorFav.adapter = adapter // Asignamos el adaptador al RecyclerView
     }
 }
+
