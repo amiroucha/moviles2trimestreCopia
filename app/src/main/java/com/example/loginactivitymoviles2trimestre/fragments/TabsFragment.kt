@@ -26,6 +26,7 @@ class TabsFragment : Fragment() {
         val adapter = ViewPagerAdapter(requireActivity())
 
         binding.viewPager.adapter = adapter
+        //conecta TabLayout con ViewPager
         TabLayoutMediator(binding.tabLayout , binding.viewPager)
         { tab, position -> tab.text =
             when (position) {
@@ -34,10 +35,10 @@ class TabsFragment : Fragment() {
                 else -> ""
             }
 
-        }.attach()
+        }.attach()//se hace la conexion
     }
 class ViewPagerAdapter (fragmentActivity: FragmentActivity): FragmentStateAdapter(fragmentActivity) {
-
+    //moverse entre tabs
     override fun getItemCount(): Int = 2 //hay 2 tabs
     override fun createFragment(position: Int): Fragment {
 
