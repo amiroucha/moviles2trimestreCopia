@@ -1,6 +1,7 @@
 package com.example.loginactivitymoviles2trimestre.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -161,19 +162,19 @@ class ScaffoldFragment : Fragment()
             }
         }
     }
-   private fun busquedaFragments(query:String){
-        //para comunicar los fragmentos, si no no consigue buscar bien
+    private fun busquedaFragments(query:String){
+        //para comunicar los fragments
         val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_scaffold) as NavHostFragment
         val listaFragment = navHostFragment.childFragmentManager.primaryNavigationFragment as? ListaFragment
         listaFragment?.buscarMonitor(query) //llamamos a la función de listaFragment para buscar, le pasamos un texto
-   }
+    }
 
     private fun logOut(){
 
         // Después de cerrar sesión, redirigir al LoginActivity
         val firebaseAuth = FirebaseAuth.getInstance()
-            firebaseAuth.signOut()
-            findNavController().navigate(R.id.action_Scaffold_to_Login)
+        firebaseAuth.signOut()
+        findNavController().navigate(R.id.action_Scaffold_to_Login)
     }
 
 }

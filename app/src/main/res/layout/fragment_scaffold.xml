@@ -22,35 +22,33 @@
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:menu="@menu/toolbar"
                     app:title="@string/listaMonitores"/>
-            <FrameLayout
-                    android:id="@+id/frameLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1">
-                <androidx.fragment.app.FragmentContainerView
-                        android:id="@+id/nav_host_scaffold"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:navGraph="@navigation/nav_graph2"
-                        android:name="androidx.navigation.fragment.NavHostFragment"
-                        tools:context=".MainActivity"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-            </FrameLayout>
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                    android:id="@+id/bottom_navigation"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:layout_gravity="bottom"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:menu="@menu/bnm"/>
-
         </com.google.android.material.appbar.AppBarLayout>
-
+        <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+            <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/nav_host_scaffold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:navGraph="@navigation/nav_graph2"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
+                    tools:context=".MainActivity"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+        </FrameLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="bottom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/bnm"/>
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigation_view"
