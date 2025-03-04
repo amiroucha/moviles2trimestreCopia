@@ -82,7 +82,6 @@ class LoginFragment : Fragment() {
         // Crea un objeto SpannableString con el texto "Recuperar contraseña"
         val underlineText = SpannableString(getString(R.string.NuevaContrasenia))
         underlineText.setSpan(UnderlineSpan(), 0, underlineText.length, 0)// Aplica un subrayado a todo el texto dentro del objeto SpannableString
-
         binding.NuevaContrasenia.text = underlineText// Asigna el texto subrayado al TextView con el ID 'NuevaContrasenia'
 
 

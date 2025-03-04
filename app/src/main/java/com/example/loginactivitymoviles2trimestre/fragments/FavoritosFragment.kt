@@ -28,6 +28,13 @@ class FavoritosFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentFavoritosBinding.inflate(inflater, container, false)
+        // Inicializamos Firestore y la lista de favoritos
+        db = FirebaseFirestore.getInstance()
+        listaFavoritos = mutableListOf()
+
+        //adapter con una lista vacía inicialmente, sino se me cierra
+        adapter = MonitorAdapter(listaFavoritos)
+        binding.recyclerMonitorFav.adapter = adapter
         return binding.root
     }
 
@@ -35,14 +42,6 @@ class FavoritosFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerMonitorFav.visibility = View.GONE
         binding.progressBarFav.visibility = View.VISIBLE
-
-        // Inicializamos Firestore y la lista de favoritos
-        db = FirebaseFirestore.getInstance()
-        listaFavoritos = mutableListOf()
-
-        //adapter con una lista vacía inicialmente
-        adapter = MonitorAdapter(listaFavoritos)
-        binding.recyclerMonitorFav.adapter = adapter
 
         mostraRecyclerView()
 
