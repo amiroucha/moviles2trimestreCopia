@@ -41,11 +41,8 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var credentialManager: CredentialManager
-
     private val loginViewModel: LoginViewModel by viewModels()
 
-
-    //Interface para pasar información del Fragment al Activity
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -54,7 +51,6 @@ class LoginFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View {
         binding = FragmentLoginBinding.inflate(layoutInflater)
-        // Inflate the layout for this fragment
         return binding.root
     }
 
@@ -64,11 +60,12 @@ class LoginFragment : Fragment() {
         //para establecer la conexion con el activity
 
         auth = Firebase.auth
+        //si sigue logueado el usuario se va al scaffold
         if (auth.currentUser != null) {
             findNavController().navigate(R.id.action_Login_to_Scaffold)
             return
         }
-
+        // Observadores para los errores de validación de email y contraseña
         loginViewModel.passwordError.observe(viewLifecycleOwner) { error ->
             binding.password.error = error
         }
@@ -90,7 +87,7 @@ class LoginFragment : Fragment() {
 
 
         binding.NuevaContrasenia.setOnClickListener { //no necesito comprobar la contraseña porque se busca cambiarla
-            showResetPasswordDialog()
+            recuperarContraDialog()
         }
 
         binding.botonAcceder.setOnClickListener {
@@ -118,7 +115,7 @@ class LoginFragment : Fragment() {
                                 } else {
                                     errorAutenticacion()
                                 }
-                            }, 2000) // Espera 2 segundos antes de continuar
+                            }, 1000) // Espera 1 segundos antes de continuar
                         }
                 }
             }
@@ -139,8 +136,7 @@ class LoginFragment : Fragment() {
         binding.botonRegistrar.setOnClickListener{
             //redirigir a REgistro
             findNavController().navigate(R.id.action_Login_to_Registro)
-//            val intent = Intent(this, RegistroActivity::class.java)
-//            startActivity(intent)
+//
         }
 
     }
@@ -152,15 +148,15 @@ class LoginFragment : Fragment() {
     }
 
     private fun signInWithGoogle(){
-        val auth = FirebaseAuth.getInstance() //si no inicio esto aquí, no me inicia sesiñón
+        val auth = FirebaseAuth.getInstance() // inicializar FirebaseAuth
 
         val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
-            .setFilterByAuthorizedAccounts(false) //con esto en false ya me deja elegir cuenta
+            .setFilterByAuthorizedAccounts(false) //false y elegir cuenta de Google
             .setServerClientId(getString(R.string.idWeb))
             //.setNonce(hashedNonce)
-            .setAutoSelectEnabled(false) //con esto en false no selecciona automáticamente una cuenta de google
+            .setAutoSelectEnabled(false) // No selecciona automáticamente una cuenta
             .build()
-
+        //solicitud para obtener las credenciales
         val request: GetCredentialRequest = GetCredentialRequest.Builder()
             .addCredentialOption(googleIdOption)
             .build()
@@ -170,34 +166,24 @@ class LoginFragment : Fragment() {
             try {
 
                 val result = credentialManager.getCredential(context = requireContext(), request = request)
-                val credential = result.credential
+                val credential = result.credential //obtener credenciales
 
-                // Use googleIdTokenCredential and extract the ID to validate and
-                // authenticate on your server.
-                val googleIdTokenCredential = GoogleIdTokenCredential
-                    .createFrom(credential.data)
-
-                // You can use the members of googleIdTokenCredential directly for UX
-                // purposes, but don't use them to store or control access to user
-                // data. For that you first need to validate the token:
-                val googleIdToken = googleIdTokenCredential.idToken
-
+                val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
+                val googleIdToken = googleIdTokenCredential.idToken // Extraemos el token de ID de Google
+                // crea una credencial de Firebase usando el token de ID de Google
                 val firebaseCredential = GoogleAuthProvider.getCredential(googleIdToken, null)
+                // Intento autenticar al usuario con la credencial
                 val authResult = auth.signInWithCredential(firebaseCredential).await()
 
-                if(authResult != null)
-                {
+                if(authResult != null) {
                     withContext(Dispatchers.Main)
                     {
-                        Toast.makeText(requireContext(), "Login exitoso", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "...Login exitoso...", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(R.id.action_Login_to_Scaffold)
                     }
-
                 }
-                else
-                {
-                    withContext(Dispatchers.Main)
-                    {
+                else {
+                    withContext(Dispatchers.Main) {
                         Toast.makeText(requireContext(), "Error en el login", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -212,25 +198,27 @@ class LoginFragment : Fragment() {
             }
         }
     }
-
-    private fun showResetPasswordDialog() {
+    //recuperar contrasenia
+    private fun recuperarContraDialog() {
+        //constructor para el cuadro de diálogo
         val builder = android.app.AlertDialog.Builder(requireContext())
         val inflater = LayoutInflater.from(requireContext())
         val dialogView = inflater.inflate(R.layout.fragment_alert_dialog, null)
-
+        //referencia del campo texto
         val emailInput = dialogView.findViewById<TextInputLayout>(R.id.correoResetPass)
             .editText
-
-        val sendButton = dialogView.findViewById<Button>(R.id.sendEmailResetPassword)
+        //referencia del campo bton
+        val enviarBtn = dialogView.findViewById<Button>(R.id.sendEmailResetPassword)
 
         builder.setView(dialogView)
+        // AlertDialog con la vista configurada
         val alertDialog = builder.create()
 
-        sendButton.setOnClickListener {
+        enviarBtn.setOnClickListener {
             val email = emailInput?.text.toString().trim()
             if (email.isNotEmpty()) {
                 resetPassword(email)
-                alertDialog.dismiss()
+                alertDialog.dismiss()//cierra el cuadro de diálogo
             } else {
                 Toast.makeText(requireContext(), "Introduce un correo válido", Toast.LENGTH_SHORT).show()
             }
