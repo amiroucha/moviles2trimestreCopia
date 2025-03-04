@@ -3,7 +3,6 @@ package com.example.loginactivitymoviles2trimestre.fragments
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -92,13 +91,7 @@ class ListaFragment : Fragment() {
         }
     }
 
-    // Método para filtrar los monitores según un texto de búsqueda
-    fun buscarMonitor(text: String) {
-        val filteredList = monitores.filter {
-            it.nombre.contains(text, ignoreCase = true) // Filtramos por nombre, ignorando mayúsculas y minúsculas
-        }
-        adapter.updateList(filteredList)
-    }
+
 
     private fun setupRecyclerView() {
         adapter = MonitorAdapter(mutableListOf())
