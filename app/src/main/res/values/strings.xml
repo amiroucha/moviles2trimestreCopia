@@ -99,5 +99,7 @@
         selección de productos, innovación y comodidad para hacer tu vida más fácil.
     </string>
     <string name="logueatelogin">Logueate en Login.</string>
+    <string name="login_exitoso">...Login exitoso...</string>
+    <string name="error_en_el_login">Error en el login</string>
 
 </resources>

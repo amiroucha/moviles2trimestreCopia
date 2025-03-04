@@ -153,7 +153,6 @@ class LoginFragment : Fragment() {
         val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
             .setFilterByAuthorizedAccounts(false) //false y elegir cuenta de Google
             .setServerClientId(getString(R.string.idWeb))
-            //.setNonce(hashedNonce)
             .setAutoSelectEnabled(false) // No selecciona automáticamente una cuenta
             .build()
         //solicitud para obtener las credenciales
@@ -178,13 +177,13 @@ class LoginFragment : Fragment() {
                 if(authResult != null) {
                     withContext(Dispatchers.Main)
                     {
-                        Toast.makeText(requireContext(), "...Login exitoso...", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.login_exitoso), Toast.LENGTH_SHORT).show()
                         findNavController().navigate(R.id.action_Login_to_Scaffold)
                     }
                 }
                 else {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "Error en el login", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.error_en_el_login), Toast.LENGTH_SHORT).show()
                     }
                 }
 
