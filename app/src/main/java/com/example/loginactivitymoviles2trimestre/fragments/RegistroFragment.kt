@@ -178,7 +178,6 @@ class RegistroFragment : Fragment() {
         //he tenido que añadir binding.root para que me pillase el findViewById
         val usuario = binding.userReg.editText?.text.toString().trim()
         val contrasenia = binding.password.editText?.text.toString().trim()
-        val contraseniaRepetir = binding.password.editText?.text.toString().trim()
 
         return when { //compruebo que tengan un formato valido
             !esCorreoValido(usuario) -> {
@@ -186,9 +185,6 @@ class RegistroFragment : Fragment() {
                 null
             }
             !esContraseniaValida(contrasenia) -> {
-                mostrarAlertaContraseniaInvalida()
-                null
-            }!esContraseniaValida(contraseniaRepetir) -> {
                 mostrarAlertaContraseniaInvalida()
                 null
             }
