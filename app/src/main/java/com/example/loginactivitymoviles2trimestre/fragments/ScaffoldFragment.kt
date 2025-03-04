@@ -1,7 +1,6 @@
 package com.example.loginactivitymoviles2trimestre.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -34,7 +33,6 @@ class ScaffoldFragment : Fragment()
         savedInstanceState: Bundle?
     ): View
     {
-        // Inflate the layout for this fragment
         binding = FragmentScaffoldBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -44,12 +42,12 @@ class ScaffoldFragment : Fragment()
 
         val user = FirebaseAuth.getInstance().currentUser?.email
         val header = binding.navigationView.getHeaderView(0)
-        val textView: TextView= header.findViewById(R.id.textViewEmail)
+        val texto: TextView= header.findViewById(R.id.textViewEmail)
 
         if (user != null){
-            textView.text = user
+            texto.text = user
         }else{
-            textView.text = getString(R.string.usuario)
+            texto.text = getString(R.string.usuario)
         }
 
         /* TOOLBAR ------------------------------------------------------------*/
@@ -65,20 +63,7 @@ class ScaffoldFragment : Fragment()
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.action_search -> {
-                        val searchView = menuItem.actionView as SearchView
-                        //searchView.isIconified = false //esto es para expandir la barra al tocarlo
-                        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                            override fun onQueryTextSubmit(query: String?): Boolean {
-                                busquedaFragments(query?:"") //aqui coge la consulta
-                                searchView.clearFocus() //esto es para cerrar el teclado
-                                return false
-                            }
 
-                            override fun onQueryTextChange(newText: String): Boolean {
-                                busquedaFragments(newText)
-                                return true //este es para filtrar en tiempo real mientras escribe
-                            }
-                        })
                         true
                     }
 
@@ -100,6 +85,7 @@ class ScaffoldFragment : Fragment()
         /* DRAWERLAYOUT ----------------------------------------------------*/
         val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_scaffold) as NavHostFragment
         val navController = navHostFragment.navController
+        //apertura y cierre del drawer
         val toggle = ActionBarDrawerToggle(
             requireActivity(), binding.drawerLayout, binding.toolbar,
             R.string.navigation_drawer_open, R.string.navigation_drawer_close
@@ -107,9 +93,7 @@ class ScaffoldFragment : Fragment()
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        binding.navigationView.setNavigationItemSelectedListener {
-
-                item ->
+        binding.navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
                     navController.navigate(R.id.homeFragment)
@@ -161,12 +145,6 @@ class ScaffoldFragment : Fragment()
                 else -> false
             }
         }
-    }
-    private fun busquedaFragments(query:String){
-        //para comunicar los fragments
-        val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_scaffold) as NavHostFragment
-        val listaFragment = navHostFragment.childFragmentManager.primaryNavigationFragment as? ListaFragment
-        listaFragment?.buscarMonitor(query) //llamamos a la función de listaFragment para buscar, le pasamos un texto
     }
 
     private fun logOut(){
