@@ -64,10 +64,9 @@ class ScaffoldFragment : Fragment()
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.action_search -> {
-
-                        //val searchView = menuItem.actionView as SearchView
-                       // searchView.isIconified = false //esto es para expandir la barra al tocarlo
-                        /*searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                        val searchView = menuItem.actionView as SearchView
+                        //searchView.isIconified = false //esto es para expandir la barra al tocarlo
+                        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                             override fun onQueryTextSubmit(query: String?): Boolean {
                                 busquedaFragments(query?:"") //aqui coge la consulta
                                 searchView.clearFocus() //esto es para cerrar el teclado
@@ -78,7 +77,7 @@ class ScaffoldFragment : Fragment()
                                 busquedaFragments(newText)
                                 return true //este es para filtrar en tiempo real mientras escribe
                             }
-                        })*/
+                        })
                         true
                     }
 
@@ -162,12 +161,12 @@ class ScaffoldFragment : Fragment()
             }
         }
     }
-   /* private fun busquedaFragments(query:String){
+   private fun busquedaFragments(query:String){
         //para comunicar los fragmentos, si no no consigue buscar bien
         val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_scaffold) as NavHostFragment
         val listaFragment = navHostFragment.childFragmentManager.primaryNavigationFragment as? ListaFragment
         listaFragment?.buscarMonitor(query) //llamamos a la función de listaFragment para buscar, le pasamos un texto
-    }*/
+   }
 
     private fun logOut(){
 

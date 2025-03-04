@@ -1,5 +1,4 @@
 package com.example.loginactivitymoviles2trimestre
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -20,8 +19,6 @@ class MonitorAdapter( private var monitoresLista: MutableList<Monitor>)
     private var itemsOriginal: List<Monitor> = ArrayList(monitoresLista)
     private val auth: FirebaseAuth = Firebase.auth
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonitorViewHolder {
         val binding = FragmentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false
         )
@@ -30,13 +27,10 @@ class MonitorAdapter( private var monitoresLista: MutableList<Monitor>)
     //actualizar los datos de la vista.
     override fun onBindViewHolder(holder: MonitorViewHolder, position: Int) {
         holder.bind(monitoresLista[position])
-
-
     }
 
     override fun getItemCount(): Int = monitoresLista.size
 
-    @SuppressLint("NotifyDataSetChanged")
     fun updateList(nuevaLista: List<Monitor>) {
         monitoresLista.clear()
         monitoresLista.addAll(nuevaLista)

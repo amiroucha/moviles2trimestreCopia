@@ -91,14 +91,14 @@ class ListaFragment : Fragment() {
                 }
         }
     }
-    /*
+
     fun buscarMonitor(text: String) {
         //coge el nombre de los monitores parecidos
         val filteredList = monitores.filter {
             it.nombre.contains(text, ignoreCase = true)
         }
         adapter.updateList(filteredList) //actualizar la vista
-    }*/
+    }
     private fun setupRecyclerView() {
         adapter = MonitorAdapter(mutableListOf()) // Inicialmente vacío
         binding.recyclerViewMonitorLista.layoutManager = LinearLayoutManager(requireContext())
