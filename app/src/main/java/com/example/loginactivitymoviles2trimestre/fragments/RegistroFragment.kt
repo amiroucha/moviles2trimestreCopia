@@ -118,7 +118,8 @@ class RegistroFragment : Fragment() {
 
 
         binding.botonGoogle.setOnClickListener{
-
+            //enseñar el mensaje snackbar
+            Snackbar.make(binding.root, getString(R.string.logueatelogin), Snackbar.LENGTH_LONG).show()
         }
         binding.botonFacebook.setOnClickListener{
             //enseñar el mensaje snackbar
@@ -137,11 +138,12 @@ class RegistroFragment : Fragment() {
         ).show()
     }
     private fun crearCuenta(email: String, password: String, fecha: String) {
+        // Llamada a Firebase Authentication
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
-                    user?.let {
+                    user?.let { //comprueba que no es null
                         val db = FirebaseFirestore.getInstance()
 
                         // Crear un array de enteros vacío
@@ -177,6 +179,7 @@ class RegistroFragment : Fragment() {
         val usuario = binding.userReg.editText?.text.toString().trim()
         val contrasenia = binding.password.editText?.text.toString().trim()
         val contraseniaRepetir = binding.password.editText?.text.toString().trim()
+
         return when { //compruebo que tengan un formato valido
             !esCorreoValido(usuario) -> {
                 mostrarAlertaCorreoInvalido()
