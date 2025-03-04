@@ -123,8 +123,8 @@ class ScaffoldFragment : Fragment()
                     true
                 }
 
-                R.id.nav_fav -> {
-                    navController.navigate(R.id.favoritosFragment)
+                R.id.nav_listaMonitores -> {
+                    navController.navigate(R.id.tabsfragment)
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }

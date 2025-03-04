@@ -3,15 +3,14 @@
 
     <item android:title="@string/opciones">
         <menu>
-
+            <item
+                    android:id="@+id/nav_listaMonitores"
+                    android:icon="@drawable/ic_monitoreslista"
+                    android:title="@string/listaMonitores" />
             <item
                     android:id="@+id/nav_home"
                     android:icon="@drawable/ic_home"
-                    android:title="@string/listaMonitores" />
-            <item
-                    android:id="@+id/nav_fav"
-                    android:icon="@drawable/ic_fav"
-                    android:title="@string/favoritos" />
+                    android:title="@string/home" />
             <item
                     android:id="@+id/nav_contactos"
                     android:icon="@drawable/ic_contacto"
