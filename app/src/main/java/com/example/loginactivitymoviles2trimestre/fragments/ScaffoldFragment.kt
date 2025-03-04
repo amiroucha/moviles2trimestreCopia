@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.GravityCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -63,7 +64,21 @@ class ScaffoldFragment : Fragment()
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.action_search -> {
-                        // Manejar la selección del item1
+
+                        //val searchView = menuItem.actionView as SearchView
+                       // searchView.isIconified = false //esto es para expandir la barra al tocarlo
+                        /*searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                            override fun onQueryTextSubmit(query: String?): Boolean {
+                                busquedaFragments(query?:"") //aqui coge la consulta
+                                searchView.clearFocus() //esto es para cerrar el teclado
+                                return false
+                            }
+
+                            override fun onQueryTextChange(newText: String): Boolean {
+                                busquedaFragments(newText)
+                                return true //este es para filtrar en tiempo real mientras escribe
+                            }
+                        })*/
                         true
                     }
 
@@ -147,9 +162,15 @@ class ScaffoldFragment : Fragment()
             }
         }
     }
-
+   /* private fun busquedaFragments(query:String){
+        //para comunicar los fragmentos, si no no consigue buscar bien
+        val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_scaffold) as NavHostFragment
+        val listaFragment = navHostFragment.childFragmentManager.primaryNavigationFragment as? ListaFragment
+        listaFragment?.buscarMonitor(query) //llamamos a la función de listaFragment para buscar, le pasamos un texto
+    }*/
 
     private fun logOut(){
+
         // Después de cerrar sesión, redirigir al LoginActivity
         val firebaseAuth = FirebaseAuth.getInstance()
             firebaseAuth.signOut()

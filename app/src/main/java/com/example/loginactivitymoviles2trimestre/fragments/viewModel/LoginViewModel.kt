@@ -12,10 +12,10 @@ class LoginViewModel : ViewModel() {
     private val _password = MutableLiveData<String>()
     //val password: LiveData<String> get() = _password
 
-    private val _emailError = MutableLiveData<String?>()
+    private val _emailError = MutableLiveData<String?>() //para almacenar los errores
     val emailError: LiveData<String?> get() = _emailError
 
-    private val _passwordError = MutableLiveData<String?>()
+    private val _passwordError = MutableLiveData<String?>() //para almacenar los errores
     val passwordError: LiveData<String?> get() = _passwordError
 
     private val _isFormValid = MutableLiveData<Boolean>()
@@ -24,11 +24,13 @@ class LoginViewModel : ViewModel() {
     fun setEmail(email: String) {
         _email.value = email
         if (email.isNotEmpty()) _emailError.value = null
+        //cuando ya no esta vaciose quita el mensaje de errir
     }
 
     fun setPassword(password: String) {
         _password.value = password
         if (password.isNotEmpty()) _passwordError.value = null
+    //cuando ya no esta vaciose quita el mensaje de errir
     }
 
     fun validateOnSubmit(): Boolean {
