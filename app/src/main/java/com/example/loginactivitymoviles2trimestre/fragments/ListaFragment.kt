@@ -19,6 +19,7 @@ class ListaFragment : Fragment() {
 
     private lateinit var binding: FragmentListaBinding
     private lateinit var adapter: MonitorAdapter
+    // monitores obtenidos
     private var monitores = mutableListOf<Monitor>()
     private val db = Firebase.firestore
 
@@ -32,78 +33,76 @@ class ListaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.recyclerViewMonitorLista.visibility = View.GONE
         binding.progressBar.visibility = View.VISIBLE
 
-        // Inicializamos el RecyclerView con una lista vacía
         setupRecyclerView()
-        //swipe de recarga
+
         binding.swipeRefreshLayout.setOnRefreshListener {
-            // Simular una recarga de 2 segundos
             Handler(Looper.getMainLooper()).postDelayed({
-                // Recargar los datos
-                obtenerMonitores()
-                // Detener la animación de carga
-                binding.swipeRefreshLayout.isRefreshing = false
-            }, 1000) // 1 segundos
+                obtenerMonitores() // Recargar los datos
+                binding.swipeRefreshLayout.isRefreshing = false // Detener la animación de carga
+            }, 1000) // Esperar 1 segundo antes de actualizar
         }
 
-        // Cargamos los datos de Firestore
+        // Cargamos los monitores
         obtenerMonitores()
     }
 
-    // Cuando el Fragment se reanuda, actualizamos la lista de monitores
+    // asegurarnos de que la lista siempre esté actualizada
     override fun onResume() {
         super.onResume()
         obtenerMonitores()
     }
 
     private fun obtenerMonitores() {
-        // Mostrar ProgressBar y ocultar RecyclerView al iniciar la carga
         binding.progressBar.visibility = View.VISIBLE
         binding.recyclerViewMonitorLista.visibility = View.GONE
+
         CoroutineScope(Dispatchers.Main).launch {
-            delay(1000) // Esperar 1.5 segundos
+            delay(700) // Simulamos una espera de 1 segundo
+
             db.collection("monitor")
                 .get()
                 .addOnSuccessListener { documents ->
-                    monitores.clear()
+                    monitores.clear() // Limpiamos la lista antes de agregar los nuevos datos
+
                     for (document in documents) {
                         val monitor = Monitor(
                             document.id.toInt(),
                             document.get("nombre") as String,
                             document.get("precio") as String,
                             document.get("favorito") as Boolean,
-                            document.get("url") as String,
+                            document.get("url") as String
                         )
-                        monitores.add(monitor)
+                        monitores.add(monitor) // Agregamos el monitor a la lista
                     }
 
-                    // Actualizamos los datos en el RecyclerView
                     adapter.updateList(monitores)
 
                     binding.progressBar.visibility = View.GONE
-                    // Mostramos el RecyclerView
                     binding.recyclerViewMonitorLista.visibility = View.VISIBLE
                 }
                 .addOnFailureListener { _ ->
-                    binding.progressBar.visibility = View.GONE //por si falla que no se quede alli
+                    // Si falla, ocultamos el ProgressBar y mensaje de error
+                    binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), "Error cargando los monitores", Toast.LENGTH_SHORT).show()
                 }
         }
     }
 
+    // Método para filtrar los monitores según un texto de búsqueda
     fun buscarMonitor(text: String) {
-        //coge el nombre de los monitores parecidos
         val filteredList = monitores.filter {
-            it.nombre.contains(text, ignoreCase = true)
+            it.nombre.contains(text, ignoreCase = true) // Filtramos por nombre, ignorando mayúsculas y minúsculas
         }
-        adapter.updateList(filteredList) //actualizar la vista
-    }
-    private fun setupRecyclerView() {
-        adapter = MonitorAdapter(mutableListOf()) // Inicialmente vacío
-        binding.recyclerViewMonitorLista.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerViewMonitorLista.adapter = adapter
+        adapter.updateList(filteredList)
     }
 
+    private fun setupRecyclerView() {
+        adapter = MonitorAdapter(mutableListOf())
+        binding.recyclerViewMonitorLista.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewMonitorLista.adapter = adapter // Asignamos el adaptador al RecyclerView
+    }
 }

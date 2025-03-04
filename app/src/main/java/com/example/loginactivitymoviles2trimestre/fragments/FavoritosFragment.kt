@@ -12,6 +12,10 @@ import com.example.loginactivitymoviles2trimestre.MonitorAdapter
 import com.example.loginactivitymoviles2trimestre.Monitor
 import com.example.loginactivitymoviles2trimestre.databinding.FragmentFavoritosBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class FavoritosFragment : Fragment() {
 
@@ -68,38 +72,40 @@ class FavoritosFragment : Fragment() {
 
         binding.recyclerMonitorFav.visibility = View.GONE
         binding.progressBarFav.visibility = View.VISIBLE
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(600) // Simulamos una espera de 1 segundo
+            // obtener solo los monitores marcados como favoritos
+            db.collection("monitor")
+                .whereEqualTo("favorito", true) //favorito = true
+                .get()
+                .addOnSuccessListener { documents ->
+                    // Recorremos los documentos obtenidos y los añadimos a la lista
+                    for (document in documents) {
+                        val favorito = document.get("favorito") as Boolean
+                        val mon = Monitor(
+                            document.id.toInt(),
+                            document.getString("nombre") ?: "",
+                            document.getString("precio") ?: "",
+                            favorito,
+                            document.getString("url") ?: ""
+                        )
+                        listaFavoritos.add(mon)
+                    }
 
-        // obtener solo los monitores marcados como favoritos
-        db.collection("monitor")
-            .whereEqualTo("favorito", true) //favorito = true
-            .get()
-            .addOnSuccessListener { documents ->
-                // Recorremos los documentos obtenidos y los añadimos a la lista
-                for (document in documents) {
-                    val favorito = document.get("favorito") as Boolean
-                    val mon = Monitor(
-                        document.id.toInt(),
-                        document.getString("nombre") ?: "",
-                        document.getString("precio") ?: "",
-                        favorito,
-                        document.getString("url") ?: ""
-                    )
-                    listaFavoritos.add(mon)
+                    // Ocultamos el ProgressBar y mostramos el RecyclerView con los datos cargados
+                    binding.progressBarFav.visibility = View.GONE
+                    binding.recyclerMonitorFav.visibility = View.VISIBLE
+                    // adapter.updateList(listaFavoritos)
+
+                    adapter = MonitorAdapter(listaFavoritos) // nuevo adaptador con la lista actualizada
+                    mostraRecyclerView() // Volvemos a configurar el RecyclerView
                 }
-
-                // Ocultamos el ProgressBar y mostramos el RecyclerView con los datos cargados
-                binding.progressBarFav.visibility = View.GONE
-                binding.recyclerMonitorFav.visibility = View.VISIBLE
-                // adapter.updateList(listaFavoritos)
-
-                adapter = MonitorAdapter(listaFavoritos) // nuevo adaptador con la lista actualizada
-                mostraRecyclerView() // Volvemos a configurar el RecyclerView
-            }
-            .addOnFailureListener { _ ->
-                // Si hay un error , ocultamos el ProgressBar y mostramos un mensaje de error
-                binding.progressBarFav.visibility = View.GONE
-                Toast.makeText(requireContext(), "Error cargando los monitores", Toast.LENGTH_SHORT).show()
-            }
+                .addOnFailureListener { _ ->
+                    // Si hay un error , ocultamos el ProgressBar y mostramos un mensaje de error
+                    binding.progressBarFav.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Error cargando los monitores", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     private fun mostraRecyclerView() {
