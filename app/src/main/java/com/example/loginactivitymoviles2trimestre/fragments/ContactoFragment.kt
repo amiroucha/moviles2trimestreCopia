@@ -16,78 +16,76 @@ import com.google.android.material.snackbar.Snackbar
 
 
 class ContactoFragment : Fragment() {
-    private lateinit var binding: FragmentContactoBinding //Declaro una variable de vinculacion
-    private val cALLPHONEPERMISSIONREQUEST = 123
-    private val lOCATIONPERMISSIONREQUESTCODE = 124
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    private lateinit var binding: FragmentContactoBinding
+    private val cALLPHONEPERMISSIONREQUEST = 123 // Código de solicitud para el permiso de llamadas
+
+    private val lOCATIONPERMISSIONREQUESTCODE = 124 // Código de solicitud para el permiso de ubicación
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
+        // Se infla el layout
         binding = FragmentContactoBinding.inflate(inflater, container, false)
         return binding.root
-
     }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //asiganr el permiso de llamar al botn de llamar de activityContacto
+
         binding.botonllamar.setOnClickListener{
-            //Verificamos si tenemos el permiso o no
+            // ver si tenemos permiso para hacer llamadas
             if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) ==
                 PackageManager.PERMISSION_GRANTED) {
-                  //todo ok entonces llma
+
                 val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:123123321"))
-                //busca una app para hacer la accion
+
+                //ver si existe app para llamar
                 if (intent.resolveActivity(requireContext().packageManager) != null){
-                    startActivity(intent)
-                }
-                else{
+                    startActivity(intent) // Iniciar la llamada
+                } else {
                     Snackbar.make(binding.root, R.string.llamadaNoPosible, Snackbar.LENGTH_LONG).show()
                 }
-            }else{ //si no tenemos el permiso se lo solicitamos al usuario
-                //el usuario ya habia rechazado el permiso anteriormente, entonces tiene que activarlo desde ajustes
-                if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),android.Manifest.permission.CALL_PHONE )){
+            } else {
+                // no tenemos el permiso, lo pedimos al usuario
+                if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), android.Manifest.permission.CALL_PHONE)) {
+                    // Si se rechazo antes aviso de que ya me lo ha rechazado
                     Snackbar.make(binding.root, R.string.permisoRechazado, Snackbar.LENGTH_LONG).show()
-                }else { //se pide el permiso
-
-                    // Si el permiso ya fue rechazado antes le aviso
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), android.Manifest.permission.CALL_PHONE)) {
-                        Snackbar.make(binding.root, R.string.permisoRechazado, Snackbar.LENGTH_LONG).show()
-                    } else {// Si es la primera vez que se pide el permiso, se lo pido
-
-                        ActivityCompat.requestPermissions(
-                            requireActivity(), arrayOf(android.Manifest.permission.CALL_PHONE),
-                            cALLPHONEPERMISSIONREQUEST
-                        )
-                    }
+                } else {
+                    // Solicitar el permiso
+                    ActivityCompat.requestPermissions(
+                        requireActivity(),
+                        arrayOf(android.Manifest.permission.CALL_PHONE),
+                        cALLPHONEPERMISSIONREQUEST
+                    )
                 }
             }
         }
-        //asiganr el permiso de correo al botn de correo de activityContacto
+
         binding.botoncorreo.setOnClickListener{
             enviarEmail()
         }
-        //Mensaje de Wasap
+
         binding.botonWhatsApp.setOnClickListener{
             enviarMensaje()
         }
-        //abirir maps y pedir la ubicacion  dandole o al icono o a la imagen
+
         binding.botonMapa.setOnClickListener{
-            // Verificamos permisos de ubicación
-            verificarPermisoYAbrirMapa()
+            verificarPermisoYAbrirMapa() // Verificar permisos y abrir mapa si es posible
         }
         binding.mapaImagen.setOnClickListener{
-            verificarPermisoYAbrirMapa()
+            verificarPermisoYAbrirMapa() // Permite abrir el mapa tocando la imagen
         }
     }
 
     private fun verificarPermisoYAbrirMapa() {
         if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            abrirMapa()
+            abrirMapa() // Si permiso abrir el mapa
         } else {
-            // Si no tenemos el permiso, lo solicitamos
+            // no permiso, pedirlo
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
@@ -95,60 +93,61 @@ class ContactoFragment : Fragment() {
             )
         }
     }
-    private fun abrirMapa() {
-        //val direccion = "Calle Isidro Vivancos Muñoz, Parque Logístico del, 30156 Murcia"
-        val latitude="37.82819578871782"
-        val longitude="-1.0984185636505475"
-        val zoom="15"
-        // Crear la URI con formato de Google Maps
-        val gmmIntentUri = Uri.parse("geo:$latitude,$longitude?z=$zoom")
-        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri) //creo el intent
 
-        // Intent para seleccionar la app adecuada
+    // abrir Google Maps con ubicacion de amazon
+    private fun abrirMapa() {
+        val latitude = "37.82819578871782"
+        val longitude = "-1.0984185636505475"
+        val zoom = "15"
+
+        // Crear la URI con la ubicación y el zoom en Google Maps
+        val gmmIntentUri = Uri.parse("geo:$latitude,$longitude?z=$zoom")
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri) // Crear el intent
+
+        // Intent para seleccionar  maps
         try {
-            startActivity(mapIntent)
+            startActivity(mapIntent) // Intentar abrir maps
         } catch (e: Exception) {
+            // Si no hay maps, enseñar mensaje de error
             Snackbar.make(binding.root, R.string.noAppMaps, Snackbar.LENGTH_LONG).show()
         }
     }
 
     private fun enviarEmail(){
-        val destinatario = "amazon@gmail.com"
+        val destinatario = "amazon@gmail.com" // Dirección de correo de destino
 
-        //SendTo : app de envar datos
+        // Crear el intent para enviar email
         val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-            //mail to lo limita a app de correos
-            data = Uri.parse("mailto:$destinatario") //email destinatario
+            data = Uri.parse("mailto:$destinatario")
         }
         try {
-            startActivity(emailIntent)
-        }catch (e: Exception){
-            // Si no hay aplicaciones de correo  enseño un mensaje de error
+            startActivity(emailIntent) // Intentar abrir la app de correo
+        } catch (e: Exception) {
+            // Si no hay correo instalado, mostrar un mensaje de error
             Snackbar.make(
                 binding.root,
                 R.string.noCorreoApp,
                 Snackbar.LENGTH_LONG
             ).show()
         }
-
     }
+
     private fun enviarMensaje(){
-        val numeroTelefono = "1234567890" // Número de teléfono con código de país sin el "+"
+        val numeroTelefono = "1234567890" // Número de teléfono sin el + !!!!
 
-        val mensaje = R.string.bienvenidaWas.toString() //to string porq sino lo pilla como un int
+        val mensaje = R.string.bienvenidaWas.toString()
 
-        //direccion de was + telefono + mensaje codificado para que sea seguro y no de problemas en la URI
+        // Crear la URL de WhatsApp con el número de teléfono y el mensaje
         val irWhatsappurl = "https://api.whatsapp.com/send?phone=$numeroTelefono&text=${Uri.encode(mensaje)}"
+        val uri = Uri.parse(irWhatsappurl) // Convertir la URL en URI
 
-        val uri = Uri.parse(irWhatsappurl)//parsear la  uri
+        // Crear intent para abrir WhatsApp
+        val wasIntent = Intent(Intent.ACTION_VIEW, uri)
 
-        //crear intent para abrir wasap
-        //uso ACtionView por acceder a was por una url
-        val wasIntent  = Intent(Intent.ACTION_VIEW, uri)
         try {
-            startActivity(wasIntent)
-
-        }catch (e: Exception){
+            startActivity(wasIntent) // Intentar abrir whatsApp
+        } catch (e: Exception) {
+            // Si no hay whatsApp, mostrar mensaje de error
             Snackbar.make(binding.root, R.string.noAppWas, Snackbar.LENGTH_LONG).show()
         }
     }
